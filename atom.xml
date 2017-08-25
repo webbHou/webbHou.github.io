@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://www.dsblog.webbhou.cn/"/>
   <updated>2017-08-25T05:19:20.827Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://www.dsblog.webbhou.cn/</id>
   
   <author>
     <name>weebHou</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2017/08/21/hello-world/"/>
-    <id>http://yoursite.com/2017/08/21/hello-world/</id>
+    <link href="http://www.dsblog.webbhou.cn/2017/08/21/hello-world/"/>
+    <id>http://www.dsblog.webbhou.cn/2017/08/21/hello-world/</id>
     <published>2017-08-21T10:07:00.455Z</published>
     <updated>2017-08-25T05:19:20.827Z</updated>
     
@@ -39,16 +39,16 @@
     
     </summary>
     
-      <category term="初始化" scheme="http://yoursite.com/categories/%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
+      <category term="初始化" scheme="http://www.dsblog.webbhou.cn/categories/%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
     
     
-      <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+      <category term="javascript" scheme="http://www.dsblog.webbhou.cn/tags/javascript/"/>
     
-      <category term="vue" scheme="http://yoursite.com/tags/vue/"/>
+      <category term="vue" scheme="http://www.dsblog.webbhou.cn/tags/vue/"/>
     
-      <category term="vuex" scheme="http://yoursite.com/tags/vuex/"/>
+      <category term="vuex" scheme="http://www.dsblog.webbhou.cn/tags/vuex/"/>
     
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+      <category term="hexo" scheme="http://www.dsblog.webbhou.cn/tags/hexo/"/>
     
   </entry>
   

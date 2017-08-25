@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://webbHou.github.io/about/index.html</loc>
+    
+    <lastmod>2017-08-25T08:19:00.018Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://webbHou.github.io/2017/08/21/hello-world/</loc>
     
     <lastmod>2017-08-25T05:19:20.827Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://webbHou.github.io/tags/index.html</loc>
     
     <lastmod>2017-08-25T03:23:32.083Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://webbHou.github.io/about/index.html</loc>
-    
-    <lastmod>2017-08-25T03:08:25.188Z</lastmod>
     
   </url>
   

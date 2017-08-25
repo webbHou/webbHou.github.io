@@ -4,7 +4,21 @@
   <url>
     <loc>http://yoursite.com/2017/08/25/about%20me/</loc>
     
-    <lastmod>2017-08-25T02:53:37.722Z</lastmod>
+    <lastmod>2017-08-25T03:11:17.200Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2017-08-25T03:08:25.188Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2017-08-25T03:07:48.866Z</lastmod>
     
   </url>
   
@@ -12,13 +26,6 @@
     <loc>http://yoursite.com/2017/08/25/about/about%20me/</loc>
     
     <lastmod>2017-08-25T02:50:47.865Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/08/25/first-blog/</loc>
-    
-    <lastmod>2017-08-25T02:01:42.011Z</lastmod>
     
   </url>
   

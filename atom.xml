@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://webbHou.github.io/"/>
-  <updated>2017-08-31T05:24:43.033Z</updated>
+  <updated>2017-08-31T05:27:49.363Z</updated>
   <id>http://webbHou.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>&#39;移动端返回上一页&#39;</title>
+    <title>移动端返回上一页</title>
     <link href="http://webbHou.github.io/2017/08/31/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%BF%94%E5%9B%9E%E4%B8%8A%E4%B8%80%E9%A1%B5/"/>
     <id>http://webbHou.github.io/2017/08/31/移动端返回上一页/</id>
     <published>2017-08-31T05:24:19.000Z</published>
-    <updated>2017-08-31T05:24:43.033Z</updated>
+    <updated>2017-08-31T05:27:49.363Z</updated>
     
     <content type="html"><![CDATA[<h2 id="移动端返回上一页问题"><a href="#移动端返回上一页问题" class="headerlink" title="移动端返回上一页问题"></a>移动端返回上一页问题</h2><p>实际工作中往往有这样的需求,需要返回上一页。</p>
 <h3 id="pc"><a href="#pc" class="headerlink" title="pc"></a>pc</h3><p>在pc上我们可以使用window.history.go(-1)或者window.history.back()都可以实现需求,而无需知道上一页的具体url。</p>

@@ -280,6 +280,140 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://webbHou.github.io/2017/08/31/移动端返回上一页/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="webbHou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大圣博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/31/移动端返回上一页/" itemprop="url">'移动端返回上一页'</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-31T13:24:19+08:00">
+                2017-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="移动端返回上一页问题"><a href="#移动端返回上一页问题" class="headerlink" title="移动端返回上一页问题"></a>移动端返回上一页问题</h2><p>实际工作中往往有这样的需求,需要返回上一页。</p>
+<h3 id="pc"><a href="#pc" class="headerlink" title="pc"></a>pc</h3><p>在pc上我们可以使用window.history.go(-1)或者window.history.back()都可以实现需求,而无需知道上一页的具体url。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=<span class="string">"javascript:history.go(-1)"</span> class=<span class="string">"header-back jsBack"</span>&gt;返回&lt;/a&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=<span class="string">"javascript:history.back()"</span> class=<span class="string">"header-back jsBack"</span>&gt;返回&lt;/a&gt;</div></pre></td></tr></table></figure>
+<h3 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h3><p>但是在移动端，如果想要返回上一页。比如从A页面跳到B页面，如果B页面想返回A页面，为了防止不会跳错，必须要有一个 &lt;  按钮，给它加 history.go(-1) ，返回上一层。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=<span class="string">"javascript:history.go(-1)"</span> class=<span class="string">"header-back jsBack"</span>&gt;返回&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p>但链接来源错综复杂，往往有些情况下根本没有上一页,这时候点击返回按钮根本没有用,用户体验性很差。很多时候会以为只是一个BUG。</p>
+<p>移动端无论是原生app还是传统的网页，返回上页是一个比较强烈的需求。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javascript 有一个可以获取前一页面的URL地址的方法：document.referrer</div></pre></td></tr></table></figure>
+<p>允许客户端通过document.referrer访问http头部来获取当前网页的来源。</p>
+<p>根据document.referrer 的来源来判断是否有来源信息，如果来源信息为空，则返回首页：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (typeof document.referrer === <span class="string">''</span>) &#123;</div><div class="line">    // 没有来源页面信息的时候，改成首页URL地址</div><div class="line">    $(<span class="string">'.jsBack'</span>).attr(<span class="string">'href'</span>, <span class="string">'/'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以此来达到返回上一页的效果。</p>
+<h3 id="无法获取referrer"><a href="#无法获取referrer" class="headerlink" title="无法获取referrer"></a>无法获取referrer</h3><p>下面的场景无法获得 referrer 信息，以下前8条属于【张鑫旭】：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">直接在浏览器中输入地址</div><div class="line">使用location.reload()刷新（location.href或者location.replace()刷新有信息）</div><div class="line">在微信对话框中，点击进入微信自身浏览器</div><div class="line">扫码进入微信或QQ的浏览器</div><div class="line">直接新窗口打开一个页面</div><div class="line">从https的网站直接进入一个http协议的网站（Chrome下亲测）</div><div class="line">a标签设置rel=<span class="string">"noreferrer"</span>（兼容IE7+）</div><div class="line">meta标签来控制不让浏览器发送referer</div><div class="line">点击 flash 内部链接</div><div class="line">Chrome4.0以下，IE 5.5+以下返回空的字符串</div><div class="line">使用 修改 Location 进行页面导航的方法，会导致在IE下丢失 referrer，这可能是IE的一个BUG</div><div class="line">跨域</div><div class="line">&lt;meta content=<span class="string">"never"</span> name=<span class="string">"referrer"</span>&gt;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://webbHou.github.io/2017/08/21/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -465,7 +599,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

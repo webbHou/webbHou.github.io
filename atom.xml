@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://webbHou.github.io/"/>
-  <updated>2017-09-13T02:19:02.701Z</updated>
+  <updated>2017-09-13T07:42:49.047Z</updated>
   <id>http://webbHou.github.io/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>小程序常用操作</title>
+    <link href="http://webbHou.github.io/2017/09/13/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"/>
+    <id>http://webbHou.github.io/2017/09/13/小程序常用操作/</id>
+    <published>2017-09-13T03:56:25.000Z</published>
+    <updated>2017-09-13T07:42:49.047Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="小程序业务常用操作"><a href="#小程序业务常用操作" class="headerlink" title="小程序业务常用操作"></a>小程序业务常用操作</h2><h3 id="上拉加载和下拉刷新"><a href="#上拉加载和下拉刷新" class="headerlink" title="上拉加载和下拉刷新:"></a>上拉加载和下拉刷新:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">方法一：onPullDownRefresh和onReachBottom方法实现小程序下拉加载和上拉刷新,在pages页xx.json设置<span class="string">"enablePullDownRefresh"</span>: <span class="string">"true"</span></div><div class="line"></div><div class="line">方法二：在scroll-view里设定bindscrolltoupper和bindscrolltolower实现微信小程序下拉,绑定自定义方法实现</div></pre></td></tr></table></figure>
+<h3 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h3><p>用于和对应的page中的方法绑定<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">方法一：<span class="built_in">bind</span>开头,例如: bindtab、bindtouchstart、bindblur</div><div class="line">方法二：catch开头, 例如: catchtab、catchblur</div></pre></td></tr></table></figure></p>
+<h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>bind事件绑定不会阻止冒泡事件向上冒泡，catch事件绑定可以阻止冒泡事件向上冒泡。</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">onLaunch 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）</div><div class="line">onShow 当小程序启动，或从后台进入前台显示，会触发 onShow</div><div class="line">onHide 当小程序从前台进入后台，会触发 onHide</div><div class="line">onReady 监听页面初次渲染完成</div><div class="line">onPullDownRefresh 监听用户下拉动作</div><div class="line">onUnload 监听页面卸载</div><div class="line">onShareAppMessage 页面分享方法</div></pre></td></tr></table></figure>
+<h3 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">const app = getApp() 获取全局应用程序实例对象</div><div class="line">各页面内适用cmd规范,require进行外部文件加载,import进行模板和样式的复用</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>小程序的数据绑定为伪数据绑定,自动与当前页面js中的date进行绑定.各种标签和方法都为内置和自定义,0基础比较容易上手开发.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;小程序业务常用操作&quot;&gt;&lt;a href=&quot;#小程序业务常用操作&quot; class=&quot;headerlink&quot; title=&quot;小程序业务常用操作&quot;&gt;&lt;/a&gt;小程序业务常用操作&lt;/h2&gt;&lt;h3 id=&quot;上拉加载和下拉刷新&quot;&gt;&lt;a href=&quot;#上拉加载和下拉刷新&quot; class
+    
+    </summary>
+    
+      <category term="小程序" scheme="http://webbHou.github.io/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+    
+      <category term="javascript" scheme="http://webbHou.github.io/tags/javascript/"/>
+    
+      <category term="小程序" scheme="http://webbHou.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>微信小程序页面跳转的方式</title>

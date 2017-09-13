@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://webbHou.github.io/"/>
-  <updated>2017-08-31T05:52:52.186Z</updated>
+  <updated>2017-09-13T02:19:02.701Z</updated>
   <id>http://webbHou.github.io/</id>
   
   <author>
@@ -16,11 +16,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>微信小程序页面跳转的方式</title>
+    <link href="http://webbHou.github.io/2017/09/13/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E7%9A%84%E6%96%B9%E5%BC%8F/"/>
+    <id>http://webbHou.github.io/2017/09/13/微信小程序页面跳转的方式/</id>
+    <published>2017-09-13T02:09:28.000Z</published>
+    <updated>2017-09-13T02:19:02.701Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="四种跳转方式"><a href="#四种跳转方式" class="headerlink" title="四种跳转方式"></a>四种跳转方式</h2><p>微信小程序页面跳转有四种方式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wx.navigateTo(OBJECT)； </div><div class="line">wx.redirectTo(OBJECT)； </div><div class="line">wx.switchTab(OBJECT)； </div><div class="line">wx.navigateBack(OBJECT)</div></pre></td></tr></table></figure></p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">其中navigateTo是将原来的页面保存在页面栈中，在跳入到下一个页面的时候目标页面也进栈，只有在这个情况下点击手机的返回按钮才可以跳转到上一个页面；</div><div class="line">redirectTo和switchTab都是先清除栈中原来的页面，然后目标页面进栈，使用这两种跳转方式，都不能通过系统的返回键回到上一个页面，而是直接退出小程序；</div><div class="line">redirectTo使用的时候一定要配合tabBar或是页面里面可以再次跳转按钮，否则无法回到上一个页面；</div><div class="line">switchTab跳转的页面必须是tabBar中声明的页面；</div><div class="line">tabBar中定义的字段不能超过5个页面，小程序的页面栈层次也不能超过5层。</div><div class="line">navigateBack只能返回到页面栈中的指定页面，一般和navigateTo配合使用。</div><div class="line">wx.navigateTo 和 wx.redirectTo 不允许跳转到 tabbar 页面，只能用 wx.switchTab 跳转到 tabbar 页面</div></pre></td></tr></table></figure>
+<h2 id="other"><a href="#other" class="headerlink" title="other"></a>other</h2><p>最后一种,使用<navigator>标签实现页面跳转:</navigator></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;navigator url=<span class="string">"navigate?title=navigate"</span> hover-class=<span class="string">"navigator-hover"</span>&gt;跳转到新页面&lt;/navigator&gt;</div><div class="line">&lt;navigator url=<span class="string">"redirect?title=redirect"</span> open-type=<span class="string">"redirect"</span> hover-class=<span class="string">"other-navigator-hover"</span>&gt;在当前页打开&lt;/navigator&gt;</div><div class="line">&lt;navigator url=<span class="string">"index"</span> open-type=<span class="string">"switchTab"</span> hover-class=<span class="string">"other-navigator-hover"</span>&gt;切换 Tab&lt;/navigator&gt;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;四种跳转方式&quot;&gt;&lt;a href=&quot;#四种跳转方式&quot; class=&quot;headerlink&quot; title=&quot;四种跳转方式&quot;&gt;&lt;/a&gt;四种跳转方式&lt;/h2&gt;&lt;p&gt;微信小程序页面跳转有四种方式：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;tab
+    
+    </summary>
+    
+      <category term="微信小程序" scheme="http://webbHou.github.io/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+    
+      <category term="javascript" scheme="http://webbHou.github.io/tags/javascript/"/>
+    
+      <category term="小程序" scheme="http://webbHou.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>移动端返回上一页</title>
     <link href="http://webbHou.github.io/2017/08/31/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%BF%94%E5%9B%9E%E4%B8%8A%E4%B8%80%E9%A1%B5/"/>
     <id>http://webbHou.github.io/2017/08/31/移动端返回上一页/</id>
     <published>2017-08-31T05:24:19.000Z</published>
-    <updated>2017-08-31T05:52:52.186Z</updated>
+    <updated>2017-08-31T05:55:26.963Z</updated>
     
     <content type="html"><![CDATA[<h2 id="移动端返回上一页问题"><a href="#移动端返回上一页问题" class="headerlink" title="移动端返回上一页问题"></a>移动端返回上一页问题</h2><p>实际工作中往往有这样的需求,需要返回上一页。</p>
 <h3 id="pc"><a href="#pc" class="headerlink" title="pc"></a>pc</h3><p>在pc上我们可以使用window.history.go(-1)或者window.history.back()都可以实现需求,而无需知道上一页的具体url。</p>
@@ -60,7 +87,7 @@
     <link href="http://webbHou.github.io/2017/08/21/hello-world/"/>
     <id>http://webbHou.github.io/2017/08/21/hello-world/</id>
     <published>2017-08-21T10:07:00.455Z</published>
-    <updated>2017-08-31T03:44:09.271Z</updated>
+    <updated>2017-08-31T05:55:25.345Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>

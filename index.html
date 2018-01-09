@@ -1661,86 +1661,14 @@ pc在pc上我们可以使用window.history.go(-1)或者window.history.back()都�
         
 
       </div>
-      <canvas id="myCanvas" style="position:absolute;left:0;top:0;z-index:0;pointer-events:none;" />
+      <canvas class="background" style="position: absolute;display: block;top: 0;left: 0;z-index: 0;"></canvas>
+      <script src="/js/src/particles.min.js"></script> 
       <script>
-        let container = document.getElementById('container-wrapper-canvas')
-        let WIDTH = container.offsetWidth
-        let HEIGHT = container.offsetHeight
-        // canvas
-        let canvas = document.getElementById('myCanvas')
-        let context = canvas.getContext('2d')
-        // 圆点数量
-        let roundCount = HEIGHT / 10
-        // 存放远点属性的数组
-        let round = []
-
-        // 令 canvas 铺满屏幕
-        canvas.width = WIDTH
-        canvas.height = HEIGHT
-
-        // 构造圆点位置颜色大小等属性
-        function roundItem(index, x, y) {
-            this.index = index
-            this.x = x
-            this.y = y
-            this.r = Math.random() * 4 + 1
-            let alpha = (Math.floor(Math.random() * 5) + 1) / 10 / 2
-            this.color = "rgba(243,152,1," + alpha + ")"
-        }
-
-        // 画圆点
-        roundItem.prototype.draw = function() {
-            context.fillStyle = this.color
-            context.shadowBlur = this.r * 2
-            context.beginPath()
-            context.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false)
-            context.closePath()
-            context.fill()
-        }
-
-        // 移动圆点
-        roundItem.prototype.move = function () {
-            // y方向移动速度与圆点半径成正比
-            this.y -= this.r / 20
-
-            // x方向移动分两个方向，移动速度与圆点半径成正比
-            if (this.index % 2 == 0) {
-                this.x -= 0.08
-            } else {
-                this.x += this.r / 40
-            }
-
-            // 如果超出范围就把它拉回来
-            if (this.y <= 0) {
-                this.y += HEIGHT
-            }
-            if (this.x <= 0) {
-                this.x += WIDTH
-            }
-            if (this.x >= WIDTH) {
-                this.x -= WIDTH
-            }
-
-            this.draw()
-        }
-        //定义动画
-        function animate() {
-            context.clearRect(0, 0, WIDTH, HEIGHT);
-            for (var i in round) {
-                round[i].move()
-            }
-            requestAnimationFrame(animate)
-        }
-
-        //初始化
-        init();
-        function init() {
-            for(var i = 0; i < roundCount; i++ ){
-                round[i] = new roundItem(i,Math.random() * WIDTH,Math.random() * HEIGHT);
-                round[i].draw();
-            }
-            animate()
-        }
+          window.onload = function() {
+            Particles.init({
+              selector: '.background'
+            });
+          };
       </script>
 
   </div> 

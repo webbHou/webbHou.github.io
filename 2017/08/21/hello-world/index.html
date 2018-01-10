@@ -673,23 +673,20 @@
         
 
       </div>
-      <style>
-      .background{ height:146px !important; }
-      </style>
       <canvas class="background" style="position: absolute;display: block;top: 0;left: 0;z-index: 0;"></canvas>
       <script src="/js/src/particles.min.js"></script> 
       <script>
           window.onload = function() {
             Particles.init({
               selector: '.background',
-              color: '#fff',
-              maxParticles: 50,
+              color: '#75A5B7',
+              maxParticles: 130,
               connectParticles: true,
               responsive: [
                 {
                   breakpoint: 768,
                   options: {
-                    maxParticles: 80  
+                    maxParticles: 80
                   }
                 }, {
                   breakpoint: 375,

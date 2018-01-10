@@ -1,7 +1,7 @@
 {
   "particles": {
     "number": {
-      "value": 80,
+      "value": 100,
       "density": {
         "enable": true,
         "value_area": 800
@@ -11,7 +11,7 @@
       "value": "#ffffff"
     },
     "shape": {
-      "type": "circle",
+      "type": "star",
       "stroke": {
         "width": 0,
         "color": "#000000"
@@ -39,7 +39,7 @@
       "value": 5,
       "random": true,
       "anim": {
-        "enable": false,
+        "enable": true,
         "speed": 40,
         "size_min": 0.1,
         "sync": false
@@ -47,7 +47,7 @@
     },
     "line_linked": {
       "enable": true,
-      "distance": 150,
+      "distance": 100,
       "color": "#ffffff",
       "opacity": 0.4,
       "width": 1
@@ -75,7 +75,7 @@
       },
       "onclick": {
         "enable": true,
-        "mode": "push"
+        "mode": "bubble"
       },
       "resize": true
     },

@@ -656,7 +656,22 @@
           window.onload = function() {
             Particles.init({
               selector: '.background',
-              color: '#ffffff'
+              color: '#ffffff',
+              maxParticles: 20,
+              connectParticles: true,
+              responsive: [
+                {
+                  breakpoint: 50,
+                  options: {
+                    maxParticles: 20
+                  }
+                }, {
+                  breakpoint: 30,
+                  options: {
+                    maxParticles: 10
+                  }
+                }
+              ]
             });
           };
       </script>

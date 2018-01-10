@@ -1664,30 +1664,12 @@ pc在pc上我们可以使用window.history.go(-1)或者window.history.back()都�
       <style>
       .background{ height: 146px !important; }
       </style>
-      <canvas class="background" style="position: absolute;display: block;top: 0;left: 0;z-index: 0;"></canvas>
+      <div id="particles-js"></div> 
       <script src="/js/src/particles.min.js"></script> 
       <script>
-          window.onload = function() {
-            Particles.init({
-              selector: '.background',
-              color: '#ffffff',
-              maxParticles: 10,
-              connectParticles: true,
-              responsive: [
-                {
-                  breakpoint: 1000,
-                  options: {
-                    maxParticles: 200
-                  }
-                }, {
-                  breakpoint: 800,
-                  options: {
-                    maxParticles: 100
-                  }
-                }
-              ]
-            });
-          };
+          particlesJS.load('particles-js', '/js/src/particles.json', function() {
+            console.log('callback - particles.js config loaded');
+          });
       </script>
 
   </div> 

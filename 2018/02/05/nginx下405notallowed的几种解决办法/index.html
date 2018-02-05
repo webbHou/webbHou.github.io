@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="2017,总结," />
+  <meta name="keywords" content="javascript,nginx,https," />
 
 
 
@@ -97,18 +97,18 @@
 
 
 
-<meta name="description" content="2017年是我人生中重要的转折点,完成了从学校到职场,从学生到员工的角色转变.来到公司的大半年里,从思想到心态上历经了一次全面的蜕变,学到了很多,也成长了很多.在此对我半年来的工作状况做一个小结: 1.学无止境 人生就是不断学习的过程，来到公司的这半年来，是我学到东西最多的几个月，从工作能力上到与人交流沟通都学到了好多。  工作上我从只想认真做前端技术现在慢慢发展到明白了前后端之间的联系和耦合，对">
-<meta name="keywords" content="2017,总结">
+<meta name="description" content="接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题: 今天在无意间测试一个项目的上传功能时发现,当用post方">
+<meta name="keywords" content="javascript,nginx,https">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2017年度工作总结">
-<meta property="og:url" content="http://webbHou.github.io/2018/01/04/2017/index.html">
+<meta property="og:title" content="nginx下405notallowed的几种解决办法">
+<meta property="og:url" content="http://webbHou.github.io/2018/02/05/nginx下405notallowed的几种解决办法/index.html">
 <meta property="og:site_name" content="大圣博客">
-<meta property="og:description" content="2017年是我人生中重要的转折点,完成了从学校到职场,从学生到员工的角色转变.来到公司的大半年里,从思想到心态上历经了一次全面的蜕变,学到了很多,也成长了很多.在此对我半年来的工作状况做一个小结: 1.学无止境 人生就是不断学习的过程，来到公司的这半年来，是我学到东西最多的几个月，从工作能力上到与人交流沟通都学到了好多。  工作上我从只想认真做前端技术现在慢慢发展到明白了前后端之间的联系和耦合，对">
+<meta property="og:description" content="接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题: 今天在无意间测试一个项目的上传功能时发现,当用post方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-05T00:55:12.830Z">
+<meta property="og:updated_time" content="2018-02-05T07:09:13.306Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2017年度工作总结">
-<meta name="twitter:description" content="2017年是我人生中重要的转折点,完成了从学校到职场,从学生到员工的角色转变.来到公司的大半年里,从思想到心态上历经了一次全面的蜕变,学到了很多,也成长了很多.在此对我半年来的工作状况做一个小结: 1.学无止境 人生就是不断学习的过程，来到公司的这半年来，是我学到东西最多的几个月，从工作能力上到与人交流沟通都学到了好多。  工作上我从只想认真做前端技术现在慢慢发展到明白了前后端之间的联系和耦合，对">
+<meta name="twitter:title" content="nginx下405notallowed的几种解决办法">
+<meta name="twitter:description" content="接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题: 今天在无意间测试一个项目的上传功能时发现,当用post方">
 
 
 
@@ -138,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://webbHou.github.io/2018/01/04/2017/"/>
+  <link rel="canonical" href="http://webbHou.github.io/2018/02/05/nginx下405notallowed的几种解决办法/"/>
 
 
 
 
 
-  <title>2017年度工作总结 | 大圣博客</title>
+  <title>nginx下405notallowed的几种解决办法 | 大圣博客</title>
   
 
 
@@ -282,7 +282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://webbHou.github.io/2018/01/04/2017/">
+    <link itemprop="mainEntityOfPage" href="http://webbHou.github.io/2018/02/05/nginx下405notallowed的几种解决办法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="webbHou">
@@ -299,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">2017年度工作总结</h1>
+          <h1 class="post-title" itemprop="name headline">nginx下405notallowed的几种解决办法</h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-04T17:02:16+08:00">
-                2018-01-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-05T10:49:35+08:00">
+                2018-02-05
               </time>
             
 
@@ -334,8 +334,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/个人总结/" itemprop="url" rel="index">
-                    <span itemprop="name">个人总结</span>
+                  <a href="/categories/开发相关/" itemprop="url" rel="index">
+                    <span itemprop="name">开发相关</span>
                   </a>
                 </span>
 
@@ -371,18 +371,22 @@
       
 
       
-        <p>2017年是我人生中重要的转折点,完成了从学校到职场,从学生到员工的角色转变.来到公司的大半年里,从思想到心态上历经了一次全面的蜕变,学到了很多,也成长了很多.在此对我半年来的工作状况做一个小结:</p>
-<p>1.学无止境 人生就是不断学习的过程，来到公司的这半年来，是我学到东西最多的几个月，从工作能力上到与人交流沟通都学到了好多。</p>
-<ul>
-<li>工作上我从只想认真做前端技术现在慢慢发展到明白了前后端之间的联系和耦合，对公司业务更加的熟悉，了解了各部门之间的工作关系，自己在公司的职责以及个人岗位的重要性。</li>
-<li>人际交往中，慢慢的在学着如何更清楚的的与人交流，表达自己的看法，让别人更快地明白你的意图或疑惑，不仅加强了和同事之间的工作效率，更锻炼了自己的性格，前端本就是需要不断与人沟通的岗位，也为以后个人职业发展做好铺垫。</li>
-</ul>
-<p>2.即使是最基础的工作，也需要不断地创新求进，以提高工作效率</p>
-<ul>
-<li>变繁琐为简单 作为技术来说，我们不喜欢简单的粘贴复制，更不喜欢每天总是重复繁琐的工作，我们更喜欢用技术来改变这一切，这半年来我们在不断的改进，把每次的上下线活动变得简单，把每次活动的弹窗修改变为即使不懂代码也可以操作的可视化界面，这些改变是让人欣喜的，技术最怕的就是一成不变，那样终有一天会磨光仅有的那些对技术对代码的热爱。</li>
-<li>更新迭代 来公司的半年里，我慢慢的了解了公司的技术栈，但发现大部分都是很老的，有很多需要改进，需要用新的更优秀的解决方案来代替，让用户体验更佳，让公司与外界保持同步，以此来吸引更多的优秀人才加入进来，公司才能更加壮大。基于这一点，每当我学习到新的技术，总是在想是否对现有的公司项目适用，让项目体验性更佳，带来更多的流量和用户，例如这半年里我使用了淘宝的flexable移动端适配插件让活动在移动端的显示更佳，更佳美观，用户体验性更好。</li>
-</ul>
-<p>2018年里，我希望能更加成熟和稳重，每一天做到认真和严谨，完成好每一项工作，不管它是否简单或复杂，学习更多的新技术，扎实基本功，更好的为公司服务。最后用自己最喜欢的一句话来结束，“以匠人之心，码出多彩人生！”</p>
+        <p>接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……<br>好了,不乱扯了,开始正题:</p>
+<p>今天在无意间测试一个项目的上传功能时发现,当用post方式去请求一个静态文件时，会报错,返回 HTTP/1.1 405 Method not allowed 状态，无法正常显示页面。 </p>
+<p>最终经过本人不懈的百度 google后,采集了各方意见,逐一测试后解决了这个bug,这里贴出我测试的几个方法,是否有用,以实际代码为准,下面我会逐各进行原理说明:</p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><blockquote>
+<p>server<br>{<br>   listen       80;<br>   server_name  test.baidu.com;<br>   index index.html index.htm index.php;<br>   root  /www/test.baidu.com;<br>   error_page   405 =200 @405;<br>   location @405<br>   {<br>       root  /www/test.baidu.com;<br>   }<br>  location ~ .*.php?$<br>   {<br>       include conf/fcgi.conf;<br>       fastcgi_pass  127.0.0.1:9000;<br>       fastcgi_index index.php;<br>   }<br>}</p>
+</blockquote>
+<p>方法一主要利用了nginx的代理转发,把错误码405 notallowed 转发到200 然后完成正常的post请求,这其实也是对浏览器的一种欺骗.</p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>编辑nginx源代码<br>vi /root/soft/nginx1.0.10/src/http/modules/ngx_http_static_module.c</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">注释掉原有的一段话</div><div class="line">/*   </div><div class="line"> <span class="keyword">if</span> (r-&gt;method &amp; NGX_HTTP_POST) &#123;</div><div class="line">        <span class="built_in">return</span> NGX_HTTP_NOT_ALLOWED;</div><div class="line">       &#125;</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>然后按照原来的编译参数  ./configuer  make  不用make install 否则会覆盖原来的一些配置文件。<br>执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp  <span class="variable">$nginx_dir</span>/sbin/nginx  <span class="variable">$nginx_dir</span>/sbin/nginx.bak</div><div class="line">cp ./objs/nginx   <span class="variable">$nginx_dir</span>/sbin/nginx</div><div class="line"><span class="variable">$nginx_dir</span>/sbin/nginx -s reload</div></pre></td></tr></table></figure>
+<p>方法二主要利用了对nginx源码的编辑,修改了nginx原有的post禁止的机制,进而避免了405 not allowed的状态.</p>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><blockquote>
+<p>server<br>{<br>   listen       80;<br>   server_name  test.baidu.com;<br>   index index.html index.htm index.php;<br>   root  /www/test.baidu.com;<br>     location /<br>    {<br>      root /www/test.baidu.com;<br>      error_page 405 =200 <a href="http://$host$request_uri" target="_blank" rel="external">http://$host$request_uri</a>;<br>      }<br>      location ~ .*.php?$<br>   {<br>       include conf/fcgi.conf;<br>       fastcgi_pass  127.0.0.1:9000;<br>       fastcgi_index index.php;<br>   }<br>}</p>
+</blockquote>
+<p>方法三和方法一原理类似,都是把错误码405 notallowed 转发到200 然后完成正常的post请求.</p>
 
       
     </div>
@@ -400,9 +404,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/2017/" rel="tag"># 2017</a>
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
           
-            <a href="/tags/总结/" rel="tag"># 总结</a>
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+            <a href="/tags/https/" rel="tag"># https</a>
           
         </div>
       
@@ -415,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/20/前端性能优化/" rel="next" title="前端性能优化">
-                <i class="fa fa-chevron-left"></i> 前端性能优化
+              <a href="/2018/01/04/2017/" rel="next" title="2017年度工作总结">
+                <i class="fa fa-chevron-left"></i> 2017年度工作总结
               </a>
             
           </div>
@@ -424,10 +430,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/05/nginx下405notallowed的几种解决办法/" rel="prev" title="nginx下405notallowed的几种解决办法">
-                nginx下405notallowed的几种解决办法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -479,8 +481,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -597,6 +608,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一"><span class="nav-number">1.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二"><span class="nav-number">2.</span> <span class="nav-text">方法二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法三"><span class="nav-number">3.</span> <span class="nav-text">方法三</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

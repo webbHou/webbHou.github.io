@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://webbHou.github.io/"/>
-  <updated>2018-01-05T00:55:12.830Z</updated>
+  <updated>2018-02-05T07:09:13.306Z</updated>
   <id>http://webbHou.github.io/</id>
   
   <author>
@@ -14,6 +14,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nginx下405notallowed的几种解决办法</title>
+    <link href="http://webbHou.github.io/2018/02/05/nginx%E4%B8%8B405notallowed%E7%9A%84%E5%87%A0%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>http://webbHou.github.io/2018/02/05/nginx下405notallowed的几种解决办法/</id>
+    <published>2018-02-05T02:49:35.000Z</published>
+    <updated>2018-02-05T07:09:13.306Z</updated>
+    
+    <content type="html"><![CDATA[<p>接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……<br>好了,不乱扯了,开始正题:</p>
+<p>今天在无意间测试一个项目的上传功能时发现,当用post方式去请求一个静态文件时，会报错,返回 HTTP/1.1 405 Method not allowed 状态，无法正常显示页面。 </p>
+<p>最终经过本人不懈的百度 google后,采集了各方意见,逐一测试后解决了这个bug,这里贴出我测试的几个方法,是否有用,以实际代码为准,下面我会逐各进行原理说明:</p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><blockquote>
+<p>server<br>{<br>   listen       80;<br>   server_name  test.baidu.com;<br>   index index.html index.htm index.php;<br>   root  /www/test.baidu.com;<br>   error_page   405 =200 @405;<br>   location @405<br>   {<br>       root  /www/test.baidu.com;<br>   }<br>  location ~ .*.php?$<br>   {<br>       include conf/fcgi.conf;<br>       fastcgi_pass  127.0.0.1:9000;<br>       fastcgi_index index.php;<br>   }<br>}</p>
+</blockquote>
+<p>方法一主要利用了nginx的代理转发,把错误码405 notallowed 转发到200 然后完成正常的post请求,这其实也是对浏览器的一种欺骗.</p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>编辑nginx源代码<br>vi /root/soft/nginx1.0.10/src/http/modules/ngx_http_static_module.c</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">注释掉原有的一段话</div><div class="line">/*   </div><div class="line"> <span class="keyword">if</span> (r-&gt;method &amp; NGX_HTTP_POST) &#123;</div><div class="line">        <span class="built_in">return</span> NGX_HTTP_NOT_ALLOWED;</div><div class="line">       &#125;</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>然后按照原来的编译参数  ./configuer  make  不用make install 否则会覆盖原来的一些配置文件。<br>执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp  <span class="variable">$nginx_dir</span>/sbin/nginx  <span class="variable">$nginx_dir</span>/sbin/nginx.bak</div><div class="line">cp ./objs/nginx   <span class="variable">$nginx_dir</span>/sbin/nginx</div><div class="line"><span class="variable">$nginx_dir</span>/sbin/nginx -s reload</div></pre></td></tr></table></figure>
+<p>方法二主要利用了对nginx源码的编辑,修改了nginx原有的post禁止的机制,进而避免了405 not allowed的状态.</p>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><blockquote>
+<p>server<br>{<br>   listen       80;<br>   server_name  test.baidu.com;<br>   index index.html index.htm index.php;<br>   root  /www/test.baidu.com;<br>     location /<br>    {<br>      root /www/test.baidu.com;<br>      error_page 405 =200 <a href="http://$host$request_uri" target="_blank" rel="external">http://$host$request_uri</a>;<br>      }<br>      location ~ .*.php?$<br>   {<br>       include conf/fcgi.conf;<br>       fastcgi_pass  127.0.0.1:9000;<br>       fastcgi_index index.php;<br>   }<br>}</p>
+</blockquote>
+<p>方法三和方法一原理类似,都是把错误码405 notallowed 转发到200 然后完成正常的post请求.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结
+    
+    </summary>
+    
+      <category term="开发相关" scheme="http://webbHou.github.io/categories/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="javascript" scheme="http://webbHou.github.io/tags/javascript/"/>
+    
+      <category term="nginx" scheme="http://webbHou.github.io/tags/nginx/"/>
+    
+      <category term="https" scheme="http://webbHou.github.io/tags/https/"/>
+    
+  </entry>
   
   <entry>
     <title>2017年度工作总结</title>

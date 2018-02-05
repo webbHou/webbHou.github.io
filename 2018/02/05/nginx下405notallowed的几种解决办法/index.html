@@ -97,18 +97,18 @@
 
 
 
-<meta name="description" content="接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题: 今天在无意间测试一个项目的上传功能时发现,当用post方">
+<meta name="description" content="接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题:今天在无意间测试一个项目的上传功能时发现,当用post方式">
 <meta name="keywords" content="javascript,nginx,https">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx下405notallowed的几种解决办法">
 <meta property="og:url" content="http://webbHou.github.io/2018/02/05/nginx下405notallowed的几种解决办法/index.html">
 <meta property="og:site_name" content="大圣博客">
-<meta property="og:description" content="接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题: 今天在无意间测试一个项目的上传功能时发现,当用post方">
+<meta property="og:description" content="接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题:今天在无意间测试一个项目的上传功能时发现,当用post方式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-05T07:09:13.306Z">
+<meta property="og:updated_time" content="2018-02-05T07:13:28.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx下405notallowed的几种解决办法">
-<meta name="twitter:description" content="接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题: 今天在无意间测试一个项目的上传功能时发现,当用post方">
+<meta name="twitter:description" content="接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题:今天在无意间测试一个项目的上传功能时发现,当用post方式">
 
 
 
@@ -371,9 +371,7 @@
       
 
       
-        <p>接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……<br>好了,不乱扯了,开始正题:</p>
-<p>今天在无意间测试一个项目的上传功能时发现,当用post方式去请求一个静态文件时，会报错,返回 HTTP/1.1 405 Method not allowed 状态，无法正常显示页面。 </p>
-<p>最终经过本人不懈的百度 google后,采集了各方意见,逐一测试后解决了这个bug,这里贴出我测试的几个方法,是否有用,以实际代码为准,下面我会逐各进行原理说明:</p>
+        <p>接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题:<br>今天在无意间测试一个项目的上传功能时发现,当用post方式去请求一个静态文件时，会报错,返回 HTTP/1.1 405 Method not allowed 状态，无法正常显示页面。<br>最终经过本人不懈的百度 google后,采集了各方意见,逐一测试后解决了这个bug,这里贴出我测试的几个方法,是否有用,以实际代码为准,下面我会逐各进行原理说明:</p>
 <h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><blockquote>
 <p>server<br>{<br>   listen       80;<br>   server_name  test.baidu.com;<br>   index index.html index.htm index.php;<br>   root  /www/test.baidu.com;<br>   error_page   405 =200 @405;<br>   location @405<br>   {<br>       root  /www/test.baidu.com;<br>   }<br>  location ~ .*.php?$<br>   {<br>       include conf/fcgi.conf;<br>       fastcgi_pass  127.0.0.1:9000;<br>       fastcgi_index index.php;<br>   }<br>}</p>
 </blockquote>

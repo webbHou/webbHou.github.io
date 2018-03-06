@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://webbHou.github.io/"/>
-  <updated>2018-02-05T07:15:48.323Z</updated>
+  <updated>2018-03-06T09:14:56.859Z</updated>
   <id>http://webbHou.github.io/</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>移动端适配1px问题解决方案</title>
+    <link href="http://webbHou.github.io/2018/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%80%82%E9%85%8D1px%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>http://webbHou.github.io/2018/03/06/移动端适配1px问题解决方案/</id>
+    <published>2018-03-06T08:33:46.000Z</published>
+    <updated>2018-03-06T09:14:56.859Z</updated>
+    
+    <content type="html"><![CDATA[<p>在之前的一个项目中,在测试后发现,在Retina屏幕下边框变宽了,经过我自己检查修改,发现确实存在这个问题,一下对这个问题进行剖析和解决方案的总结:</p>
+<h3 id="边框变粗的原因"><a href="#边框变粗的原因" class="headerlink" title="边框变粗的原因"></a>边框变粗的原因</h3><p>其实这个问题是因为不同手机的分辨率不同造成的,也就是设备物理像素和逻辑像素的不同造成的,物理像素也就是也就是设备的分辨率,逻辑像素就是设备的尺寸像素。在window对象下有一个deviceRatio的属性,这个值就是物理像素和逻辑像素的比值。当这个值大于1时就成为Retina屏。css中的1px在设备中显示时就会等比例的加粗。</p>
+<blockquote>
+<p>devicePixelRatio的官方的定义为：设备物理像素和设备独立像素的比例，也就是 devicePixelRatio = 物理像素 / 独立像素。</p>
+</blockquote>
+<h3 id="解决边框变粗的7种办法"><a href="#解决边框变粗的7种办法" class="headerlink" title="解决边框变粗的7种办法"></a>解决边框变粗的7种办法</h3><p>1、0.5px边框: 解决方案是通过 JavaScript 检测浏览器能否处理0.5px的边框，如果可以，给html标签元素添加个class。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (window.devicePixelRatio &amp;&amp; devicePixelRatio &gt;= 2) &#123;</div><div class="line">  var testElem = document.createElement(<span class="string">'div'</span>);</div><div class="line">  testElem.style.border = <span class="string">'.5px solid transparent'</span>;</div><div class="line">  document.body.appendChild(testElem);</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (testElem.offsetHeight == 1) &#123;</div><div class="line">  document.querySelector(<span class="string">'html'</span>).classList.add(<span class="string">'hairlines'</span>);</div><div class="line">&#125;</div><div class="line">  document.body.removeChild(testElem);</div><div class="line">&#125;</div><div class="line">// 脚本应该放在内，如果在里面运行，需要包装 $(document).ready(<span class="function"><span class="title">function</span></span>() &#123;&#125;)</div></pre></td></tr></table></figure>
+<p>样式代码:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">div &#123;</div><div class="line">  border: 1px solid <span class="comment">#bbb;</span></div><div class="line">&#125;</div><div class="line">.hairlines div &#123;</div><div class="line">  border-width: 0.5px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>优点: 代码简单  缺点: 无法兼容安卓设备、 iOS 8 以下设备。</p>
+<p>2.使用border-image实现</p>
+<p>样式设置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">.border-bottom-1px &#123;</div><div class="line">  border-width: 0 0 1px 0;</div><div class="line">  -webkit-border-image: url(linenew.png) 0 0 2 0 stretch;</div><div class="line">  border-image: url(linenew.png) 0 0 2 0 stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>但是会在非Retina屏下不显示的情况,做了以下潘丹处理:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">.border-image-1px &#123;</div><div class="line">  border-bottom: 1px solid <span class="comment">#666;</span></div><div class="line">&#125;</div><div class="line">@media only screen and (-webkit-min-device-pixel-ratio: 2) &#123;</div><div class="line">  .border-image-1px &#123;</div><div class="line">    border-bottom: none;</div><div class="line">    border-width: 0 0 1px 0;</div><div class="line">    -webkit-border-image: url(../img/linenew.png) 0 0 2 0 stretch;</div><div class="line">    border-image: url(../img/linenew.png) 0 0 2 0 stretch;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>优点：<br>可以设置单条,多条边框<br>没有性能瓶颈的问题</p>
+<p>缺点：<br>修改颜色麻烦, 需要替换图片<br>圆角需要特殊处理，并且边缘会模糊</p>
+<p>3.使用background-image实现</p>
+<p>和border-image的原理相同</p>
+<p>4.多背景渐变</p>
+<p>与background-image方案类似，只是将图片替换为css3渐变。设置1px的渐变背景，50%有颜色，50%透明。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">.background-gradient-1px &#123;</div><div class="line">  background:</div><div class="line">    linear-gradient(<span class="comment">#000, #000 100%, transparent 100%) left / 1px 100% no-repeat,</span></div><div class="line">    linear-gradient(<span class="comment">#000, #000 100%, transparent 100%) right / 1px 100% no-repeat,</span></div><div class="line">    linear-gradient(<span class="comment">#000,#000 100%, transparent 100%) top / 100% 1px no-repeat,</span></div><div class="line">    linear-gradient(<span class="comment">#000,#000 100%, transparent 100%) bottom / 100% 1px no-repeat</span></div><div class="line">&#125;</div><div class="line">/* 或者 */</div><div class="line">.background-gradient-1px&#123;</div><div class="line">  background:</div><div class="line">    -webkit-gradient(linear, left top, right bottom, color-stop(0, transparent), color-stop(0, <span class="comment">#000), to(#000)) left / 1px 100% no-repeat,</span></div><div class="line">    -webkit-gradient(linear, left top, right bottom, color-stop(0, transparent), color-stop(0, <span class="comment">#000), to(#000)) right / 1px 100% no-repeat,</span></div><div class="line">    -webkit-gradient(linear, left top, right bottom, color-stop(0, transparent), color-stop(0, <span class="comment">#000), to(#000)) top / 100% 1px no-repeat,</span></div><div class="line">    -webkit-gradient(linear, left top, right bottom, color-stop(0, transparent), color-stop(0, <span class="comment">#000), to(#000)) bottom / 100% 1px no-repeat</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>优点：<br>可以实现单条、多条边框<br>边框的颜色随意设置</p>
+<p>缺点：<br>代码量不少<br>圆角没法实现<br>多背景图片有兼容性问题</p>
+<p>5.使用box-shadow模拟边框</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box-shadow-1px &#123;</div><div class="line">  box-shadow: inset 0px -1px 1px -1px <span class="comment">#c8c7cc;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>优点：代码量少可以满足所有场景<br>缺点：边框有阴影，颜色变浅</p>
+<p>6.viewport + rem 实现</p>
+<p>通过js获取设备的devicePixelRatio值，来设置对应viewport属性值，然后设置不同的rem转化比例，这种方式就可以像以前一样轻松愉快的写1px了。</p>
+<p>这种兼容方案相对比较完美，适合新的项目，老的项目修改成本过大。可以看下<a href="https://github.com/amfe/article/issues/17" target="_blank" rel="external">淘宝的flexible适配方案</a>。</p>
+<p>7.伪类 + transform 实现</p>
+<p>老项目可以使用这个方案</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">.scale-1px&#123;</div><div class="line">  position: relative;</div><div class="line">  border:none;</div><div class="line">&#125;</div><div class="line">.scale-1px:after&#123;</div><div class="line">  content: <span class="string">''</span>;</div><div class="line">  position: absolute;</div><div class="line">  bottom: 0;</div><div class="line">  background: <span class="comment">#000;</span></div><div class="line">  width: 100%;</div><div class="line">  height: 1px;</div><div class="line">  -webkit-transform: scaleY(0.5);</div><div class="line">  transform: scaleY(0.5);</div><div class="line">  -webkit-transform-origin: 0 0;</div><div class="line">  transform-origin: 0 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在之前的一个项目中,在测试后发现,在Retina屏幕下边框变宽了,经过我自己检查修改,发现确实存在这个问题,一下对这个问题进行剖析和解决方案的总结:&lt;/p&gt;
+&lt;h3 id=&quot;边框变粗的原因&quot;&gt;&lt;a href=&quot;#边框变粗的原因&quot; class=&quot;headerlink&quot; tit
+    
+    </summary>
+    
+      <category term="移动端" scheme="http://webbHou.github.io/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+    
+      <category term="移动端" scheme="http://webbHou.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+      <category term="适配" scheme="http://webbHou.github.io/tags/%E9%80%82%E9%85%8D/"/>
+    
+  </entry>
   
   <entry>
     <title>nginx下405notallowed的几种解决办法</title>

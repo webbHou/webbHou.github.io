@@ -154,15 +154,21 @@
     <link href="http://webbHou.github.io/2017/12/20/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     <id>http://webbHou.github.io/2017/12/20/前端性能优化/</id>
     <published>2017-12-20T02:23:51.000Z</published>
-    <updated>2018-01-09T09:05:56.131Z</updated>
+    <updated>2018-03-06T09:33:36.786Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前端性能优化"><a href="#前端性能优化" class="headerlink" title="前端性能优化"></a>前端性能优化</h2><h4 id="合并请求"><a href="#合并请求" class="headerlink" title="合并请求"></a>合并请求</h4><p>合理的http/htpps请求会减少对后台服务器的压力,提升页面的性能.</p>
+    <content type="html"><![CDATA[<h4 id="合并请求"><a href="#合并请求" class="headerlink" title="合并请求"></a>合并请求</h4><p>合理的http/htpps请求会减少对后台服务器的压力,提升页面的性能.</p>
 <h3 id="雪碧图"><a href="#雪碧图" class="headerlink" title="雪碧图"></a>雪碧图</h3><p>也相当于合并请求的一种,减少对图片的请求,尽量合并在一张大图进行请求</p>
-<h3 id="合理利用插件库"><a href="#合理利用插件库" class="headerlink" title="合理利用插件库"></a>合理利用插件库</h3>]]></content>
+<h3 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h3><h3 id="代码压缩合并"><a href="#代码压缩合并" class="headerlink" title="代码压缩合并"></a>代码压缩合并</h3><h3 id="合理利用插件库"><a href="#合理利用插件库" class="headerlink" title="合理利用插件库"></a>合理利用插件库</h3><p>以上其实这是前端的部分方法,总的来说性能优化分为两个部分,页面加载时间和页面运行效率。</p>
+<h3 id="页面加载时间"><a href="#页面加载时间" class="headerlink" title="页面加载时间"></a>页面加载时间</h3><p>首先我们需要知道一个页面从浏览器打开到加载完成都发生了什么，才能知道如何优化和改进。</p>
+<p>总共为以下几步:<br>浏览器请求-&gt;查询缓存-&gt;dns解析-&gt;建立连接-&gt;服务器处理请求-&gt;服务器发送响应-&gt;浏览器进行页面渲染-&gt;用户可交互-&gt;加载完成</p>
+<p>前面说的几种方法主要体现在服务器处理请求和发送响应这两步,其他如dns解析可以通过cdn加速进行优化处理,当然还需要后台对服务器端进行优化。</p>
+<h3 id="页面运行效率"><a href="#页面运行效率" class="headerlink" title="页面运行效率"></a>页面运行效率</h3><p>页面运行效率主要体现在页面的滑动是否卡顿、浏览器运行机制、代码是否逻辑清晰简洁以及硬件相关的问题。</p>
+]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;前端性能优化&quot;&gt;&lt;a href=&quot;#前端性能优化&quot; class=&quot;headerlink&quot; title=&quot;前端性能优化&quot;&gt;&lt;/a&gt;前端性能优化&lt;/h2&gt;&lt;h4 id=&quot;合并请求&quot;&gt;&lt;a href=&quot;#合并请求&quot; class=&quot;headerlink&quot; title=&quot;合
+      &lt;h4 id=&quot;合并请求&quot;&gt;&lt;a href=&quot;#合并请求&quot; class=&quot;headerlink&quot; title=&quot;合并请求&quot;&gt;&lt;/a&gt;合并请求&lt;/h4&gt;&lt;p&gt;合理的http/htpps请求会减少对后台服务器的压力,提升页面的性能.&lt;/p&gt;
+&lt;h3 id=&quot;雪碧图&quot;&gt;&lt;a href=
     
     </summary>
     

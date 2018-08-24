@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://webbHou.github.io/"/>
-  <updated>2018-03-06T10:03:29.828Z</updated>
+  <updated>2018-03-06T10:03:30.000Z</updated>
   <id>http://webbHou.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://webbHou.github.io/2018/03/06/mvvm%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/"/>
     <id>http://webbHou.github.io/2018/03/06/mvvm框架原理/</id>
     <published>2018-03-06T09:35:45.000Z</published>
-    <updated>2018-03-06T10:03:29.828Z</updated>
+    <updated>2018-03-06T10:03:30.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近几年前端技术层出不穷，行业生态和技术创新形式一片大好，涌现出了一大批框架、ui库、构建工具等，前端变得越来越不可替代，在公司的地位也越来越重要，工作内容页越来越有趣和技术性。当然也有坏的一面，层出不穷的技术当然会让很大一批人迷茫和不知从何学起，但随之慢慢的沉淀，更好的技术慢慢的被大家所接受和运用，react、vue等mvvm现在已经成为了一个前端er必须了解的东西，以下将从原理上对mvvm框架进行解析。</p>
 <h3 id="什么是mvvm"><a href="#什么是mvvm" class="headerlink" title="什么是mvvm"></a>什么是mvvm</h3><p>m即modle模型逻辑层，v即view视图层。mvvm体现了这个框架的运行原理，也就是模型驱动视图，视图的改变更改模型。也就是双向数据绑定的核心。</p>
@@ -52,7 +52,7 @@
     <link href="http://webbHou.github.io/2018/03/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%80%82%E9%85%8D1px%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
     <id>http://webbHou.github.io/2018/03/06/移动端适配1px问题解决方案/</id>
     <published>2018-03-06T08:33:46.000Z</published>
-    <updated>2018-03-06T09:14:56.859Z</updated>
+    <updated>2018-03-06T09:14:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>在之前的一个项目中,在测试后发现,在Retina屏幕下边框变宽了,经过我自己检查修改,发现确实存在这个问题,一下对这个问题进行剖析和解决方案的总结:</p>
 <h3 id="边框变粗的原因"><a href="#边框变粗的原因" class="headerlink" title="边框变粗的原因"></a>边框变粗的原因</h3><p>其实这个问题是因为不同手机的分辨率不同造成的,也就是设备物理像素和逻辑像素的不同造成的,物理像素也就是也就是设备的分辨率,逻辑像素就是设备的尺寸像素。在window对象下有一个deviceRatio的属性,这个值就是物理像素和逻辑像素的比值。当这个值大于1时就成为Retina屏。css中的1px在设备中显示时就会等比例的加粗。</p>
@@ -107,7 +107,7 @@
     <link href="http://webbHou.github.io/2018/02/05/nginx%E4%B8%8B405notallowed%E7%9A%84%E5%87%A0%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
     <id>http://webbHou.github.io/2018/02/05/nginx下405notallowed的几种解决办法/</id>
     <published>2018-02-05T02:49:35.000Z</published>
-    <updated>2018-02-05T07:15:48.323Z</updated>
+    <updated>2018-02-05T07:15:50.000Z</updated>
     
     <content type="html"><![CDATA[<p>接近年底,闲来无事,刚好在网上看到一个https的帖子,https现在已经成为潮流,就想着闲来无事不如把自己以前的一些项目也都部署转成https的.从https证书部署到nginx代理配置再到成功看到浏览器中的小锁头一切都顺利的走了下来,心里想着https配置也挺简单嘛,结果直到几天后某一天,终于发生了一件大事……好了,不乱扯了,开始正题:</p>
 <p>今天在无意间测试一个项目的上传功能时发现,当用post方式去请求一个静态文件时，会报错,返回 HTTP/1.1 405 Method not allowed 状态，无法正常显示页面。 </p>
@@ -149,7 +149,7 @@
     <link href="http://webbHou.github.io/2018/01/04/2017/"/>
     <id>http://webbHou.github.io/2018/01/04/2017/</id>
     <published>2018-01-04T09:02:16.000Z</published>
-    <updated>2018-01-05T00:55:12.830Z</updated>
+    <updated>2018-01-05T00:55:14.000Z</updated>
     
     <content type="html"><![CDATA[<p>2017年是我人生中重要的转折点,完成了从学校到职场,从学生到员工的角色转变.来到公司的大半年里,从思想到心态上历经了一次全面的蜕变,学到了很多,也成长了很多.在此对我半年来的工作状况做一个小结:</p>
 <p>1.学无止境 人生就是不断学习的过程，来到公司的这半年来，是我学到东西最多的几个月，从工作能力上到与人交流沟通都学到了好多。</p>
@@ -218,7 +218,7 @@
     <link href="http://webbHou.github.io/2017/11/17/vue%E5%92%8Creact%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96/"/>
     <id>http://webbHou.github.io/2017/11/17/vue和react路由参数获取/</id>
     <published>2017-11-17T03:30:20.000Z</published>
-    <updated>2017-11-17T03:41:44.662Z</updated>
+    <updated>2017-11-17T03:41:46.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="vue获取路由参数的方式"><a href="#vue获取路由参数的方式" class="headerlink" title="vue获取路由参数的方式"></a>vue获取路由参数的方式</h2><p>vue可以通过获取当前路由来获取,可以通过路由的监控触发事件来进行数据请求变更<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">this.<span class="variable">$route</span>.params</div><div class="line">watch:&#123;</div><div class="line">  //进行路由的监控触发事件</div><div class="line">  <span class="string">'$route'</span>: <span class="string">'事件名'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="react获取路由参数的方式"><a href="#react获取路由参数的方式" class="headerlink" title="react获取路由参数的方式"></a>react获取路由参数的方式</h2><p>react把路由参数作为prop进行传递,子组件只需要获取当前组件的props即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">this.props.params</div></pre></td></tr></table></figure></p>
@@ -246,7 +246,7 @@
     <link href="http://webbHou.github.io/2017/09/15/react%E5%88%9D%E5%AD%A6%E6%80%BB%E7%BB%93/"/>
     <id>http://webbHou.github.io/2017/09/15/react初学总结/</id>
     <published>2017-09-15T07:04:31.000Z</published>
-    <updated>2017-09-15T07:59:18.654Z</updated>
+    <updated>2017-09-15T07:59:20.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="react的特点"><a href="#react的特点" class="headerlink" title="react的特点"></a>react的特点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">声明式设计 −React采用声明范式，可以轻松描述应用。</div><div class="line">高效 −React通过对DOM的模拟，最大限度地减少与DOM的交互。性能更佳</div><div class="line">灵活 −React可以与已知的库或框架很好地配合。</div><div class="line">JSX − JSX 是 JavaScript 语法的扩展。React 开发不一定使用 JSX ，但我们建议使用它。</div><div class="line">组件 − 通过 React 构建组件，使得代码更加容易得到复用，能够很好的应用在大项目的开发中。</div><div class="line">单向响应的数据流 − React 实现了单向响应的数据流，从而减少了重复代码，这也是它为什么比传统数据绑定更简单。</div></pre></td></tr></table></figure>
 ]]></content>
@@ -271,7 +271,7 @@
     <link href="http://webbHou.github.io/2017/09/13/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"/>
     <id>http://webbHou.github.io/2017/09/13/小程序常用操作/</id>
     <published>2017-09-13T03:56:25.000Z</published>
-    <updated>2017-09-13T08:16:03.552Z</updated>
+    <updated>2017-09-13T08:16:04.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="小程序业务常用操作"><a href="#小程序业务常用操作" class="headerlink" title="小程序业务常用操作"></a>小程序业务常用操作</h2><h3 id="上拉加载和下拉刷新"><a href="#上拉加载和下拉刷新" class="headerlink" title="上拉加载和下拉刷新:"></a>上拉加载和下拉刷新:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">方法一：onPullDownRefresh和onReachBottom方法实现小程序下拉加载和上拉刷新,在pages页xx.json设置<span class="string">"enablePullDownRefresh"</span>: <span class="string">"true"</span></div><div class="line">方法二：在scroll-view里设定bindscrolltoupper和bindscrolltolower实现微信小程序下拉,绑定自定义方法实现</div></pre></td></tr></table></figure>
 <h3 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h3><p>用于和对应的page中的方法绑定<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">方法一：<span class="built_in">bind</span>开头,例如: bindtab点击、bindtouchstart开始滑动、bindblur失去焦点、bindscrolltolower上滑加载</div><div class="line">方法二：catch开头, 例如: catchtab点击、catchblur</div></pre></td></tr></table></figure></p>
@@ -303,7 +303,7 @@
     <link href="http://webbHou.github.io/2017/09/13/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E7%9A%84%E6%96%B9%E5%BC%8F/"/>
     <id>http://webbHou.github.io/2017/09/13/微信小程序页面跳转的方式/</id>
     <published>2017-09-13T02:09:28.000Z</published>
-    <updated>2017-09-13T02:19:02.701Z</updated>
+    <updated>2017-09-13T02:19:04.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="四种跳转方式"><a href="#四种跳转方式" class="headerlink" title="四种跳转方式"></a>四种跳转方式</h2><p>微信小程序页面跳转有四种方式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wx.navigateTo(OBJECT)； </div><div class="line">wx.redirectTo(OBJECT)； </div><div class="line">wx.switchTab(OBJECT)； </div><div class="line">wx.navigateBack(OBJECT)</div></pre></td></tr></table></figure></p>
 <h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">其中navigateTo是将原来的页面保存在页面栈中，在跳入到下一个页面的时候目标页面也进栈，只有在这个情况下点击手机的返回按钮才可以跳转到上一个页面；</div><div class="line">redirectTo和switchTab都是先清除栈中原来的页面，然后目标页面进栈，使用这两种跳转方式，都不能通过系统的返回键回到上一个页面，而是直接退出小程序；</div><div class="line">redirectTo使用的时候一定要配合tabBar或是页面里面可以再次跳转按钮，否则无法回到上一个页面；</div><div class="line">switchTab跳转的页面必须是tabBar中声明的页面；</div><div class="line">tabBar中定义的字段不能超过5个页面，小程序的页面栈层次也不能超过5层。</div><div class="line">navigateBack只能返回到页面栈中的指定页面，一般和navigateTo配合使用。</div><div class="line">wx.navigateTo 和 wx.redirectTo 不允许跳转到 tabbar 页面，只能用 wx.switchTab 跳转到 tabbar 页面</div></pre></td></tr></table></figure>
@@ -326,11 +326,48 @@
   </entry>
   
   <entry>
+    <title>Hello World</title>
+    <link href="http://webbHou.github.io/2017/08/31/hello-world/"/>
+    <id>http://webbHou.github.io/2017/08/31/hello-world/</id>
+    <published>2017-08-31T05:55:26.000Z</published>
+    <updated>2017-08-31T05:55:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+    
+    </summary>
+    
+      <category term="初始化" scheme="http://webbHou.github.io/categories/%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
+    
+    
+      <category term="javascript" scheme="http://webbHou.github.io/tags/javascript/"/>
+    
+      <category term="vue" scheme="http://webbHou.github.io/tags/vue/"/>
+    
+      <category term="vuex" scheme="http://webbHou.github.io/tags/vuex/"/>
+    
+      <category term="hexo" scheme="http://webbHou.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
     <title>移动端返回上一页</title>
     <link href="http://webbHou.github.io/2017/08/31/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%BF%94%E5%9B%9E%E4%B8%8A%E4%B8%80%E9%A1%B5/"/>
     <id>http://webbHou.github.io/2017/08/31/移动端返回上一页/</id>
     <published>2017-08-31T05:24:19.000Z</published>
-    <updated>2017-08-31T05:55:26.963Z</updated>
+    <updated>2017-08-31T05:55:28.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="移动端返回上一页问题"><a href="#移动端返回上一页问题" class="headerlink" title="移动端返回上一页问题"></a>移动端返回上一页问题</h2><p>实际工作中往往有这样的需求,需要返回上一页。</p>
 <h3 id="pc"><a href="#pc" class="headerlink" title="pc"></a>pc</h3><p>在pc上我们可以使用window.history.go(-1)或者window.history.back()都可以实现需求,而无需知道上一页的具体url。</p>
@@ -362,43 +399,6 @@
       <category term="javascript" scheme="http://webbHou.github.io/tags/javascript/"/>
     
       <category term="移动端" scheme="http://webbHou.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://webbHou.github.io/2017/08/21/hello-world/"/>
-    <id>http://webbHou.github.io/2017/08/21/hello-world/</id>
-    <published>2017-08-21T10:07:00.455Z</published>
-    <updated>2017-08-31T05:55:25.345Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
-      <category term="初始化" scheme="http://webbHou.github.io/categories/%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
-    
-    
-      <category term="javascript" scheme="http://webbHou.github.io/tags/javascript/"/>
-    
-      <category term="vue" scheme="http://webbHou.github.io/tags/vue/"/>
-    
-      <category term="vuex" scheme="http://webbHou.github.io/tags/vuex/"/>
-    
-      <category term="hexo" scheme="http://webbHou.github.io/tags/hexo/"/>
     
   </entry>
   

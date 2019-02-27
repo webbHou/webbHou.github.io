@@ -1,0 +1,443 @@
+---
+title: 面试秘籍-原生js篇
+tags:
+  - javascript
+categories: 面试
+date: 2019-02-19 11:53:44
+---
+
+### 原型/构造函数/实例
+
+- 原型(prototype)：包含实例的构造函数和原型方法的对象，用于实现实例的属性继承。可以理解成对象的爹，每个JavaScript对象中都包含一个__proto__ (非标准)的属性指向它爹(该对象的原型)，可obj.__proto__进行访问。
+- 构造函数：可以通过new来 新建一个对象 的函数，每个函数都可以是构造函数。一般构造函数的首字母大写 构造函数的prototype也指向原型 构造函数的_proto_指向函数原型。
+- 实例：通过构造函数new出来的对象 实例的_proto_指向原型 实例的constructor执行构造函数 构造函数的prototype也指向原型
+
+### 原型链
+
+原型链由原型对象组成，每个对象都有_proto_属性，指向创建该对象的构造函数的原型，_proto_属性把对象链接组成原型链，是一个用来实现继承和共享属性的有限的对象链。
+
+- 属性查找机制：当查找对象的属性时，如果实例上不存在该对象，则沿着原型链往上一级查找，找到则输出否则继续往上一级查找，直到顶级原型对象Object.prototype，没有则返回undefined
+- 属性修改机制：只会修改该实例的属性，没有则添加该属性，如果需要修改原型的属性时，则可以用: b.prototype.x = 2；但是这样会造成所有继承于该对象的实例的属性发生改变。
+
+### 作用域
+
+作用域其实可理解为该上下文中*声明的变量和声明的作用范围*。可分为*块级作用域* 和 *函数作用域*。
+
+#### 特性
+
+- 声明提前: 一个声明在函数体内都是可见的, 函数优先于变量
+- 非匿名自执行函数，函数变量为 只读 状态，无法修改
+
+```bash
+const foo = 1
+(function foo() {
+    foo = 10  // 由于foo在函数中只为可读，因此赋值无效
+    console.log(foo)
+}()) 
+
+// 结果打印：  ƒ foo() { foo = 10 ; console.log(foo) }
+```
+
+### 作用域链
+
+作用域链可以理解为一组对象列表，包含*父级和自身的变量对象*，因此我们便能通过作用域链访问到父级里声明的变量或者函数。
+
+### 闭包
+
+闭包：当函数A被摧毁的情况下，返回出的子函数中依然保存着父级的变量和作用域，因此可以访问父函数的变量对象，这样的函数叫做闭包。
+
+#### 经典问题
+```bash
+for(var i=0;i<6;i++){
+  setTimeOUt(()=>{
+    console.log(i)  //setTimeOut是异步函数会在循环结束后执行 这时所以i是6
+  },i*1000)
+}
+```
+#### 解决办法1 闭包
+```bash
+for(var i=0;i<6;i++){
+  (function(j) {
+    setTimeOUt(()=>{
+      console.log(j) 
+    },j*1000)
+  })(i)
+}
+```
+
+#### 解决办法2 setTimeOUt第三个参数
+```bash
+for(var i=0;i<6;i++){
+  setTimeOUt(i=>{
+    console.log(i) 
+  },i*1000,i)
+}
+```
+
+#### 解决办法2 let创建块级作用域
+```bash
+for(let i=0;i<6;i++){
+  setTimeOUt(()=>{
+    console.log(i) 
+  },i*1000)
+}
+```
+
+### script引入方式
+
+- script 标签静态引入 遇到标签加载并执行
+- js 动态插入
+- script async 与后面元素并行（加载并执行，加载完就执行，并不按声明顺序）
+- script defer 与后面元素并行 (加载但不执行，等所以元素解析完后执行，DOMContentLoaded事件触发前执行，按声明顺序执行)
+
+### 拷贝
+
+#### 浅拷贝: 只会拷贝第一层，深层的修改依然会有影响
+- Object.assign({},obj);
+- ...展开符
+
+### 深拷贝
+- JSON.parse(JSON.stringify(obj)): 性能最快 （值为函数或undefined时，无法拷贝）
+- 递归
+
+### new运算符的执行过程
+- 新生成一个对象
+- 新对象的_proto_指向构造函数的prototype
+- 绑定this并执行构造函数
+- 返回该对象
+
+### instanceOf原理
+
+能在原型链中找到构造函数的原型则返回true
+
+### 继承的方式
+```bash
+function Anmail(){
+  this.specil = '动物‘
+}
+```
+
+- 父对象构造函数绑定：使用call或apply方法，将父对象的构造函数绑定在子对象上，即在子对象构造函数中加一行：
+```bash
+function Cat(name,age){
+  Anmail.call(this,arguments)
+  this.name = name;
+  this.age = age;
+}
+var cat1 = new Cat("大毛","黄色");
+alert(cat1.species); // 动物
+```
+
+- 修改prototype指向：把子对象的prototype指向父对象的实例，则有了父对象的属性，但只能为静态
+```bash
+function Cat(name,age){
+  this.name = name;
+  this.age = age;
+}
+Cat.prototype = new Anmail();
+Cat.prototype.constructor = Cat; //最后把子对象构造函数指向本身
+```
+
+- 直接继承prototype：把子对象的prototype指向父对象的prototype
+```bash
+function Cat(name,age){
+  this.name = name;
+  this.age = age;
+}
+Cat.prototype = Anmail.prototype;
+Cat.prototype.constructor = Cat; //会修改Anmail对象的构造函数指向
+```
+
+- 利用空对象作为中介:对直接继承的修改
+```bash
+var F = function(){};
+F.prototype= Anmail.prototype;
+Cat.prototype = new F();
+Cat.prototype.constructor = Cat;
+Cat.uber = Parent.prototype; //为了实现继承的完备性 指向父级的prototype
+```
+
+- 拷贝继承
+```bash
+function(parent,child){
+  var p = parent.prototype;
+  var c = parent.prototype;
+  for(var i in p){
+    c[i] = p[i]
+  }
+  c.uber = p;
+}
+```
+
+- Es6 class 继承
+```bash
+  class Cat extends Anmail{
+
+  }
+```
+
+### 隐式类型转换
+
+- 除+以外的运算都先转为数值
+- +有一端为字符串则都转完字符串 否则为数值
+- [1].toString === '1'   先转为数值再转为字符串
+- var a = {} a.toString() === '[object object]'  
+
+### 类型判断
+
+Object.prototype.toString().call()
+
+### 模块化
+
+- Es6： import/export
+- commonjs：require/exports/module.export
+
+#### require和import的区别
+
+- require支持*动态导入*，import不支持，正在提案(babel 下可支持)
+- require是*同步导入*，import属于*异步导入* （require执行时导入，import编译时导入）
+- require是*值拷贝*，导出值变化不会影响导入值；import指向*内存地址*，导入值会随导出值而变化 （但目前都是值拷贝，babel最终也会把import转换为require）
+
+### 防抖与节流
+
+防抖和节流是对*高频触发操作*的优化方式，会极大的提升性能
+
+- 防抖 (debounce): 将多次高频操作优化为只在最后一次调用执行，通常使用的场景是：用户输入，只需在输入完成后做一次输入校验即可。
+```bash
+function debounce(fun,wait=5000,immediately=true){
+
+  let timer,context,args;
+
+  return function(...arumens){
+    context = this;
+    args = arumens;
+
+    if(immediately && !timer){
+      fn.apply(context,args)
+    }
+
+    if(timer) clearTimeout(timer);
+
+    timer = setTimerOut(()=>{
+      timer = null;
+      fun.apply(context,args);
+    },wait)
+
+  }
+
+}
+```
+- 节流 (throttle): 每隔一段时间后执行一次，也就是降低频率，将高频操作优化成低频操作，通常使用场景: 滚动条事件 或者 resize 事件，通常每隔 100~500 ms执行一次即可。 
+```bash
+function throttle(func,wait=5000,immediately=true){
+  let timer,context,args,first=immediately;
+
+  return function(...arguments){
+    context = this;
+    args = arguments;
+    if(first){
+      fn.apply(context,args);
+      first=false;
+    }
+    if(!timer){
+      timer = setTimeOut(()=>{
+        timer=null;
+        fn.apply(context,args)
+      },wait)
+    }
+  }
+}
+```
+
+### 回流和重绘
+
+**当元素的样式发生变化时，浏览器需要触发更新，重新绘制元素。这个过程中，有两种类型的操作，即重绘与回流。**
+
+- 重绘(repaint):当元素的样式改变而不影响布局时，浏览器将使用重绘对元素进行更新，只是UI变现层的更新，因此**损耗较少**
+- 回流(reflow):当元素的尺寸、结构或属性发生改变时，引发浏览器的重新渲染，称之为回流。浏览器需要重新计算，计算后还要重新布局，然后GPU绘制页面，因此对性能损耗较大，这也是性能优化重要的一点
+  * 容易引发回流的操作
+    + 页面初次渲染
+    + 浏览器窗口大小改变
+    + 元素尺寸、位置、内容发生改变
+    + 元素字体大小变化
+    + 添加或者删除可见的 dom 元素
+    + 激活 CSS 伪类（例如：:hover）
+    + 查询某些属性或调用某些方法
+
+**回流必定触发重绘，而重绘不一定触发回流，查询某些属性或调用某些方法**
+
+- 减少回流的css实践（优化性能）
+  * css
+    + 避免使用display:table布局
+    + 将动画应用到脱离文档流的元素上(如absolute，fixed)
+  * js
+    + 避免频繁操作样式，将多次汇总为一次
+    + 尽量用添加class进行修改
+    + 减少dom操作次数，可使用字符串一次插入进去
+    + 多次操作一个元素样式时，先display：none再操作
+
+### http/https
+
+- http协议:
+  * 1.0
+    + 无法复用 完成就断开 需要重新连接和Tcp三次握手
+    + head of line blocking 阻塞 导致请求之间影响
+  * 1.1
+    + 长连接keep-alive
+    + 断点续传
+    + cache 缓存
+      * cache-control 设置最大缓存时间 优先
+      * expires  过期时间判断
+      * Last-Modified 最后一次修改时间 
+      * E-tag 文件唯一标示 优先
+  * 2.0
+    + 多路复用
+    + 服务端推送(websocket)
+- https协议:
+  * 证书(公钥)
+  * ssl加密
+  * 443端口
+
+- 缓存策略：强缓存和协商缓存
+  * 强缓存：浏览器判断缓存是否过期，没过期直接使用强缓存
+    - cache-control：设置最大缓存过期时间(秒) 优先于expires
+    - expires：设置到期的时间(服务器时间) **客户端可能和服务器时间不同**
+  * 协商缓存：当缓存过期时，使用强缓存
+    - Last-Modified：最后一次修改时间 Last-Modified(response) & If-Modified-Since (request，上一次返回的Last-Modified)
+      + 如果一致，则直接返回 304 通知浏览器使用缓存
+      + 不一致 服务器返回新资源
+    - 唯一标识方案：Etag(response 携带) & If-None-Match(request携带，上一次返回的 Etag): 服务器判断资源是否被修改：
+      + 修改了则返回新的资源
+      + 如果相同则返回304浏览器使用缓存
+
+### http状态码
+
+- 1**：接受，继续处理
+- 200：成功，并返回数据
+- 201：已创建
+- 202：已接受
+- 203：成功，并返回数据
+- 204：成功，无内容
+- 205：成功，重置内容
+- 206：成功，部分内容
+- 301：重定向
+- 302：临时移动，可使用原url
+- 304：资源未修改，可使用缓存
+- 305：需要代理访问
+- 400：语法错误
+- 401：需要身份认证
+- 403：拒绝请求
+- 404：资源不存在
+- 500：服务器错误
+
+### get/post区别
+
+- get：可以被缓存/请求长度受限制(4k)/会被历史记录/不会修改资源
+- post：安全/数据传输大/更多编码类型
+
+### Node的EventLoop的6个阶段
+
+- timer阶段：执行到期的定时器setTimeout和setInterval的回掉
+- I/O阶段：执行上轮循环残留的callback
+- 
+
+### 跨域
+
+- JSONP：利用script标签不受限制的特点，但只支持get请求
+- 设置CORS：Access-Control-Allow-Origin：*
+- postMessage：window.postMessage
+
+### 安全
+
+- XSS攻击：前端注入
+  * cookie设置httpOnly
+  * 对页面上的输入和输出内容进行转义
+- CSRFF：跨站伪装请求
+  * get 不修改数据
+  * 不被第三方网站访问cookie
+  * 设置白名单，不被第三方请求
+  * 请求校验
+
+### 虚拟dom diff原理和实现
+
+- 真实dom初始化为虚拟dom树
+- 树的diff，同层对比 输出（diffList，diffchildren，diffprops）
+  * 没有新的节点，返回
+  * 有新的节点，tagname和key相同，对比属性，遍历子节点
+    + 对比属性(新旧属性列表)
+      * 相同则不返回
+      * 不同则替换为新节点
+  * tagname和key不同，直接替换该节点
+- 渲染差异：根据前后虚拟dom的差异节点渲染真实dom
+  * 遍历patchs， 把需要更改的节点取出来
+  * 局部更新dom
+
+- js模拟dom对象的实现
+```bash
+class Elemnet{
+  constructor(tags,props,children,key){
+    this.tags = tags;
+    this.props = props;
+    if(Array.isArray(children)){
+      this.children = children
+    }else if(isString(children)){
+      this.key = children;
+      this.children = null;
+    }
+    if(key) this.key = key;
+  }
+
+  render(){
+    var root = this._createHtml(
+      this.tags,
+      this.props,
+      this.children,
+      this.key
+    )
+    document.body.appendChild(root)
+  }
+
+  create(){
+    return this._createHtml(
+      this.tags,
+      this.props,
+      this.children,
+      this.key
+    )
+  }
+
+  _createHtml(tags,props,children,key){
+    let el = document.createElement(tags);
+    for(const key in props){
+      if (props.hasOwnProperty(key)) {
+        let value = props[key];
+        el.setAttribute(key,value)
+      }
+    }
+    if(key) el.key = key
+    if(children){
+      children.forEach(e=>{
+        let child;
+        if(e instanceOf Element){
+          e = this._createHtml(e)
+        }else{
+          child = document.createTextNode(e);
+        }
+        el.appendChild(child)
+      })
+    }
+    return el
+  }
+}
+```
+
+
+### diff算法实现
+
+``` bash 
+class diff{
+  constructor(){
+    
+  }
+}
+```

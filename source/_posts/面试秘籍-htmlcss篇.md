@@ -2,7 +2,7 @@
 title: 面试秘籍-htmlcss篇
 tags:
   - javascript
-categories: js常见问题
+categories: 面试
 date: 2019-02-18 14:53:53
 ---
 

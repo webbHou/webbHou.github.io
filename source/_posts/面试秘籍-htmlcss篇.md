@@ -108,3 +108,9 @@ CSS预处理器的原理: 是将类 CSS 语言通过 Webpack 编译 转成浏览
 2.把构造函数的this指向这个对象
 3.执行构造函数
 4.返回这个对象
+
+
+### flex-grow和flex-shrink有什么用
+
+* flex-grow：当元素设置该属性时，当父元素还有剩余空间时会按flex-grow的值比例分给该元素 子元素的flex-grow值总和小于1时 **分配空间是剩余空间*flex-grow值总和**
+* flex-shrink：当元素设置该属性时，当子元素的空间总和大于父元素时，会按flex-grow的值比例收缩，子元素的flex-grow值总和小于1时 **收缩空间是超出空间*flex-grow值总和**

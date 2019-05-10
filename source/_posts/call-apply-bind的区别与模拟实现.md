@@ -7,7 +7,7 @@ categories: js常见问题
 date: 2018-09-25 16:24:16
 ---
 
-**call、apply、bind方法的区别一般会是前端面试的必考题目之一。可是你以为会了这个就可以了？那说明你还是太年轻，前端的水还是很深的。只有你没学到的，没有问不到的。好了，废话不多说，下面分别说一下三者的区别的和模拟实现。**
+**call、apply、bind方法的区别一般会是前端面试的必考题目之一。可是你以为会了这个就可以了？那说明你还是太年轻，前端的水还是很深的。只有你没学到的，没有问不到的。好了，废话不多说，下面分别说一下三者的区别和模拟实现。**
 
 ### call和apply区别
 
@@ -24,7 +24,7 @@ Function.prototype.myCall = function(context){
     const context = context || window;
     context.fn = this; //给新对象添加函数为该方法，执行后删除
     const args = [...arguments].slice(1);
-    const result = context.fn(args);
+    const result = context.fn(...args);
     delete context.fn;
     return result;
 }
@@ -64,7 +64,7 @@ Function.prototype.myBind = function(context){
       if (this instanceof F) {
         return new _this(...args, ...arguments)
       }
-      return _this.apply(context,args.concat(arguments))
+      return _this.apply(context,args.concat(arguments))  //_this.call(context,...args,...arguments)
     }
 }
 ```

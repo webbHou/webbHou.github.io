@@ -10,7 +10,7 @@ date: 2019-02-19 11:53:44
 
 - 原型(prototype)：包含实例的构造函数和原型方法的对象，用于实现实例的属性继承。可以理解成对象的爹，每个JavaScript对象中都包含一个__proto__ (非标准)的属性指向它爹(该对象的原型)，可obj.__proto__进行访问。
 - 构造函数：可以通过new来 新建一个对象 的函数，每个函数都可以是构造函数。一般构造函数的首字母大写 构造函数的prototype也指向原型 构造函数的_proto_指向函数原型。
-- 实例：通过构造函数new出来的对象 实例的_proto_指向原型 实例的constructor执行构造函数 构造函数的prototype也指向原型
+- 实例：通过构造函数new出来的对象 实例的_proto_指向原型 实例的constructor指向构造函数 构造函数的prototype也指向原型 原型的constructor只想构造函数
 
 ### 原型链
 
@@ -45,6 +45,7 @@ const foo = 1
 ### 闭包
 
 闭包：当函数A被摧毁的情况下，返回出的子函数中依然保存着父级的变量和作用域，因此可以访问父函数的变量对象，这样的函数叫做闭包。
+应用：函数柯里化
 
 #### 经典问题
 ```bash
@@ -106,9 +107,6 @@ for(let i=0;i<6;i++){
 - 绑定this并执行构造函数
 - 返回该对象
 
-### instanceOf原理
-
-能在原型链中找到构造函数的原型则返回true
 
 ### 继承的方式
 ```bash
@@ -118,6 +116,10 @@ function Anmail(){
 ```
 
 - 父对象构造函数绑定：使用call或apply方法，将父对象的构造函数绑定在子对象上，即在子对象构造函数中加一行：
+
+缺点：
+  - 只能继承属性，不能继承原型方法
+  - 无法实现复用，每个子类都有父类实例函数的副本，影响性能
 ```bash
 function Cat(name,age){
   Anmail.call(this,arguments)
@@ -128,7 +130,10 @@ var cat1 = new Cat("大毛","黄色");
 alert(cat1.species); // 动物
 ```
 
-- 修改prototype指向：把子对象的prototype指向父对象的实例，则有了父对象的属性，但只能为静态
+- 修改prototype指向：把子对象的prototype指向父对象的实例，则有了父对象的属性，但只能为静态 
+
+缺点：**(实例对引用类型的修改会影响原数据)**
+
 ```bash
 function Cat(name,age){
   this.name = name;
@@ -183,9 +188,15 @@ function(parent,child){
 - [1].toString === '1'   先转为数值再转为字符串
 - var a = {} a.toString() === '[object object]'  
 
+
 ### 类型判断
 
-Object.prototype.toString().call()
+* Object.prototype.toString.call(obj): 原理：调用Object的原型的toString方法（返回对象的具体类型）
+
+* typeof：是对对象的二进制进行区分的  因为不同对象的在底层表示为二进制的不同  这也是为什么typeof null===‘object’的原因
+
+* instance：是在该对象的原型链上进行查找是否有与之匹配的原型对象
+
 
 ### 模块化
 
@@ -251,7 +262,7 @@ function throttle(func,wait=5000,immediately=true){
 
 ### 回流和重绘
 
-**当元素的样式发生变化时，浏览器需要触发更新，重新绘制元素。这个过程中，有两种类型的操作，即重绘与回流。**
+**当js操作dom时，会引发js引擎与渲染引擎的交互，多次的交互极大的损失性能，所以现代框架中虚拟dom来模拟，多次的操作合并为一次。当元素的样式发生变化时，浏览器需要触发更新，重新绘制元素。这个过程中，有两种类型的操作，即重绘与回流。**
 
 - 重绘(repaint):当元素的样式改变而不影响布局时，浏览器将使用重绘对元素进行更新，只是UI变现层的更新，因此**损耗较少**
 - 回流(reflow):当元素的尺寸、结构或属性发生改变时，引发浏览器的重新渲染，称之为回流。浏览器需要重新计算，计算后还要重新布局，然后GPU绘制页面，因此对性能损耗较大，这也是性能优化重要的一点
@@ -334,6 +345,14 @@ function throttle(func,wait=5000,immediately=true){
 
 - get：可以被缓存/请求长度受限制(4k)/会被历史记录/不会修改资源
 - post：安全/数据传输大/更多编码类型
+
+
+### cookie和seesion和localstorage的区别
+
+- 时效性： cookie一般有过期时间 localstorage不清楚永远存在 seesion窗口打开期间
+- 存储大小：coookie一般4K左右 localstorage session 5M左右
+- 服务器交互：cookie会在交互时在请求头携带 其他不会
+
 
 ### Node的EventLoop的6个阶段
 
@@ -437,7 +456,60 @@ class Elemnet{
 ``` bash 
 class diff{
   constructor(){
-    
+    let pathchs = {}; //收集差异
+    difers(newTrees,oldTrees,0,pathchs);
+    return pathchs;
   }
 }
+
+function difers(){
+
+}
 ```
+
+### vue3.0中proxy相比于defineProperty的优点
+
+- defineProperty只能对属性进行劫持，所以需要深度遍历整个对象。proxy直接对整个对象进行拦截
+- 不能监听到数组的变化  proxy原生支持监听数组
+
+
+### react-redux和mobx的区别
+
+- mobx 入门更简单  redux相对较难
+- mobx异步更加方便  redux需要中间件来支持
+- mobx是对数据的引用 可直接修改数据的状态  redux 是immutable的思想 每次返回新的对象 需要数据流的方式去修改状态
+- 正是因为这个 所以mobx更适合小项目 没有很多数据的管理 大型项目多人协作开发会容易引发冲突
+
+
+
+### for..in和for..of的区别
+
+* for..in：会对对象的key值进行遍历 如果是数组会遍历下标(多维数组不可遍历)  
+```bash
+当给数组添加属性时，也会被遍历
+let arr = [1,2,3];
+arr.name = 'w';
+for(let i in arr){
+  console.log(i)   //0,1,2,name
+}
+```
+
+* for..of：会对对象的值进行遍历 还可以通过下标拿到子属性的值 只会遍历集合本身元素 
+
+
+
+### 位运算
+
+* &位与运算
+
+1&2 => 0001&0010 => 0
+15&14 => 1111&1110 => 1110  取都等于1的公共位
+
+* <<位左移运算
+1<<2 => 0001左移两位 => 0100 => 4
+
+
+### 模块化和组件化
+
+* 模块化：是从逻辑上的划分，考虑代码的组织
+* 组件化：是从UI上的划分，考虑代码的复用

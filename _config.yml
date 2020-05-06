@@ -99,3 +99,11 @@ sitemap:
 
 #avatar 头像
   avatar: /images/avatar.jpg
+
+#commont  评论
+duoshuo:
+  enable: true
+  shortname: webb
+
+social:
+  GitHub: https://github.com/webbHou

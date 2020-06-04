@@ -52,7 +52,12 @@ date: 2020-04-10 17:58:41
     * Access-Control-Allow-Origin: 允许的请求源
     * Content-Type: 响应体文档类型和编码格式
     * Date: 时间
-    * ETag: 资源过期时间
+    * ETag: 文件唯一标识
+    * cache-control: 最大缓存过期时间（秒）
+    * expires：缓存过期时间（date格式）
+    * Last-Modified：最后一次文件修改时间
     * content-encoding： 压缩格式
     
 - 响应体
+
+

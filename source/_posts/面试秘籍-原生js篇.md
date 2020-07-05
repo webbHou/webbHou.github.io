@@ -365,6 +365,7 @@ function throttle(func,wait=5000,immediately=true){
 - JSONP：利用script标签不受限制的特点，但只支持get请求
 - 设置CORS：Access-Control-Allow-Origin：*
 - postMessage：window.postMessage
+- 设置domain：同一主域名下
 
 ### 安全
 

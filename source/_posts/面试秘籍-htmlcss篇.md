@@ -114,3 +114,30 @@ CSS预处理器的原理: 是将类 CSS 语言通过 Webpack 编译 转成浏览
 
 * flex-grow：当元素设置该属性时，当父元素还有剩余空间时会按flex-grow的值比例分给该元素 子元素的flex-grow值总和小于1时 **分配空间是剩余空间*flex-grow值总和**
 * flex-shrink：当元素设置该属性时，当子元素的空间总和大于父元素时，会按flex-grow的值比例收缩，子元素的flex-grow值总和小于1时 **收缩空间是超出空间*flex-grow值总和**
+
+
+### 三栏布局
+
+- float：
+  .left: float:left; width: 300px
+  .right: float:right; width: 300px
+  .center: margin: 0 300px
+
+- absolute:
+  .left: position: absolute; left:0; width: 300px
+  .right: position: absolute; right:0; width: 300px
+  .center: margin: 0 300px
+
+- flex:
+  .main: display:flex
+  .left: width: 300px
+  .right: width: 300px
+
+- table:
+  .main: display:table
+  .left: display:table-cell; width: 300px
+  .right: display:table-cell; width: 300px
+  .center: display:table-cell;
+
+- grid:
+  .main: display:grid; grid-template-rows: 100px; grid-template-columns: 300px auto 300px;

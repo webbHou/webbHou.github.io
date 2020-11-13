@@ -33,7 +33,7 @@ const foo = 1
 (function foo() {
     foo = 10  // 由于foo在函数中只为可读，因此赋值无效
     console.log(foo)
-}()) 
+}())
 
 // 结果打印：  ƒ foo() { foo = 10 ; console.log(foo) }
 ```
@@ -48,6 +48,7 @@ const foo = 1
 应用：函数柯里化、第三方库(避免全局污染)
 
 #### 经典问题
+
 ```bash
 for(var i=0;i<6;i++){
   setTimeOUt(()=>{
@@ -55,31 +56,35 @@ for(var i=0;i<6;i++){
   },i*1000)
 }
 ```
+
 #### 解决办法1 闭包
+
 ```bash
 for(var i=0;i<6;i++){
   (function(j) {
     setTimeOUt(()=>{
-      console.log(j) 
+      console.log(j)
     },j*1000)
   })(i)
 }
 ```
 
 #### 解决办法2 setTimeOUt第三个参数
+
 ```bash
 for(var i=0;i<6;i++){
   setTimeOUt(i=>{
-    console.log(i) 
+    console.log(i)
   },i*1000,i)
 }
 ```
 
 #### 解决办法2 let创建块级作用域
+
 ```bash
 for(let i=0;i<6;i++){
   setTimeOUt(()=>{
-    console.log(i) 
+    console.log(i)
   },i*1000)
 }
 ```
@@ -94,21 +99,24 @@ for(let i=0;i<6;i++){
 ### 拷贝
 
 #### 浅拷贝: 只会拷贝第一层，深层的修改依然会有影响
+
 - Object.assign({},obj);
 - ...展开符
 
 ### 深拷贝
+
 - JSON.parse(JSON.stringify(obj)): 性能最快 （值为函数或undefined时，无法拷贝）
 - 递归
 
 ### new运算符的执行过程
+
 - 新生成一个对象
 - 新对象的_proto_指向构造函数的prototype
 - 绑定this并执行构造函数
 - 返回该对象
 
-
 ### 继承的方式
+
 ```bash
 function Anmail(){
   this.specil = '动物‘
@@ -118,8 +126,10 @@ function Anmail(){
 - 父对象构造函数绑定：使用call或apply方法，将父对象的构造函数绑定在子对象上，即在子对象构造函数中加一行：
 
 缺点：
-  - 只能继承属性，不能继承原型方法
-  - 无法实现复用，每个子类都有父类实例函数的副本，影响性能
+
+- 只能继承属性，不能继承原型方法
+- 无法实现复用，每个子类都有父类实例函数的副本，影响性能
+
 ```bash
 function Cat(name,age){
   Anmail.call(this,arguments)
@@ -130,7 +140,7 @@ var cat1 = new Cat("大毛","黄色");
 alert(cat1.species); // 动物
 ```
 
-- 修改prototype指向：把子对象的prototype指向父对象的实例，则有了父对象的属性，但只能为静态 
+- 修改prototype指向：把子对象的prototype指向父对象的实例，则有了父对象的属性，但只能为静态
 
 缺点：**(实例对引用类型的修改会影响原数据)**
 
@@ -144,6 +154,7 @@ Cat.prototype.constructor = Cat; //最后把子对象构造函数指向本身
 ```
 
 - 直接继承prototype：把子对象的prototype指向父对象的prototype
+
 ```bash
 function Cat(name,age){
   this.name = name;
@@ -154,6 +165,7 @@ Cat.prototype.constructor = Cat; //会修改Anmail对象的构造函数指向
 ```
 
 - 利用空对象作为中介:对直接继承的修改
+
 ```bash
 var F = function(){};
 F.prototype= Anmail.prototype;
@@ -163,6 +175,7 @@ Cat.uber = Parent.prototype; //为了实现继承的完备性 指向父级的pro
 ```
 
 - 拷贝继承
+
 ```bash
 function(parent,child){
   var p = parent.prototype;
@@ -175,6 +188,7 @@ function(parent,child){
 ```
 
 - Es6 class 继承
+
 ```bash
   class Cat extends Anmail{
 
@@ -188,7 +202,6 @@ function(parent,child){
 - [1].toString === '1'   先转为数值再转为字符串
 - var a = {} a.toString() === '[object object]'  
 
-
 ### 类型判断
 
 * Object.prototype.toString.call(obj): 原理：调用Object的原型的toString方法（返回对象的具体类型）
@@ -196,7 +209,6 @@ function(parent,child){
 * typeof：是对对象的二进制进行区分的  因为不同对象的在底层表示为二进制的不同  这也是为什么typeof null===‘object’的原因
 
 * instance：是在该对象的原型链上进行查找是否有与之匹配的原型对象
-
 
 ### 模块化
 
@@ -214,6 +226,7 @@ function(parent,child){
 防抖和节流是对*高频触发操作*的优化方式，会极大的提升性能
 
 - 防抖 (debounce): 将多次高频操作优化为只在最后一次调用执行，通常使用的场景是：用户输入，只需在输入完成后做一次输入校验即可。
+
 ```bash
 function debounce(fun,wait=5000,immediately=true){
 
@@ -238,7 +251,9 @@ function debounce(fun,wait=5000,immediately=true){
 
 }
 ```
-- 节流 (throttle): 每隔一段时间后执行一次，也就是降低频率，将高频操作优化成低频操作，通常使用场景: 滚动条事件 或者 resize 事件，通常每隔 100~500 ms执行一次即可。 
+
+- 节流 (throttle): 每隔一段时间后执行一次，也就是降低频率，将高频操作优化成低频操作，通常使用场景: 滚动条事件 或者 resize 事件，通常每隔 100~500 ms执行一次即可。
+
 ```bash
 function throttle(func,wait=5000,immediately=true){
   let timer,context,args,first=immediately;
@@ -299,7 +314,7 @@ function throttle(func,wait=5000,immediately=true){
     + cache 缓存
       * cache-control 设置最大缓存时间 优先
       * expires  过期时间判断
-      * Last-Modified 最后一次修改时间 
+      * Last-Modified 最后一次修改时间
       * E-tag 文件唯一标示 优先
   * 2.0
     + 多路复用
@@ -346,19 +361,18 @@ function throttle(func,wait=5000,immediately=true){
 - get：可以被缓存/请求长度受限制(4k)/会被历史记录/不会修改资源
 - post：安全/数据传输大/更多编码类型
 
-
 ### cookie和seesion和localstorage的区别
 
 - 时效性： cookie一般有过期时间 localstorage不清楚永远存在 seesion窗口打开期间
 - 存储大小：coookie一般4K左右 localstorage session 5M左右
 - 服务器交互：cookie会在交互时在请求头携带 其他不会
 
-
 ### Node的EventLoop的6个阶段
 
 - timer阶段：执行到期的定时器setTimeout和setInterval的回掉
 - I/O阶段：执行上轮循环残留的callback
-- 
+
+-
 
 ### 跨域
 
@@ -417,6 +431,7 @@ function throttle(func,wait=5000,immediately=true){
   * 局部更新dom
 
 - js模拟dom对象的实现
+
 ```bash
 class Elemnet{
   constructor(tags,props,children,key){
@@ -475,10 +490,9 @@ class Elemnet{
 }
 ```
 
-
 ### diff算法实现
 
-``` bash 
+``` bash
 class diff{
   constructor(){
     let pathchs = {}; //收集差异
@@ -497,7 +511,6 @@ function difers(){
 - defineProperty只能对属性进行劫持，所以需要深度遍历整个对象。proxy直接对整个对象进行拦截
 - 不能监听到数组的变化  proxy原生支持监听数组
 
-
 ### react-redux和mobx的区别
 
 - mobx 入门更简单  redux相对较难
@@ -505,11 +518,10 @@ function difers(){
 - mobx是对数据的引用 可直接修改数据的状态  redux 是immutable的思想 每次返回新的对象 需要数据流的方式去修改状态
 - 正是因为这个 所以mobx更适合小项目 没有很多数据的管理 大型项目多人协作开发会容易引发冲突
 
-
-
 ### for..in和for..of的区别
 
 * for..in：会对对象的key值进行遍历 如果是数组会遍历下标(多维数组不可遍历)  
+
 ```bash
 当给数组添加属性时，也会被遍历
 let arr = [1,2,3];
@@ -519,9 +531,7 @@ for(let i in arr){
 }
 ```
 
-* for..of：会对对象的值进行遍历 还可以通过下标拿到子属性的值 只会遍历集合本身元素 
-
-
+* for..of：会对对象的值进行遍历 还可以通过下标拿到子属性的值 只会遍历集合本身元素
 
 ### 位运算
 
@@ -533,8 +543,31 @@ for(let i in arr){
 * <<位左移运算
 1<<2 => 0001左移两位 => 0100 => 4
 
-
 ### 模块化和组件化
 
 * 模块化：是从逻辑上的划分，考虑代码的组织
 * 组件化：是从UI上的划分，考虑代码的复用
+
+### 用户体验
+
+首先介绍一些用户体验的相关概念：
+
+* 主动交互：需要用户去点击去触发的一些操作产生的交互  比如点击
+* 被动交互：不需要用户去操作 就可以在视觉上与用户产生交互 比如 开屏广告 动画 loading
+* 刷新率：屏幕每秒钟刷新的频率，这是显示设备优劣的参考值之一 值越高屏幕的流畅性越高 用户体验越好
+* FPS：每秒钟往屏幕上传输的图像数量，玩游戏的朋友都应该知道这个东西，值低于60 会开始明显感觉到卡顿
+
+体验案例:苹果的通用页面 点击会延时进入下一个页面 而不会进去后显示一个loading  尽管那个loading很短 但很影响用户的体验性
+
+##### 如何优化长任务
+
+因为每一秒需要至少60帧的渲染频率，每一帧也就是16.7ms，所以为了用户体验，我们应避免长任务，尤其是超过运行超过10ms的任务，因为在每一帧还需要给浏览器渲染预留时间。
+
+但是如果是超过10ms的长任务应该怎么办呢，有两种方案，Web Worker和Time Slicing
+
+* Web Woker：就是重启一个线程来运行长任务，而避免主线程的阻塞，而导致浏览器卡死。但缺点是无法操作dom
+* Time Slicing：时间切片的概念，就是把长任务进行切割成多个执行时间很短的段任务，因为每个任务之间需要间隔，所以肯定比长任务时间长，但是基本可以做到用户无感知。
+
+##### react17
+
+重写调度器系统，把同步长任务变成异步短任务，把渲染分布到每一帧的空隙去执行

@@ -2,7 +2,8 @@
 title: immutable使用详解
 tags:
   - javascript
-categories: immutable
+  - immutable
+categories: 学习
 date: 2019-01-16 14:26:13
 ---
 
@@ -10,13 +11,11 @@ date: 2019-01-16 14:26:13
 
 immutable Data就是一旦创建就不可变的数据，每次的修改和添加删除操作都会返回新的immutable Data数据，Immutable 实现的原理是 Persistent Data Structure（持久化数据结构），immutable会共享相同的数据结构，当两个对象的hashCode相同，值就相同。当修改时只会对有影响的节点进行修改，其余的继续共享，避免了deepclone把所以节点都复制一遍带来的性能损耗，immutable解决了复杂类型引用赋值带来的数据隐患。
 
-
 ### immutable的优点
 
 - 降低了复杂可变数据带来的复杂度
 - 节省内存(共享相同的节点)
 - 函数式编程
-
 
 ### 常用的immutable数据结构
 
@@ -25,6 +24,7 @@ immutable Data就是一旦创建就不可变的数据，每次的修改和添加
 - Set：无序且不可重复的列表
 
 ### 常见用法
+
 - immutableA.immutableB(bb) A融合B
 - Immutable.Map({1:2}) 创建一个Map
 - Immutable.is(比较两个immutable对象的值 ===比较内存)
@@ -36,6 +36,7 @@ immutable Data就是一旦创建就不可变的数据，每次的修改和添加
 - Immutable.toArray 转化为数组
 
 ### List常用方法
+
 - Immutable.List.of([1,3]) 创建一个List
 - Immutable.List([1,2]) 生成不可变List 数据
 - immutableA.size/immutableA.count() 查看List 大小
@@ -50,6 +51,7 @@ immutable Data就是一旦创建就不可变的数据，每次的修改和添加
 - immutableData.forEach (a, b)=> 遍历
 
 ### Map常用方法
+
 - Immutable.Map.isMap(x) 判断是不是map
 - immutableData.get('a')/immutableData.getIn(['a','b']) 直接/嵌套更新获取
 - immutableA.set('a', 1)/immutableA.setIn( ['a', 'b'], 1) 直接/嵌套更新设置
@@ -59,12 +61,12 @@ immutable Data就是一旦创建就不可变的数据，每次的修改和添加
 - immutableData.filter (value, key) -> value is 1  属性过滤
 - immutableData.map(v=>v*V)
 
-
 ### Immutable与react搭配使用
 
 React性能优化的重要步骤就是避免重复渲染，使用的react生命周期函数shouldComponentUpdate进行新旧节点的比较，来判断是否需要更新，来减少一些不必要的渲染。
 
 利用immutable的is和===进行比较，简单且高效，极大的提高了性能。而不像deepclone对性能的极大损耗
+
 ```bash
 import { is } from 'immutable';
 
@@ -101,7 +103,6 @@ initData = {
 }
 this.setState({ data: this.state.data.update('times', v => v + 1) }); //更优 this.setState( ({data})=> ({ data: data.update('times', v => v + 1) }) );
 ```
-
 
 ### Immutable与redux的集成
 

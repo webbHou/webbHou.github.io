@@ -6,6 +6,62 @@ categories: 面试
 date: 2019-02-19 11:53:44
 ---
 
+#### 获取元素位置和大小的方法和区别
+
+- offset
+  * offsetTop：获取元素顶部距离定位父级的距离 元素外边框至定位父级上内边框的距离。外边距+父级上内边距
+  * offsetLeft：获取元素左边距离定位父级的距离 元素外边框至定位父级左内边框的距离。外边距+父级左内边距
+  * offsetWidth/offsetHeight：获取元素在页面上可见的空间大小，不包含隐藏滚动区域 实际宽度 + 左右内边距 + 左右边框
+
+- client
+  * clientLeft/clientTop：实际获取的就是元素的边框宽度
+  * clientWidth/clientHeight：获取元素内容和内边距占的大小 不包含隐藏滚动区域  内容区域+内边距-滚动条宽度
+
+- scroll
+  * scrollLeft和scrollTop：获取当前元素的滚动位置 隐藏在内容区域左侧和上方的像素
+  * scrollWidth和scrollHeight：获取包含滚动内容的元素的大小
+
+- getBoundClientRect：
+  * top/bottom：顶部/底部距离视口上边的距离  height = bottom - top
+  * left/bottom：左侧/右侧距离视口左边的距离  width = right - left
+
+- getComputedStyle：获取元素样式
+  * width/height: 实际宽高 不包含内外边距和边框
+
+##### 如何获取元素到文档顶部的距离
+
+1.offsetTop
+
+```javascript
+function getTop(ele){
+  let top = ele.offsetTop;
+  var parent = ele.offsetParent;
+  while(parent){
+    top += parent.offsetTop;
+    parent = parent.offsetParent;
+  }
+  return top;
+}
+```
+
+2.getBoundingClientRect().top + offsetParent.scrollTop
+
+```javascript
+function getTop(ele){
+  let top = ele.getBoundingClientRect().top;
+  var parent = ele.offsetParent;
+  while(parent){
+    top += parent.scrollTop;
+    parent = parent.offsetParent;
+  }
+  return top;
+}
+```
+
+##### 判断一个元素是不是包含另一个元素
+
+parentele.contains(ele)
+
 ### 原型/构造函数/实例
 
 - 原型(prototype)：包含实例的构造函数和原型方法的对象，用于实现实例的属性继承。可以理解成对象的爹，每个JavaScript对象中都包含一个__proto__ (非标准)的属性指向它爹(该对象的原型)，可obj.__proto__进行访问。
@@ -381,6 +437,12 @@ function throttle(func,wait=5000,immediately=true){
 - postMessage：window.postMessage
 - 设置domain：同一主域名下
 
+### script的src和img的src跨域的区别
+
+原理是相同的，都是利用标签的src属性可以跨域请求的特点，但是具体的实现不同。
+使用img标签不能访问服务器返回的响应内容，也就是说只能单向的发送get请求。
+而使用script标签实现的jsonp跨域可以将服务器响应文本以函数参数的形式返回，浏览器解析js代码时直接就执行了。
+
 ### 安全
 
 - XSS攻击：跨站脚本：利用浏览器的输入输出漏洞进行脚本攻击
@@ -571,3 +633,19 @@ for(let i in arr){
 ##### react17
 
 重写调度器系统，把同步长任务变成异步短任务，把渲染分布到每一帧的空隙去执行
+
+
+#### instandof
+
+```javascript
+function instanceNew(obj, constructor){
+  var a = obj.__proto__;
+  while(a){
+    if(a === constructor.prototype){
+      return true
+    }
+    a = a.__proto__;
+  }
+  return false;
+}
+```

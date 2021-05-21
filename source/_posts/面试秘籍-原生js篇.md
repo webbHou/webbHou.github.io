@@ -9,24 +9,24 @@ date: 2019-02-19 11:53:44
 #### 获取元素位置和大小的方法和区别
 
 - offset
-  * offsetTop：获取元素顶部距离定位父级的距离 元素外边框至定位父级上内边框的距离。外边距+父级上内边距
-  * offsetLeft：获取元素左边距离定位父级的距离 元素外边框至定位父级左内边框的距离。外边距+父级左内边距
-  * offsetWidth/offsetHeight：获取元素在页面上可见的空间大小，不包含隐藏滚动区域 实际宽度 + 左右内边距 + 左右边框
+  - offsetTop：获取元素顶部距离定位父级的距离 元素外边框至定位父级上内边框的距离。外边距+父级上内边距
+  - offsetLeft：获取元素左边距离定位父级的距离 元素外边框至定位父级左内边框的距离。外边距+父级左内边距
+  - offsetWidth/offsetHeight：获取元素在页面上可见的空间大小，不包含隐藏滚动区域 实际宽度 + 左右内边距 + 左右边框
 
 - client
-  * clientLeft/clientTop：实际获取的就是元素的边框宽度
-  * clientWidth/clientHeight：获取元素内容和内边距占的大小 不包含隐藏滚动区域  内容区域+内边距-滚动条宽度
+  - clientLeft/clientTop：实际获取的就是元素的边框宽度
+  - clientWidth/clientHeight：获取元素内容和内边距占的大小 不包含隐藏滚动区域  内容区域+内边距-滚动条宽度
 
 - scroll
-  * scrollLeft和scrollTop：获取当前元素的滚动位置 隐藏在内容区域左侧和上方的像素
-  * scrollWidth和scrollHeight：获取包含滚动内容的元素的大小
+  - scrollLeft和scrollTop：获取当前元素的滚动位置 隐藏在内容区域左侧和上方的像素
+  - scrollWidth和scrollHeight：获取包含滚动内容的元素的大小
 
 - getBoundClientRect：
-  * top/bottom：顶部/底部距离视口上边的距离  height = bottom - top
-  * left/bottom：左侧/右侧距离视口左边的距离  width = right - left
+  - top/bottom：顶部/底部距离视口上边的距离  height = bottom - top
+  - left/bottom：左侧/右侧距离视口左边的距离  width = right - left
 
 - getComputedStyle：获取元素样式
-  * width/height: 实际宽高 不包含内外边距和边框
+  - width/height: 实际宽高 不包含内外边距和边框
 
 ##### 如何获取元素到文档顶部的距离
 
@@ -125,11 +125,11 @@ for(var i=0;i<6;i++){
 }
 ```
 
-#### 解决办法2 setTimeOUt第三个参数
+#### 解决办法2 setTimeout第三个参数
 
-```bash
+```javascript
 for(var i=0;i<6;i++){
-  setTimeOUt(i=>{
+  setTimeout(i=>{
     console.log(i)
   },i*1000,i)
 }
@@ -137,9 +137,9 @@ for(var i=0;i<6;i++){
 
 #### 解决办法2 let创建块级作用域
 
-```bash
+```javascript
 for(let i=0;i<6;i++){
-  setTimeOUt(()=>{
+  setTimeout(()=>{
     console.log(i)
   },i*1000)
 }
@@ -186,7 +186,7 @@ function Anmail(){
 - 只能继承属性，不能继承原型方法
 - 无法实现复用，每个子类都有父类实例函数的副本，影响性能
 
-```bash
+```javascript
 function Cat(name,age){
   Anmail.call(this,arguments)
   this.name = name;
@@ -200,7 +200,7 @@ alert(cat1.species); // 动物
 
 缺点：**(实例对引用类型的修改会影响原数据)**
 
-```bash
+```javascript
 function Cat(name,age){
   this.name = name;
   this.age = age;
@@ -211,7 +211,7 @@ Cat.prototype.constructor = Cat; //最后把子对象构造函数指向本身
 
 - 直接继承prototype：把子对象的prototype指向父对象的prototype
 
-```bash
+```javascript
 function Cat(name,age){
   this.name = name;
   this.age = age;
@@ -222,7 +222,7 @@ Cat.prototype.constructor = Cat; //会修改Anmail对象的构造函数指向
 
 - 利用空对象作为中介:对直接继承的修改
 
-```bash
+```javascript
 var F = function(){};
 F.prototype= Anmail.prototype;
 Cat.prototype = new F();
@@ -232,7 +232,7 @@ Cat.uber = Parent.prototype; //为了实现继承的完备性 指向父级的pro
 
 - 拷贝继承
 
-```bash
+```javascript
 function(parent,child){
   var p = parent.prototype;
   var c = parent.prototype;
@@ -245,7 +245,7 @@ function(parent,child){
 
 - Es6 class 继承
 
-```bash
+```javascript
   class Cat extends Anmail{
 
   }
@@ -260,11 +260,11 @@ function(parent,child){
 
 ### 类型判断
 
-* Object.prototype.toString.call(obj): 原理：调用Object的原型的toString方法（返回对象的具体类型）
+- Object.prototype.toString.call(obj): 原理：调用Object的原型的toString方法（返回对象的具体类型）
 
-* typeof：是对对象的二进制进行区分的  因为不同对象的在底层表示为二进制的不同  这也是为什么typeof null===‘object’的原因
+- typeof：是对对象的二进制进行区分的  因为不同对象的在底层表示为二进制的不同  这也是为什么typeof null===‘object’的原因
 
-* instance：是在该对象的原型链上进行查找是否有与之匹配的原型对象
+- instance：是在该对象的原型链上进行查找是否有与之匹配的原型对象
 
 ### 模块化
 
@@ -283,7 +283,7 @@ function(parent,child){
 
 - 防抖 (debounce): 将多次高频操作优化为只在最后一次调用执行，通常使用的场景是：用户输入，只需在输入完成后做一次输入校验即可。
 
-```bash
+```javascript
 function debounce(fun,wait=5000,immediately=true){
 
   let timer,context,args;
@@ -310,7 +310,7 @@ function debounce(fun,wait=5000,immediately=true){
 
 - 节流 (throttle): 每隔一段时间后执行一次，也就是降低频率，将高频操作优化成低频操作，通常使用场景: 滚动条事件 或者 resize 事件，通常每隔 100~500 ms执行一次即可。
 
-```bash
+```javascript
 function throttle(func,wait=5000,immediately=true){
   let timer,context,args,first=immediately;
 
@@ -337,60 +337,60 @@ function throttle(func,wait=5000,immediately=true){
 
 - 重绘(repaint):当元素的样式改变而不影响布局时，浏览器将使用重绘对元素进行更新，只是UI变现层的更新，因此**损耗较少**
 - 回流(reflow):当元素的尺寸、结构或属性发生改变时，引发浏览器的重新渲染，称之为回流。浏览器需要重新计算，计算后还要重新布局，然后GPU绘制页面，因此对性能损耗较大，这也是性能优化重要的一点
-  * 容易引发回流的操作
-    + 页面初次渲染
-    + 浏览器窗口大小改变
-    + 元素尺寸、位置、内容发生改变
-    + 元素字体大小变化
-    + 添加或者删除可见的 dom 元素
-    + 激活 CSS 伪类（例如：:hover）
-    + 查询某些属性或调用某些方法
+  - 容易引发回流的操作
+    - 页面初次渲染
+    - 浏览器窗口大小改变
+    - 元素尺寸、位置、内容发生改变
+    - 元素字体大小变化
+    - 添加或者删除可见的 dom 元素
+    - 激活 CSS 伪类（例如：:hover）
+    - 查询某些属性或调用某些方法
 
 **回流必定触发重绘，而重绘不一定触发回流，查询某些属性或调用某些方法**
 
 - 减少回流的css实践（优化性能）
-  * css
-    + 避免使用display:table布局
-    + 将动画应用到脱离文档流的元素上(如absolute，fixed)
-  * js
-    + 避免频繁操作样式，将多次汇总为一次
-    + 尽量用添加class进行修改
-    + 减少dom操作次数，可使用字符串一次插入进去
-    + 多次操作一个元素样式时，先display：none再操作
+  - css
+    - 避免使用display:table布局
+    - 将动画应用到脱离文档流的元素上(如absolute，fixed)
+  - js
+    - 避免频繁操作样式，将多次汇总为一次
+    - 尽量用添加class进行修改
+    - 减少dom操作次数，可使用字符串一次插入进去
+    - 多次操作一个元素样式时，先display：none再操作
 
 ### http/https
 
 - http协议:
-  * 1.0
-    + 无法复用 完成就断开 需要重新连接和Tcp三次握手
-    + head of line blocking 阻塞 导致请求之间影响
-  * 1.1
-    + 长连接keep-alive
-    + 断点续传
-    + cache 缓存
-      * cache-control 设置最大缓存时间 优先
-      * expires  过期时间判断
-      * Last-Modified 最后一次修改时间
-      * E-tag 文件唯一标示 优先
-  * 2.0
-    + 多路复用
-    + 服务端推送(websocket)
+  - 1.0
+    - 无法复用 完成就断开 需要重新连接和Tcp三次握手
+    - head of line blocking 阻塞 导致请求之间影响
+  - 1.1
+    - 长连接keep-alive
+    - 断点续传
+    - cache 缓存
+      - cache-control 设置最大缓存时间 优先
+      - expires  过期时间判断
+      - Last-Modified 最后一次修改时间
+      - E-tag 文件唯一标示 优先
+  - 2.0
+    - 多路复用
+    - 服务端推送(websocket)
 - https协议:
-  * 证书(公钥)
-  * ssl加密
-  * 443端口
+  - 证书(公钥)
+  - ssl加密
+  - 443端口
 
 - 缓存策略：强缓存和协商缓存
-  * 强缓存：浏览器判断缓存是否过期，没过期直接使用强缓存
+  - 强缓存：浏览器判断缓存是否过期，没过期直接使用强缓存
     - cache-control：设置最大缓存过期时间(秒) 优先于expires
     - expires：设置到期的时间(服务器时间) **客户端可能和服务器时间不同**
-  * 协商缓存：当缓存过期时，使用强缓存
+  - 协商缓存：当缓存过期时，使用强缓存
     - Last-Modified：最后一次修改时间 Last-Modified(response) & If-Modified-Since (request，上一次返回的Last-Modified)
-      + 如果一致，则直接返回 304 通知浏览器使用缓存
-      + 不一致 服务器返回新资源
+      - 如果一致，则直接返回 304 通知浏览器使用缓存
+      - 不一致 服务器返回新资源
     - 唯一标识方案：Etag(response 携带) & If-None-Match(request携带，上一次返回的 Etag): 服务器判断资源是否被修改：
-      + 修改了则返回新的资源
-      + 如果相同则返回304浏览器使用缓存
+      - 修改了则返回新的资源
+      - 如果相同则返回304浏览器使用缓存
 
 ### http状态码
 
@@ -446,55 +446,55 @@ function throttle(func,wait=5000,immediately=true){
 ### 安全
 
 - XSS攻击：跨站脚本：利用浏览器的输入输出漏洞进行脚本攻击
-  * 危害
-    + 窃取cookie信息
-    + 监听用户行为
-    + 修改dom，伪造登录页面
-  * 类型
-    + 存储型：黑客输入脚本然后存入该站点数据库，用户访问时请求就包含了恶意脚本，执行就会被窃取用户信息
-    + 反射型：该类型不需要存储在数据库，恶意链接会携带js脚本，然后在页面中执行，触发恶意操作
-    + 基于DOM：通过手段修改dom，html传输中或使用中被劫持，然后修改dom
-  * 防范
-    + 重要数据httpOnly
-    + 对页面上的输入和输出内容进行转义或过滤
-    + 利用CSP（同源策略）：禁止加载或者执行其他域下的脚本
+  - 危害
+    - 窃取cookie信息
+    - 监听用户行为
+    - 修改dom，伪造登录页面
+  - 类型
+    - 存储型：黑客输入脚本然后存入该站点数据库，用户访问时请求就包含了恶意脚本，执行就会被窃取用户信息
+    - 反射型：该类型不需要存储在数据库，恶意链接会携带js脚本，然后在页面中执行，触发恶意操作
+    - 基于DOM：通过手段修改dom，html传输中或使用中被劫持，然后修改dom
+  - 防范
+    - 重要数据httpOnly
+    - 对页面上的输入和输出内容进行转义或过滤
+    - 利用CSP（同源策略）：禁止加载或者执行其他域下的脚本
 - CSRFF：跨站伪装请求：访问第三方站点时，利用用户的登录态调取接口
-  * 危害
-    + 窃取cookie信息
-    + 伪装请求来让操作用户数据或财产
-  * 类型
-    + 伪造get请求（img\src等标签自动发起请求）
-    + 伪造post请求（表单自动提交）
-    + 吸引用户点击第三方站点链接
-  * 防范
-    + get 不修改数据
-    + 禁止第三方网站发送cookie：设置cookit的sameSite（Strict|Lax|None）
-    + CSRF Token：第一次请求下发CSRF Token、接口请求携带并校验
-    * 设置白名单，不被第三方请求
-    + 请求来源校验（origin、refer：安全原因有时候没有）
+  - 危害
+    - 窃取cookie信息
+    - 伪装请求来让操作用户数据或财产
+  - 类型
+    - 伪造get请求（img\src等标签自动发起请求）
+    - 伪造post请求（表单自动提交）
+    - 吸引用户点击第三方站点链接
+  - 防范
+    - get 不修改数据
+    - 禁止第三方网站发送cookie：设置cookit的sameSite（Strict|Lax|None）
+    - CSRF Token：第一次请求下发CSRF Token、接口请求携带并校验
+    - 设置白名单，不被第三方请求
+    - 请求来源校验（origin、refer：安全原因有时候没有）
 
 ### 虚拟dom diff原理和实现
 
 - 真实dom初始化为虚拟dom树
 - 树的diff，深度遍历，添加索引(方便渲染差异)，同层对比 输出（diffList，diffchildren，diffprops）
-  * 没有新的节点，返回
-  * 有新的节点，tagname和key相同，对比属性，遍历子节点
-    + 对比属性(新旧属性列表)
-      * 是否有删除属性
-      * 是否属性值修改
-      * 是否有新加属性
-    + 对比列表(新旧列表)
-      * 是否有删除
-      * 是否有新增
-      * 是否移动
-  * tagname和key不同，直接替换该节点
+  - 没有新的节点，返回
+  - 有新的节点，tagname和key相同，对比属性，遍历子节点
+    - 对比属性(新旧属性列表)
+      - 是否有删除属性
+      - 是否属性值修改
+      - 是否有新加属性
+    - 对比列表(新旧列表)
+      - 是否有删除
+      - 是否有新增
+      - 是否移动
+  - tagname和key不同，直接替换该节点
 - 渲染差异：根据前后虚拟dom的差异节点渲染真实dom
-  * 遍历patchs， 把需要更改的节点取出来
-  * 局部更新dom
+  - 遍历patchs， 把需要更改的节点取出来
+  - 局部更新dom
 
 - js模拟dom对象的实现
 
-```bash
+```javascript
 class Elemnet{
   constructor(tags,props,children,key){
     this.tags = tags;
@@ -554,7 +554,7 @@ class Elemnet{
 
 ### diff算法实现
 
-``` bash
+``` javascript
 class diff{
   constructor(){
     let pathchs = {}; //收集差异
@@ -582,7 +582,7 @@ function difers(){
 
 ### for..in和for..of的区别
 
-* for..in：会对对象的key值进行遍历 如果是数组会遍历下标(多维数组不可遍历)  
+- for..in：会对对象的key值进行遍历 如果是数组会遍历下标(多维数组不可遍历)  
 
 ```bash
 当给数组添加属性时，也会被遍历
@@ -593,31 +593,31 @@ for(let i in arr){
 }
 ```
 
-* for..of：会对对象的值进行遍历 还可以通过下标拿到子属性的值 只会遍历集合本身元素
+- for..of：会对对象的值进行遍历 还可以通过下标拿到子属性的值 只会遍历集合本身元素
 
 ### 位运算
 
-* &位与运算
+- &位与运算
 
 1&2 => 0001&0010 => 0
 15&14 => 1111&1110 => 1110  取都等于1的公共位
 
-* <<位左移运算
+- <<位左移运算
 1<<2 => 0001左移两位 => 0100 => 4
 
 ### 模块化和组件化
 
-* 模块化：是从逻辑上的划分，考虑代码的组织
-* 组件化：是从UI上的划分，考虑代码的复用
+- 模块化：是从逻辑上的划分，考虑代码的组织
+- 组件化：是从UI上的划分，考虑代码的复用
 
 ### 用户体验
 
 首先介绍一些用户体验的相关概念：
 
-* 主动交互：需要用户去点击去触发的一些操作产生的交互  比如点击
-* 被动交互：不需要用户去操作 就可以在视觉上与用户产生交互 比如 开屏广告 动画 loading
-* 刷新率：屏幕每秒钟刷新的频率，这是显示设备优劣的参考值之一 值越高屏幕的流畅性越高 用户体验越好
-* FPS：每秒钟往屏幕上传输的图像数量，玩游戏的朋友都应该知道这个东西，值低于60 会开始明显感觉到卡顿
+- 主动交互：需要用户去点击去触发的一些操作产生的交互  比如点击
+- 被动交互：不需要用户去操作 就可以在视觉上与用户产生交互 比如 开屏广告 动画 loading
+- 刷新率：屏幕每秒钟刷新的频率，这是显示设备优劣的参考值之一 值越高屏幕的流畅性越高 用户体验越好
+- FPS：每秒钟往屏幕上传输的图像数量，玩游戏的朋友都应该知道这个东西，值低于60 会开始明显感觉到卡顿
 
 体验案例:苹果的通用页面 点击会延时进入下一个页面 而不会进去后显示一个loading  尽管那个loading很短 但很影响用户的体验性
 
@@ -627,13 +627,133 @@ for(let i in arr){
 
 但是如果是超过10ms的长任务应该怎么办呢，有两种方案，Web Worker和Time Slicing
 
-* Web Woker：就是重启一个线程来运行长任务，而避免主线程的阻塞，而导致浏览器卡死。但缺点是无法操作dom
-* Time Slicing：时间切片的概念，就是把长任务进行切割成多个执行时间很短的段任务，因为每个任务之间需要间隔，所以肯定比长任务时间长，但是基本可以做到用户无感知。
+- Web Woker：就是重启一个线程来运行长任务，而避免主线程的阻塞，而导致浏览器卡死。但缺点是无法操作dom
+- Time Slicing：时间切片的概念，就是把长任务进行切割成多个执行时间很短的段任务，因为每个任务之间需要间隔，所以肯定比长任务时间长，但是基本可以做到用户无感知，例如react的Fiber调度系统，一个长任务可以被多次中断执行。
+
+###### 去渲染数据量超大的一个列表页如何优化
+
+- 时间切片：把一次渲染40000条数据切割成多次去渲染
+
+```javascript
+class Index extends React.Component<any,any>{
+    state={
+       list: []
+    }
+    handerClick=()=>{
+       this.sliceTime(new Array(40000).fill(0), 0)
+    }
+    sliceTime=(list,times)=>{
+        if(times === 400) return 
+        setTimeout(() => {
+            const newList = list.slice( times*100 , (times + 1) * 100 ) /* 每次截取 100 个 */
+            this.setState({
+                list: this.state.list.concat(newList)
+            })
+            this.sliceTime( list ,times + 1 )
+        }, 0)
+    }
+    render(){
+        const { list } = this.state
+        return <div>
+            <button onClick={ this.handerClick } >点击</button>
+            {
+                list.map((item,index)=><li className="list"  key={index} >
+                    { item  + '' + index } Item
+                </li>)
+            }
+        </div>
+    }
+}
+```
+
+- 虚拟列表：lib:react-tiny-virtual-list
+
+```javascript
+//只渲染当前视口范围和缓存区内的数据，列表滚动时当前让渲染区域也进行滚动，根据滚动多少计算应该展示的渲染条目
+let num  = 0
+class Index extends React.Component<any, any>{
+    state = {
+        list: new Array(9999).fill(0).map(() =>{ 
+            num++
+            return num
+        }),
+        scorllBoxHeight: 500, /* 容器高度(初始化高度) */
+        renderList: [],       /* 渲染列表 */
+        itemHeight: 60,       /* 每一个列表高度 */
+        bufferCount: 8,       /* 缓冲个数 上下四个 */
+        renderCount: 0,       /* 渲染数量 */
+        start: 0,             /* 起始索引 */
+        end: 0                /* 终止索引 */
+    }
+    listBox: any = null
+    scrollBox : any = null
+    scrollContent:any = null
+    componentDidMount() {
+        const { itemHeight, bufferCount } = this.state
+        /* 计算容器高度 */
+        const scorllBoxHeight = this.listBox.offsetHeight
+        const renderCount = Math.ceil(scorllBoxHeight / itemHeight) + bufferCount
+        const end = renderCount + 1
+        this.setState({
+            scorllBoxHeight,
+            end,
+            renderCount,
+        })
+    }
+    /* 处理滚动效果 */
+    handerScroll=()=>{
+        const { scrollTop } :any =  this.scrollBox
+        const { itemHeight , renderCount } = this.state
+        const currentOffset = scrollTop - (scrollTop % itemHeight)
+        /* translate3d 开启css cpu 加速 */
+        this.scrollContent.style.transform = `translate3d(0, ${currentOffset}px, 0)`
+        const start = Math.floor(scrollTop / itemHeight)
+        const end = Math.floor(scrollTop / itemHeight + renderCount + 1)
+        this.setState({
+            start,
+            end,
+       })
+    }
+     /* 性能优化：只有在列表start 和 end 改变的时候在渲染列表 */
+    shouldComponentUpdate(_nextProps, _nextState){
+        const { start , end } = _nextState
+        return start !== this.state.start || end !==this.state.end 
+    }
+    /* 处理滚动效果 */
+    render() {
+        console.log(1111)
+        const { list, scorllBoxHeight, itemHeight ,start ,end } = this.state
+        const renderList = list.slice(start,end)
+        return <div className="list_box"
+            ref={(node) => this.listBox = node}
+        >   
+            <div  
+               style={{ height: scorllBoxHeight, overflow: 'scroll', position: 'relative' }}  
+               ref={ (node)=> this.scrollBox = node }
+               onScroll={ this.handerScroll }   
+            >
+                { /* 占位作用 */}
+                <div style={{ height: `${list.length * itemHeight}px`, position: 'absolute', left: 0, top: 0, right: 0 }} />
+                { /* 显然区 */ }
+                <div ref={(node) => this.scrollContent = node} style={{ position: 'relative', left: 0, top: 0, right: 0 }} >
+                    {
+                        renderList.map((item, index) => (
+                            <div className="list" key={index} >
+                                {item + '' } Item
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+        </div>
+    }
+}
+```
 
 ##### react17
 
 重写调度器系统，把同步长任务变成异步短任务，把渲染分布到每一帧的空隙去执行
-
 
 #### instandof
 
@@ -647,5 +767,31 @@ function instanceNew(obj, constructor){
     a = a.__proto__;
   }
   return false;
+}
+```
+
+
+#### 切片上传
+
+```javascript
+const handleChange = (e) => {
+  const file = e.target.files[0];
+  var start=0,end=0,chunks=[],chunkSize=2*1024*1024;
+  if(file.size > chunkSize) {
+      while (true) {
+          end+=chunkSize;
+          var blob = file.slice(start,end);
+          start+=chunkSize;
+          
+          if(!blob.size){//截取的数据为空 则结束
+              //拆分结束
+              break;
+          }
+          chunks.push(blob);//保存分段数据
+      }
+  }else {
+      chunks.push(file)
+  }
+  console.log(chunks);
 }
 ```

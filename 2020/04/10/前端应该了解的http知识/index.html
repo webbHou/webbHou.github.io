@@ -250,8 +250,86 @@
     
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
         <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js"></script>
-        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+        <script type="text/javascript">
+            const aplayer = new APlayer({
+                container: document.querySelector(".aplayer"),
+                fixed: true,
+                autoplay: false,
+                loop: "all",
+                order: "random",
+                preload: "auto",
+                volume: 0.67,
+                mutex: true,
+                lrcType: 3,
+                audio: [
+                    
+                        {
+                            name: "aLIEz",
+                            artist: "mizuki（瑞葵）",
+                            cover: "/music/cover/aLIEz.jpg",
+                            url: "/music/song/aLIEz.mp3",
+                            lrc: "/music/lrc/aLIEz.lrc"
+                        },
+                    
+                        {
+                            name: "Endless Tears",
+                            artist: "CLIFF EDGE",
+                            cover: "/music/cover/Endless Tears.jpg",
+                            url: "/music/song/Endless Tears.mp3",
+                            lrc: "/music/lrc/Endless Tears.lrc"
+                        },
+                    
+                        {
+                            name: "Miracle",
+                            artist: "Cascada",
+                            cover: "/music/cover/Miracle.jpg",
+                            url: "/music/song/Miracle.mp3",
+                            lrc: "/music/lrc/Miracle.lrc"
+                        },
+                    
+                        {
+                            name: "Roll The Dice",
+                            artist: "高珊",
+                            cover: "/music/cover/Roll The Dice.jpg",
+                            url: "/music/song/Roll The Dice.mp3",
+                            lrc: "/music/lrc/Roll The Dice.lrc"
+                        },
+                    
+                        {
+                            name: "See You Again",
+                            artist: "Charlie Puth, Wiz Khalifa",
+                            cover: "/music/cover/See You Again.jpg",
+                            url: "/music/song/See You Again.mp3",
+                            lrc: "/music/lrc/See You Again.lrc"
+                        },
+                    
+                        {
+                            name: "Traveling Light",
+                            artist: "Joel Hanson, Sara Groves",
+                            cover: "/music/cover/Traveling Light.jpg",
+                            url: "/music/song/Traveling Light.mp3",
+                            lrc: "/music/lrc/Traveling Light.lrc"
+                        },
+                    
+                        {
+                            name: "痴心绝对",
+                            artist: "李圣杰",
+                            cover: "/music/cover/痴心绝对.jpg",
+                            url: "/music/song/痴心绝对.mp3",
+                            lrc: "/music/lrc/痴心绝对.lrc"
+                        },
+                    
+                        {
+                            name: "好想大声说爱你",
+                            artist: "BAAD（バード）",
+                            cover: "/music/cover/好想大声说爱你.jpg",
+                            url: "/music/song/好想大声说爱你.mp3",
+                            lrc: "/music/lrc/好想大声说爱你.lrc"
+                        },
+                    
+                ]
+            });
+        </script>
     
     
     <div class="wrap-right"></div>
@@ -564,7 +642,7 @@
         },
 
         Music : {
-            type : 'Meting'
+            type : 'APlayer'
         },
         APlayer : {
             container : '.aplayer',

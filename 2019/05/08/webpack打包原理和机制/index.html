@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"webbhou.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在前端模块化和工程化的演变进程中，涌现出了大量模块化规范和工程化工具，这些规范和工具使我们在编码中更规范，提升了我们代码的复用率，使我们的开发效率和编码得到提高，大大解放了我们的生产力，不需要我们去手动引入模块。 模块化规范 CMD规范：module.export | require 同步 Sea.js：类似于CMD规范 AMD规范：define | require 异步模块规范  12345">
+<meta name="keywords" content="javascript,webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack打包原理和机制">
+<meta property="og:url" content="http://webbHou.github.io/2019/05/08/webpack打包原理和机制/index.html">
+<meta property="og:site_name" content="大圣博客">
+<meta property="og:description" content="在前端模块化和工程化的演变进程中，涌现出了大量模块化规范和工程化工具，这些规范和工具使我们在编码中更规范，提升了我们代码的复用率，使我们的开发效率和编码得到提高，大大解放了我们的生产力，不需要我们去手动引入模块。 模块化规范 CMD规范：module.export | require 同步 Sea.js：类似于CMD规范 AMD规范：define | require 异步模块规范  12345">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-05-23T01:35:51.017Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack打包原理和机制">
+<meta name="twitter:description" content="在前端模块化和工程化的演变进程中，涌现出了大量模块化规范和工程化工具，这些规范和工具使我们在编码中更规范，提升了我们代码的复用率，使我们的开发效率和编码得到提高，大大解放了我们的生产力，不需要我们去手动引入模块。 模块化规范 CMD规范：module.export | require 同步 Sea.js：类似于CMD规范 AMD规范：define | require 异步模块规范  12345">
+
+<link rel="canonical" href="http://webbHou.github.io/2019/05/08/webpack打包原理和机制/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>webpack打包原理和机制 | 大圣博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">大圣博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description"><img src="/logo.png" style="width:50px;height:60px;"></p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://webbHou.github.io/2019/05/08/webpack打包原理和机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="webbHou">
+      <meta itemprop="description" content="想做赛车手的Coder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大圣博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack打包原理和机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-05-08 19:48:20" itemprop="dateCreated datePublished" datetime="2019-05-08T19:48:20+08:00">2019-05-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-23 09:35:51" itemprop="dateModified" datetime="2021-05-23T09:35:51+08:00">2021-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js常见问题/" itemprop="url" rel="index"><span itemprop="name">js常见问题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>  在前端模块化和工程化的演变进程中，涌现出了大量模块化规范和工程化工具，这些规范和工具使我们在编码中更规范，提升了我们代码的复用率，使我们的开发效率和编码得到提高，大大解放了我们的生产力，不需要我们去手动引入模块。</p>
+<h4 id="模块化规范"><a href="#模块化规范" class="headerlink" title="模块化规范"></a>模块化规范</h4><ul>
+<li>CMD规范：module.export | require 同步</li>
+<li>Sea.js：类似于CMD规范</li>
+<li>AMD规范：define | require 异步模块规范</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一个参数是该模块依赖的其他模块  第二参数是一个函数 参数是依赖模块的默认导出成员 里边定义了这个模块实现的功能和方法</span></span><br><span class="line">define([<span class="string">'jquery'</span>,<span class="string">'./module.js'</span>],($,module2)=&gt;&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;  <span class="comment">// return 出的东西就是该模块的导出成员</span></span><br><span class="line">    start: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      $(<span class="string">'body'</span>).text(<span class="string">'111'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//第一个参数是该模块引入的其他模块 第一个参数可以对依赖模块进行使用</span></span><br><span class="line"><span class="built_in">require</span>([<span class="string">'./module1.js'</span>],<span class="function"><span class="keyword">function</span>(<span class="params">module1</span>)</span>&#123;</span><br><span class="line">  module1.start();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Es6模块化：export | import</li>
+</ul>
+<h4 id="工程化工具"><a href="#工程化工具" class="headerlink" title="工程化工具"></a>工程化工具</h4><ul>
+<li>Grunt：构建工具 同步 不够灵活</li>
+<li>npm | bower：包管理工具</li>
+<li>Gulp：自动化构建工具 异步 管道式处理 更快</li>
+<li><p>webpack：静态资源打包工具</p>
+<p><strong>在当前前端市场，由于webpack功能的强大和全面，已经在市场上占据了大量的用户，所以本文主要简析webpack</strong></p>
+</li>
+</ul>
+<h4 id="wbepack的几大核心板块"><a href="#wbepack的几大核心板块" class="headerlink" title="wbepack的几大核心板块"></a>wbepack的几大核心板块</h4><ul>
+<li>entry：打包的入口文件，对应用的模块依赖关系做了指示，作为应用构建的开始  默认为’./src/index.js’ 可自定义一个或多个入口</li>
+<li>output：打包的出口，即打包后的文件位置及文件名，path：打包后存放的文件夹路径，filename：打包后的文件名</li>
+<li>loader： 由于webpack只能识别js|json文件，所以需要loader对静态资源文件进行计算处理，根据不同类型文件，使用不同loader并打包成可用的模块，相当于处理器</li>
+<li>plugin：plugin相对于loader更加强大，打包优化(压缩，提取公共，预加载等)，资源的管理(html注入打包后module)，环境变量管理(开发和生产环境)</li>
+<li>mode：设置当前环境模式来做不同处理（development，production，none）</li>
+</ul>
+<h4 id="webpack打包原理"><a href="#webpack打包原理" class="headerlink" title="webpack打包原理"></a>webpack打包原理</h4><ul>
+<li>从打包入口进入，把所有依赖的模块按依赖顺序放入一个空数组中</li>
+<li>把该数组传入一个自执行函数中，该函数被html引入，当页面在浏览器中打开时被执行</li>
+<li>执行第一个模块即入口模块，然后根据入口模块所依赖模块的数组索引找到依赖模块引入</li>
+<li>所有模块被打包进数组时，接受一个module和require方法，module.export对外暴露自己，require用来按索引引入所需模块</li>
+<li>这样按照每个模块的依赖关系来构建起整个应用</li>
+</ul>
+<h5 id="loader原理和实现"><a href="#loader原理和实现" class="headerlink" title="loader原理和实现"></a>loader原理和实现</h5><p>Loader 机制是 Webpack 最核心的机制，因为正是有了 Loader 机制，Webpack 才能足以支撑整个前端项目模块化的大梁，实现通过 Webpack 去加载任何你想要加载的资源。<strong>每一个loader都是一个函数，接收的是需要处理的资源文件内容，输出的是处理完的结果。</strong></p>
+<p>  <strong>webpack的每一个资源处理完后都必须是js的代码格式，因为webpack只能按照JavaScript的语法解析模块。所以使用管道流的方式去处理文件最后生成js code。</strong></p>
+<p>  any source -&gt; loader1 -&gt; loader2 -&gt; javascript</p>
+<p>  其实管道的思想很多地方都在使用，gulp、redux中间件、express中间件、rxjs等。</p>
+<p>  而为什么我们需要把所有的资源引入到js中呢，webpack的设计思想是：<br>    1.方便维护，当一个模块不需要时我们只需要去取这个模块，而不需要再去html去删除相关的引入资源。<br>    2.webpack以js作为入口文件，去按依赖进行模块的引用，所有不会导致资源的遗漏和缺失。</p>
+<p>  下面来具体实现一个loader：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//markdown-loader.js</span></span><br><span class="line"><span class="keyword">const</span> marked = <span class="built_in">require</span>(<span class="string">'marked'</span>)</span><br><span class="line">moudule.export = <span class="function"><span class="params">source</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//具体的loader实现</span></span><br><span class="line">  <span class="keyword">const</span> html = marked(source)</span><br><span class="line">  <span class="comment">//将 html 字符串拼接为一段导出字符串的 JS 代码</span></span><br><span class="line">  <span class="keyword">const</span> code = <span class="string">`module.exports = <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(html)&#125;</span>`</span></span><br><span class="line">  <span class="keyword">return</span> code;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ./webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./src/main.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.md$/</span>,</span><br><span class="line">        <span class="comment">// 直接使用相对路径</span></span><br><span class="line">        use: <span class="string">'./markdown-loader'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="plugin原理和实现"><a href="#plugin原理和实现" class="headerlink" title="plugin原理和实现"></a>plugin原理和实现</h5><p><strong>Webpack 插件机制的目的是为了增强 Webpack 在项目自动化构建方面的能力。</strong></p>
+<p>我在这里先介绍几个插件最常见的应用场景：</p>
+<ul>
+<li><p>实现自动在打包之前清除 dist 目录（上次的打包结果）；</p>
+</li>
+<li><p>自动生成应用所需要的 HTML 文件；</p>
+</li>
+<li><p>根据不同环境为代码注入类似 API 地址这种可能变化的部分；</p>
+</li>
+<li><p>拷贝不需要参与打包的资源文件到输出目录；</p>
+</li>
+<li><p>压缩 Webpack 打包完成后输出的文件；</p>
+</li>
+<li><p>自动发布打包结果到服务器实现自动部署。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> CopyWebpackPlugin = <span class="built_in">require</span>(<span class="string">'copy-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./src/main.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> CleanWebpackPlugin(), <span class="comment">//清楚dist目录 避免缓存</span></span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">      title: <span class="string">'Webpack Plugin Sample'</span>, <span class="comment">//模板需要的title参数</span></span><br><span class="line">      template: <span class="string">'./src/index.html'</span> <span class="comment">//自定义模板 然后去进行生成</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> CopyWebpackPlugin(&#123;</span><br><span class="line">      patterns: [<span class="string">'public'</span>] <span class="comment">// 需要拷贝的目录或者路径通配符</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="plugin实现"><a href="#plugin实现" class="headerlink" title="plugin实现"></a>plugin实现</h5><p><strong>Webpack 要求我们的插件必须是一个函数或者是一个包含 apply 方法的类，这个方法接收compiler 对象参数，这个对象是 Webpack 工作过程中最核心的对象，包含所有配置信息。我们运用这个对象去把函数挂载到哪个钩子上。</strong></p>
+<p>webpack钩子：</p>
+<ul>
+<li>emit：Webpack 即将向输出目录输出文件时执行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./remove-comments-plugin.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RemoveCommentsPlugin</span> </span>&#123;</span><br><span class="line">  apply (compiler) &#123;</span><br><span class="line">    <span class="comment">//把这个插件挂载到emit钩子上</span></span><br><span class="line">    compiler.hooks.emit.tap(<span class="string">'RemoveCommentsPlugin'</span>, compilation =&gt; &#123;</span><br><span class="line">      <span class="comment">// compilation =&gt; 可以理解为此次打包的上下文</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> name <span class="keyword">in</span> compilation.assets) &#123;</span><br><span class="line">        <span class="keyword">if</span> (name.endsWith(<span class="string">'.js'</span>)) &#123;</span><br><span class="line">          <span class="keyword">const</span> contents = compilation.assets[name].source() <span class="comment">//文件内容</span></span><br><span class="line">          <span class="keyword">const</span> noComments = contents.replace(<span class="regexp">/\/\*&#123;2,&#125;\/\s?/g</span>, <span class="string">''</span>) <span class="comment">//去除注释文件</span></span><br><span class="line">          compilation.assets[name] = &#123;  <span class="comment">//webapck插件规定的格式</span></span><br><span class="line">            source: <span class="function"><span class="params">()</span> =&gt;</span> noComments,</span><br><span class="line">            size: <span class="function"><span class="params">()</span> =&gt;</span> noComments.length</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="核心原理和机制"><a href="#核心原理和机制" class="headerlink" title="核心原理和机制"></a>核心原理和机制</h3><ul>
+<li><p>模块化打包：从入口文件开始，根据依赖关系，把整个项目中用到的资源进行一个梳理，形成一个依赖关系树。然后遍历整个树，根据树的依赖关系，把整个项目中散落的js、css、img、font等各种资源文件进行加载，根据配置找到每个资源对应的loader去处理这个模块，把打包结果放入bundle.js中，然后就可以完成整个项目的打包。插件机制是Webpack 打包功能以外的能力，你可以通过钩子在打包的任意环节插入你想要处理的任务。</p>
+</li>
+<li><p>机制：</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/webpack/" rel="tag"># webpack</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/02/多参数函数的柯里化实现/" rel="prev" title="多参数函数的柯里化实现">
+      <i class="fa fa-chevron-left"></i> 多参数函数的柯里化实现
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/16/单页面应用路由原理与实现浅析/" rel="next" title="单页面应用路由原理与实现浅析">
+      单页面应用路由原理与实现浅析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#模块化规范"><span class="nav-number">1.</span> <span class="nav-text">模块化规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工程化工具"><span class="nav-number">2.</span> <span class="nav-text">工程化工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wbepack的几大核心板块"><span class="nav-number">3.</span> <span class="nav-text">wbepack的几大核心板块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack打包原理"><span class="nav-number">4.</span> <span class="nav-text">webpack打包原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#loader原理和实现"><span class="nav-number">4.1.</span> <span class="nav-text">loader原理和实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#plugin原理和实现"><span class="nav-number">4.2.</span> <span class="nav-text">plugin原理和实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#plugin实现"><span class="nav-number">4.3.</span> <span class="nav-text">plugin实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心原理和机制"><span class="nav-number"></span> <span class="nav-text">核心原理和机制</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">webbHou</p>
+  <div class="site-description" itemprop="description">想做赛车手的Coder</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">webbHou</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

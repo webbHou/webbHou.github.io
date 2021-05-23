@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"webbhou.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="作为前端工程师，我们日常打交道的就是浏览器了，可是你想过当你输入url回车到页面展示的这一个过程都发生了什么吗？ 浏览器渲染之前主要有如下几步 浏览器根据DNS域名服务器得到域名对应的公网ip 浏览器对这个ip发送http请求 服务器接受、处理http请求，并响应 浏览器收到服务器响应的内容并解析  DNS解析：DNS服务器对url进行一对一的ip映射解析一个域名解析的过程：www.baidu.c">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="输入url到展示的过程">
+<meta property="og:url" content="http://webbHou.github.io/2019/02/26/输入url到展示的过程/index.html">
+<meta property="og:site_name" content="大圣博客">
+<meta property="og:description" content="作为前端工程师，我们日常打交道的就是浏览器了，可是你想过当你输入url回车到页面展示的这一个过程都发生了什么吗？ 浏览器渲染之前主要有如下几步 浏览器根据DNS域名服务器得到域名对应的公网ip 浏览器对这个ip发送http请求 服务器接受、处理http请求，并响应 浏览器收到服务器响应的内容并解析  DNS解析：DNS服务器对url进行一对一的ip映射解析一个域名解析的过程：www.baidu.c">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-12-01T06:17:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="输入url到展示的过程">
+<meta name="twitter:description" content="作为前端工程师，我们日常打交道的就是浏览器了，可是你想过当你输入url回车到页面展示的这一个过程都发生了什么吗？ 浏览器渲染之前主要有如下几步 浏览器根据DNS域名服务器得到域名对应的公网ip 浏览器对这个ip发送http请求 服务器接受、处理http请求，并响应 浏览器收到服务器响应的内容并解析  DNS解析：DNS服务器对url进行一对一的ip映射解析一个域名解析的过程：www.baidu.c">
+
+<link rel="canonical" href="http://webbHou.github.io/2019/02/26/输入url到展示的过程/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>输入url到展示的过程 | 大圣博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">大圣博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description"><img src="/logo.png" style="width:50px;height:60px;"></p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://webbHou.github.io/2019/02/26/输入url到展示的过程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="webbHou">
+      <meta itemprop="description" content="想做赛车手的Coder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大圣博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          输入url到展示的过程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-26 10:04:21" itemprop="dateCreated datePublished" datetime="2019-02-26T10:04:21+08:00">2019-02-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-01 14:17:21" itemprop="dateModified" datetime="2020-12-01T14:17:21+08:00">2020-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js常见问题/" itemprop="url" rel="index"><span itemprop="name">js常见问题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>作为前端工程师，我们日常打交道的就是浏览器了，可是你想过当你输入url回车到页面展示的这一个过程都发生了什么吗？</p>
+<h3 id="浏览器渲染之前主要有如下几步"><a href="#浏览器渲染之前主要有如下几步" class="headerlink" title="浏览器渲染之前主要有如下几步"></a>浏览器渲染之前主要有如下几步</h3><ul>
+<li>浏览器根据DNS域名服务器得到域名对应的公网ip</li>
+<li>浏览器对这个ip发送http请求</li>
+<li>服务器接受、处理http请求，并响应</li>
+<li><p>浏览器收到服务器响应的内容并解析</p>
+</li>
+<li><p>DNS解析：DNS服务器对url进行一对一的ip映射解析<br>一个域名解析的过程：<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> -&gt; 网络服务商 -&gt; 递归服务器 -&gt; 根DNS服务器 -&gt; .com顶级DNS服务器 -&gt; baidu.com权威DNS服务器 -&gt; IP返回给用户<br>为了下次查找方便，所以递归服务器就会记录下来 就叫做DNS缓存，这一层也是黑客进行DNS攻击的薄弱地方。</p>
+</li>
+<li><p>DNS攻击：因为递归服务器会把解析记录存下来，所以我们只需要让他错一个错误的缓存记录就可以了。域名和DNS服务器采用问答的方式去请求和响应，当询问的端口号和回答的端口号相同时就会把该条记录存下来。最早该端口号是规律递增的，黑客只需要赶在DNS服务器响应前进行答复，所以dns缓存极易被污染。</p>
+</li>
+<li><p>TCP三次握手：解析完后，就是服务器和浏览器的交互，交互之前就需要创建连接，我们知道tcp协议是全双工传输，需要浏览器和服务端都可以传输数据，都需要确认对方可以接收到，所以需要三次握手</p>
+<ul>
+<li>ACK表示消息收到</li>
+<li>SYN表示请求创建连接</li>
+<li>FIN表示请求关闭连接</li>
+</ul>
+</li>
+<li>TCP四次挥手：而连接的关闭需要四次，需要双方都确认关闭</li>
+<li>发送请求，分析 url，设置请求报文(头，主体)</li>
+<li>服务器返回请求的文件 (html)</li>
+<li><p>浏览器进行渲染</p>
+<ul>
+<li>HTML parser –&gt; DOM Tree<ul>
+<li>标记化算法，进行元素状态的标记</li>
+<li>dom树构建</li>
+</ul>
+</li>
+<li>css parser  –&gt; Style Tree<ul>
+<li>解析 css 代码，生成样式树</li>
+</ul>
+</li>
+<li>集合 –&gt;  Render树<ul>
+<li>结合dom树和样式树，生成渲染树</li>
+</ul>
+</li>
+<li>layout 根据渲染树布局</li>
+<li>Gup 绘制：根据样式进行页面绘制</li>
+</ul>
+</li>
+<li><p>解析dom遇到js代码的过程：因为dom解析和js执行是两个引擎完成，为防止渲染发生不可预知的错误，js引擎和渲染引擎是互斥的，所以会阻断dom解析</p>
+<ul>
+<li>阻断dom解析</li>
+<li>下载并执行js</li>
+<li>继续dom解析</li>
+</ul>
+</li>
+<li><p>执行的js操作cssDom的情况：</p>
+</li>
+</ul>
+<ul>
+<li>阻断dom</li>
+<li>执行js(操作css)</li>
+<li>下载css并解析cssDom</li>
+<li>执行js</li>
+<li>继续dom解析</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/02/19/面试秘籍-原生js篇/" rel="prev" title="面试秘籍-原生js篇">
+      <i class="fa fa-chevron-left"></i> 面试秘籍-原生js篇
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/24/vue双向绑定虚拟dom实现/" rel="next" title="简易版vue双向绑定原理实现">
+      简易版vue双向绑定原理实现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器渲染之前主要有如下几步"><span class="nav-number">1.</span> <span class="nav-text">浏览器渲染之前主要有如下几步</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">webbHou</p>
+  <div class="site-description" itemprop="description">想做赛车手的Coder</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">webbHou</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

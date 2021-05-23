@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"webbhou.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="盒模型页面渲染时，dom 元素所采用的 布局模型。可通过box-sizing进行设置。根据计算宽高的区域可分为：  content-box(w3c标准模型)：元素实际宽=width border-box(怪异盒模型)：元素实际宽=width-padding-border margin-box  BFC块级格式化上下文，一个独立的块渲染区域，让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试秘籍-htmlcss篇">
+<meta property="og:url" content="http://webbHou.github.io/2019/02/18/面试秘籍-htmlcss篇/index.html">
+<meta property="og:site_name" content="大圣博客">
+<meta property="og:description" content="盒模型页面渲染时，dom 元素所采用的 布局模型。可通过box-sizing进行设置。根据计算宽高的区域可分为：  content-box(w3c标准模型)：元素实际宽=width border-box(怪异盒模型)：元素实际宽=width-padding-border margin-box  BFC块级格式化上下文，一个独立的块渲染区域，让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-12-01T06:17:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面试秘籍-htmlcss篇">
+<meta name="twitter:description" content="盒模型页面渲染时，dom 元素所采用的 布局模型。可通过box-sizing进行设置。根据计算宽高的区域可分为：  content-box(w3c标准模型)：元素实际宽=width border-box(怪异盒模型)：元素实际宽=width-padding-border margin-box  BFC块级格式化上下文，一个独立的块渲染区域，让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素">
+
+<link rel="canonical" href="http://webbHou.github.io/2019/02/18/面试秘籍-htmlcss篇/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>面试秘籍-htmlcss篇 | 大圣博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">大圣博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description"><img src="/logo.png" style="width:50px;height:60px;"></p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://webbHou.github.io/2019/02/18/面试秘籍-htmlcss篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="webbHou">
+      <meta itemprop="description" content="想做赛车手的Coder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大圣博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面试秘籍-htmlcss篇
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-18 14:53:53" itemprop="dateCreated datePublished" datetime="2019-02-18T14:53:53+08:00">2019-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-01 14:17:21" itemprop="dateModified" datetime="2020-12-01T14:17:21+08:00">2020-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="盒模型"><a href="#盒模型" class="headerlink" title="盒模型"></a>盒模型</h3><p>页面渲染时，dom 元素所采用的 布局模型。可通过box-sizing进行设置。根据计算宽高的区域可分为：</p>
+<ul>
+<li>content-box(w3c标准模型)：元素实际宽=width</li>
+<li>border-box(怪异盒模型)：元素实际宽=width-padding-border</li>
+<li>margin-box</li>
+</ul>
+<h3 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h3><p>块级格式化上下文，一个独立的块渲染区域，让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响。</p>
+<p>bfc的形成条件(满足其一)：</p>
+<ul>
+<li>根元素</li>
+<li>float不等于none</li>
+<li>position：absolute/fixed</li>
+<li>display：inline-block/table-cell</li>
+<li>overflow不等于visible</li>
+</ul>
+<p>bfc的约束条件：</p>
+<ul>
+<li>属于同一个 BFC 的两个相邻 Box 垂直排列</li>
+<li>属于同一个 BFC 的两个相邻 Box 的 margin 会发生重叠</li>
+<li>BFC 中子元素不会超出他的包含块</li>
+<li>BFC 的区域不会与 float 的元素区域重叠</li>
+<li>计算 BFC 的高度时，浮动子元素也参与计算</li>
+<li>文字层不会被浮动层覆盖，环绕于周围</li>
+</ul>
+<p>bfc应用：</p>
+<ul>
+<li>阻止margin重叠</li>
+<li>清除浮动(解决高度塌陷)</li>
+<li>阻止与浮动元素重叠</li>
+<li>自适应三栏布局</li>
+</ul>
+<p>###居中布局</p>
+<p>水平居中布局</p>
+<ul>
+<li>行内元素: text-align: center</li>
+<li>块级元素: margin: 0 auto</li>
+<li>absolute + transform</li>
+<li>flex + justify-content: center</li>
+</ul>
+<p>垂直居中布局</p>
+<ul>
+<li>line-height: height</li>
+<li>absolute + transform</li>
+<li>flex + align-items: center</li>
+<li>table</li>
+</ul>
+<p>水平垂直居中</p>
+<ul>
+<li>absolute + transform</li>
+<li>flex + justify-content: center + align-items: center</li>
+</ul>
+<p>###选择器优先级<br>!important &gt; 行内样式 &gt; #id &gt; .class &gt; tag &gt; * &gt; 继承 &gt; 默认</p>
+<p>###去浮动</p>
+<ul>
+<li>通过增加伪元素清除浮动</li>
+<li>创建父级BFC区域</li>
+<li>父级设置高度</li>
+</ul>
+<p>###link和import区别</p>
+<ul>
+<li>link可以用于加载rel、css等 import只能加载css</li>
+<li>link加载的css会在编译时同步加载并执行 impirt引入的会在页面加载完成后加载</li>
+<li>@import需要 IE5 以上才能使用</li>
+<li>link可以使用 js 动态引入，@import不行</li>
+</ul>
+<p>###CSS预处理器(Sass/Less/Postcss)</p>
+<p>CSS预处理器的原理: 是将类 CSS 语言通过 Webpack 编译 转成浏览器可读的真正 CSS。在这层编译之上，便可以赋予 CSS 更多更强大的功能，常用功能:</p>
+<ul>
+<li>嵌套</li>
+<li>变量</li>
+<li>循环语句</li>
+<li>条件语句</li>
+<li>自动前缀</li>
+<li>单位转换</li>
+<li>mixin复用</li>
+</ul>
+<p>###CSS动画</p>
+<p>####过渡动画translation</p>
+<ul>
+<li>transition-property: 属性</li>
+<li>transition-duration: 间隔</li>
+<li>transition-timing-function: 曲线</li>
+<li>transition-delay: 延迟</li>
+<li>常用钩子: transitionend(过渡完成事件)</li>
+</ul>
+<p>####animation / keyframes</p>
+<ul>
+<li>animation-name: 动画名称，对应@keyframes</li>
+<li>animation-duration: 间隔</li>
+<li>animation-timing-function: 曲线</li>
+<li>animation-delay: 延迟</li>
+<li>animation-iteration-count: 次数 （infinite: 无限循环动画）</li>
+<li>animation-direction: 方向 （alternate: 反向播放）</li>
+<li>animation-fill-mode: 静止模式 （forwards: 停止时，保留最后一帧 backwards: 停止时，回到第一帧 both: 同时运用 forwards / backwards）</li>
+<li>常用钩子: (animationend动画完成事件)</li>
+</ul>
+<p>###创建一个对象的步骤：<br>1.新建一个对象<br>2.把构造函数的this指向这个对象<br>3.执行构造函数<br>4.返回这个对象</p>
+<h3 id="flex-grow和flex-shrink有什么用"><a href="#flex-grow和flex-shrink有什么用" class="headerlink" title="flex-grow和flex-shrink有什么用"></a>flex-grow和flex-shrink有什么用</h3><ul>
+<li>flex-grow：当元素设置该属性时，当父元素还有剩余空间时会按flex-grow的值比例分给该元素 子元素的flex-grow值总和小于1时 <strong>分配空间是剩余空间*flex-grow值总和</strong></li>
+<li>flex-shrink：当元素设置该属性时，当子元素的空间总和大于父元素时，会按flex-grow的值比例收缩，子元素的flex-grow值总和小于1时 <strong>收缩空间是超出空间*flex-grow值总和</strong></li>
+</ul>
+<h3 id="三栏布局"><a href="#三栏布局" class="headerlink" title="三栏布局"></a>三栏布局</h3><ul>
+<li><p>float：<br>.left: float:left; width: 300px<br>.right: float:right; width: 300px<br>.center: margin: 0 300px</p>
+</li>
+<li><p>absolute:<br>.left: position: absolute; left:0; width: 300px<br>.right: position: absolute; right:0; width: 300px<br>.center: margin: 0 300px</p>
+</li>
+<li><p>flex:<br>.main: display:flex<br>.left: width: 300px<br>.right: width: 300px</p>
+</li>
+<li><p>table:<br>.main: display:table<br>.left: display:table-cell; width: 300px<br>.right: display:table-cell; width: 300px<br>.center: display:table-cell;</p>
+</li>
+<li><p>grid:<br>.main: display:grid; grid-template-rows: 100px; grid-template-columns: 300px auto 300px;</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/16/immutable使用详解/" rel="prev" title="immutable使用详解">
+      <i class="fa fa-chevron-left"></i> immutable使用详解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/02/19/面试秘籍-原生js篇/" rel="next" title="面试秘籍-原生js篇">
+      面试秘籍-原生js篇 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#盒模型"><span class="nav-number">1.</span> <span class="nav-text">盒模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BFC"><span class="nav-number">2.</span> <span class="nav-text">BFC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flex-grow和flex-shrink有什么用"><span class="nav-number">3.</span> <span class="nav-text">flex-grow和flex-shrink有什么用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三栏布局"><span class="nav-number">4.</span> <span class="nav-text">三栏布局</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">webbHou</p>
+  <div class="site-description" itemprop="description">想做赛车手的Coder</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">webbHou</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

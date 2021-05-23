@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"webbhou.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="移动端返回上一页问题实际工作中往往有这样的需求,需要返回上一页。 pc在pc上我们可以使用window.history.go(-1)或者window.history.back()都可以实现需求,而无需知道上一页的具体url。 1&amp;lt;a href=&quot;javascript:history.go(-1)&quot; class=&quot;header-back jsBack&quot;&amp;gt;返回&amp;lt;/a&amp;gt; 1&amp;lt">
+<meta name="keywords" content="javascript,移动端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端返回上一页">
+<meta property="og:url" content="http://webbHou.github.io/2017/08/31/移动端返回上一页/index.html">
+<meta property="og:site_name" content="大圣博客">
+<meta property="og:description" content="移动端返回上一页问题实际工作中往往有这样的需求,需要返回上一页。 pc在pc上我们可以使用window.history.go(-1)或者window.history.back()都可以实现需求,而无需知道上一页的具体url。 1&amp;lt;a href=&quot;javascript:history.go(-1)&quot; class=&quot;header-back jsBack&quot;&amp;gt;返回&amp;lt;/a&amp;gt; 1&amp;lt">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-12-01T06:17:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动端返回上一页">
+<meta name="twitter:description" content="移动端返回上一页问题实际工作中往往有这样的需求,需要返回上一页。 pc在pc上我们可以使用window.history.go(-1)或者window.history.back()都可以实现需求,而无需知道上一页的具体url。 1&amp;lt;a href=&quot;javascript:history.go(-1)&quot; class=&quot;header-back jsBack&quot;&amp;gt;返回&amp;lt;/a&amp;gt; 1&amp;lt">
+
+<link rel="canonical" href="http://webbHou.github.io/2017/08/31/移动端返回上一页/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>移动端返回上一页 | 大圣博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">大圣博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description"><img src="/logo.png" style="width:50px;height:60px;"></p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://webbHou.github.io/2017/08/31/移动端返回上一页/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="webbHou">
+      <meta itemprop="description" content="想做赛车手的Coder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大圣博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          移动端返回上一页
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-31 13:24:19" itemprop="dateCreated datePublished" datetime="2017-08-31T13:24:19+08:00">2017-08-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-01 14:17:21" itemprop="dateModified" datetime="2020-12-01T14:17:21+08:00">2020-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js常见问题/" itemprop="url" rel="index"><span itemprop="name">js常见问题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="移动端返回上一页问题"><a href="#移动端返回上一页问题" class="headerlink" title="移动端返回上一页问题"></a>移动端返回上一页问题</h2><p>实际工作中往往有这样的需求,需要返回上一页。</p>
+<h3 id="pc"><a href="#pc" class="headerlink" title="pc"></a>pc</h3><p>在pc上我们可以使用window.history.go(-1)或者window.history.back()都可以实现需求,而无需知道上一页的具体url。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">"javascript:history.go(-1)"</span> class=<span class="string">"header-back jsBack"</span>&gt;返回&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">"javascript:history.back()"</span> class=<span class="string">"header-back jsBack"</span>&gt;返回&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h3><p>但是在移动端，如果想要返回上一页。比如从A页面跳到B页面，如果B页面想返回A页面，为了防止不会跳错，必须要有一个 &lt;  按钮，给它加 history.go(-1) ，返回上一层。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">"javascript:history.go(-1)"</span> class=<span class="string">"header-back jsBack"</span>&gt;返回&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>但链接来源错综复杂，往往有些情况下根本没有上一页,这时候点击返回按钮根本没有用,用户体验性很差。很多时候会以为只是一个BUG。</p>
+<p>移动端无论是原生app还是传统的网页，返回上页是一个比较强烈的需求。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascript 有一个可以获取前一页面的URL地址的方法：document.referrer</span><br></pre></td></tr></table></figure>
+<p>允许客户端通过document.referrer访问http头部来获取当前网页的来源。</p>
+<p>根据document.referrer 的来源来判断是否有来源信息，如果来源信息为空，则返回首页：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (typeof document.referrer === <span class="string">''</span>) &#123;</span><br><span class="line">    // 没有来源页面信息的时候，改成首页URL地址</span><br><span class="line">    $(<span class="string">'.jsBack'</span>).attr(<span class="string">'href'</span>, <span class="string">'/'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以此来达到返回上一页的效果。</p>
+<h3 id="无法获取referrer"><a href="#无法获取referrer" class="headerlink" title="无法获取referrer"></a>无法获取referrer</h3><p>下面的场景无法获得 referrer 信息，以下前8条属于【张鑫旭】：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">直接在浏览器中输入地址</span><br><span class="line">使用location.reload()刷新（location.href或者location.replace()刷新有信息）</span><br><span class="line">在微信对话框中，点击进入微信自身浏览器</span><br><span class="line">扫码进入微信或QQ的浏览器</span><br><span class="line">直接新窗口打开一个页面</span><br><span class="line">从https的网站直接进入一个http协议的网站（Chrome下亲测）</span><br><span class="line">a标签设置rel=<span class="string">"noreferrer"</span>（兼容IE7+）</span><br><span class="line">meta标签来控制不让浏览器发送referer</span><br><span class="line">点击 flash 内部链接</span><br><span class="line">Chrome4.0以下，IE 5.5+以下返回空的字符串</span><br><span class="line">使用 修改 Location 进行页面导航的方法，会导致在IE下丢失 referrer，这可能是IE的一个BUG</span><br><span class="line">跨域</span><br><span class="line">&lt;meta content=<span class="string">"never"</span> name=<span class="string">"referrer"</span>&gt;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/移动端/" rel="tag"># 移动端</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2017/09/13/微信小程序页面跳转的方式/" rel="next" title="微信小程序页面跳转的方式">
+      微信小程序页面跳转的方式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#移动端返回上一页问题"><span class="nav-number">1.</span> <span class="nav-text">移动端返回上一页问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pc"><span class="nav-number">1.1.</span> <span class="nav-text">pc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动端"><span class="nav-number">1.2.</span> <span class="nav-text">移动端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无法获取referrer"><span class="nav-number">1.3.</span> <span class="nav-text">无法获取referrer</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">webbHou</p>
+  <div class="site-description" itemprop="description">想做赛车手的Coder</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">webbHou</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"webbhou.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近几年前端技术层出不穷，行业生态和技术创新形式一片大好，涌现出了一大批框架、ui库、构建工具等，前端变得越来越不可替代，在公司的地位也越来越重要，工作内容页越来越有趣和技术性。当然也有坏的一面，层出不穷的技术当然会让很大一批人迷茫和不知从何学起，但随之慢慢的沉淀，更好的技术慢慢的被大家所接受和运用，react、vue等mvvm现在已经成为了一个前端er必须了解的东西，以下将从原理上对mvvm框架">
+<meta name="keywords" content="javascript,mvvm,框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mvvm框架原理">
+<meta property="og:url" content="http://webbHou.github.io/2018/03/06/mvvm框架原理/index.html">
+<meta property="og:site_name" content="大圣博客">
+<meta property="og:description" content="最近几年前端技术层出不穷，行业生态和技术创新形式一片大好，涌现出了一大批框架、ui库、构建工具等，前端变得越来越不可替代，在公司的地位也越来越重要，工作内容页越来越有趣和技术性。当然也有坏的一面，层出不穷的技术当然会让很大一批人迷茫和不知从何学起，但随之慢慢的沉淀，更好的技术慢慢的被大家所接受和运用，react、vue等mvvm现在已经成为了一个前端er必须了解的东西，以下将从原理上对mvvm框架">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-12-01T06:17:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mvvm框架原理">
+<meta name="twitter:description" content="最近几年前端技术层出不穷，行业生态和技术创新形式一片大好，涌现出了一大批框架、ui库、构建工具等，前端变得越来越不可替代，在公司的地位也越来越重要，工作内容页越来越有趣和技术性。当然也有坏的一面，层出不穷的技术当然会让很大一批人迷茫和不知从何学起，但随之慢慢的沉淀，更好的技术慢慢的被大家所接受和运用，react、vue等mvvm现在已经成为了一个前端er必须了解的东西，以下将从原理上对mvvm框架">
+
+<link rel="canonical" href="http://webbHou.github.io/2018/03/06/mvvm框架原理/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>mvvm框架原理 | 大圣博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">大圣博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description"><img src="/logo.png" style="width:50px;height:60px;"></p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://webbHou.github.io/2018/03/06/mvvm框架原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="webbHou">
+      <meta itemprop="description" content="想做赛车手的Coder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大圣博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mvvm框架原理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-06 17:35:45" itemprop="dateCreated datePublished" datetime="2018-03-06T17:35:45+08:00">2018-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-01 14:17:21" itemprop="dateModified" datetime="2020-12-01T14:17:21+08:00">2020-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js常见问题/" itemprop="url" rel="index"><span itemprop="name">js常见问题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近几年前端技术层出不穷，行业生态和技术创新形式一片大好，涌现出了一大批框架、ui库、构建工具等，前端变得越来越不可替代，在公司的地位也越来越重要，工作内容页越来越有趣和技术性。当然也有坏的一面，层出不穷的技术当然会让很大一批人迷茫和不知从何学起，但随之慢慢的沉淀，更好的技术慢慢的被大家所接受和运用，react、vue等mvvm现在已经成为了一个前端er必须了解的东西，以下将从原理上对mvvm框架进行解析。</p>
+<h3 id="什么是mvvm"><a href="#什么是mvvm" class="headerlink" title="什么是mvvm"></a>什么是mvvm</h3><p>m即modle模型逻辑层，v即view视图层。mvvm体现了这个框架的运行原理，也就是模型驱动视图，视图的改变更改模型。也就是双向数据绑定的核心。</p>
+<h3 id="双向数据绑定的原理"><a href="#双向数据绑定的原理" class="headerlink" title="双向数据绑定的原理"></a>双向数据绑定的原理</h3><p>vue主要运用了原生得Object.defindproperty()方法进行data数据的getter和setter,然后追踪依赖,当数据发生改变时,发布通知给订阅者,然后通过computed进行计算后,生成新的虚拟dom，然后通过diff算法进行新老视图的对比，然后进行视图的更新。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">function</span> Vue(opts)&#123;</span><br><span class="line">        this.data =opts.data;</span><br><span class="line">        this.el =opts.el;</span><br><span class="line">        var data = this.data;</span><br><span class="line">        var me = this;</span><br><span class="line">        var el = document.querySelector(this.el);</span><br><span class="line">        observer(data,this);      </span><br><span class="line">        var dom =  nodeToFragment(el,this);</span><br><span class="line">        el.appendChild(dom);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> nodeToFragment(node,vm)&#123;</span><br><span class="line">        var frag = document.createDocumentFragment();</span><br><span class="line">        var child;</span><br><span class="line">        <span class="keyword">while</span>(child = node.firstChild)&#123;</span><br><span class="line">            complie(child,vm);</span><br><span class="line">            frag.append(child);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">return</span> frag;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> complie(node,vm)&#123;</span><br><span class="line">        var reg = /\&#123;\&#123;(.*)\&#125;\&#125;/;</span><br><span class="line">        <span class="keyword">if</span>(node.nodeType == 1)&#123;</span><br><span class="line">            var attrs = node.attributes;</span><br><span class="line">            <span class="keyword">for</span>(var i = 0,len = attrs.length;i &lt; len;i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(attrs[i].nodeName == <span class="string">'v-model'</span>)&#123;</span><br><span class="line">                    var name =attrs[i].nodeValue;</span><br><span class="line">                    node.addEventListener(<span class="string">'input'</span>,<span class="keyword">function</span>(e)&#123;</span><br><span class="line">                        vm[name] = e.target.value;</span><br><span class="line">                    &#125;)</span><br><span class="line">                    node.value = vm[name];</span><br><span class="line">                    node.removeAttribute(<span class="string">'v-model'</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            new watch(vm,node,name,<span class="string">'input'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(node.nodeType ==3)&#123;</span><br><span class="line">            <span class="keyword">if</span>(reg.test(node.nodeValue))&#123;</span><br><span class="line">                var name = RegExp.<span class="variable">$1</span>;</span><br><span class="line">                name = name.trim();</span><br><span class="line">                nodeType = <span class="string">'text'</span>;</span><br><span class="line">                new watch(vm,node,name,<span class="string">'text'</span>)</span><br><span class="line">            &#125;         </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> watch(vm,node,name,nodeType)&#123;</span><br><span class="line">        Dep.target = this;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.node = node;</span><br><span class="line">        this.vm = vm;</span><br><span class="line">        this.nodeType = nodeType;</span><br><span class="line">        this.update();</span><br><span class="line">        Dep.target = null;</span><br><span class="line">    &#125;</span><br><span class="line">    watch.prototype = &#123;</span><br><span class="line">        update:<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            this.get();</span><br><span class="line">            <span class="keyword">if</span>(this.nodeType == <span class="string">'text'</span>)&#123;</span><br><span class="line">                this.node.nodeValue = this.value;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(this.nodeType == <span class="string">'input'</span>)&#123;</span><br><span class="line">                this.node.value = this.value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        get:<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            this.value = this.vm[this.name];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //observer</span><br><span class="line">    <span class="keyword">function</span> observer(data,vm)&#123;</span><br><span class="line">        Object.keys(data).forEach(<span class="keyword">function</span>(key)&#123;</span><br><span class="line">            defineReactive(vm,key,data[key]);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> defineReactive(vm,key,val)&#123;</span><br><span class="line">        var dep = new Dep();</span><br><span class="line">        Object.defineProperty(vm,key,&#123;</span><br><span class="line">            get:<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">                <span class="keyword">if</span>(Dep.target)&#123;</span><br><span class="line">                    dep.addSub(Dep.target);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">return</span> val;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="built_in">set</span>:<span class="keyword">function</span>(newVal)&#123;</span><br><span class="line">                <span class="keyword">if</span>(newVal == val) <span class="built_in">return</span>;</span><br><span class="line">                val = newVal;</span><br><span class="line">                dep.notify();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="function"><span class="title">Dep</span></span>()&#123;</span><br><span class="line">        this.subs = [];</span><br><span class="line">    &#125;</span><br><span class="line">    Dep.prototype = &#123;</span><br><span class="line">        addSub:<span class="keyword">function</span>(sub)&#123;</span><br><span class="line">            this.subs.push(sub);</span><br><span class="line">        &#125;,</span><br><span class="line">        notify:<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            this.subs.forEach(<span class="keyword">function</span>(sub)&#123;</span><br><span class="line">                sub.update();</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el:<span class="string">'#app'</span>,</span><br><span class="line">        data:&#123;</span><br><span class="line">            <span class="string">'msg'</span>:<span class="string">'hello duanduan'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="diff算法"><a href="#diff算法" class="headerlink" title="diff算法"></a>diff算法</h3><p>diff 的实现主要通过两个方法，patchVnode 与 updateChildren 。<br>patchVnode 有两个参数，分别是老节点 oldVnode, 新节点 vnode 。主要分五种情况：</p>
+<p>if (oldVnode === vnode)，他们的引用一致，可以认为没有变化。<br>if(oldVnode.text !== null &amp;&amp; vnode.text !== null &amp;&amp; oldVnode.text !== vnode.text)，文本节点的比较，需要修改，则会调用Node.textContent = vnode.text。<br>if( oldCh &amp;&amp; ch &amp;&amp; oldCh !== ch ), 两个节点都有子节点，而且它们不一样，这样我们会调用 updateChildren 函数比较子节点，这是diff的核心，后边会讲到。<br>if (ch)，只有新的节点有子节点，调用createEle(vnode)，vnode.el已经引用了老的dom节点，createEle函数会在老dom节点上添加子节点。<br>if (oldCh)，新节点没有子节点，老节点有子节点，直接删除老节点。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/mvvm/" rel="tag"># mvvm</a>
+              <a href="/tags/框架/" rel="tag"># 框架</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/03/06/移动端适配1px问题解决方案/" rel="prev" title="移动端适配1px问题解决方案">
+      <i class="fa fa-chevron-left"></i> 移动端适配1px问题解决方案
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/08/24/多维数组降维的几种方式/" rel="next" title="多维数组降维的几种方式">
+      多维数组降维的几种方式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是mvvm"><span class="nav-number">1.</span> <span class="nav-text">什么是mvvm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向数据绑定的原理"><span class="nav-number">2.</span> <span class="nav-text">双向数据绑定的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#diff算法"><span class="nav-number">3.</span> <span class="nav-text">diff算法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">webbHou</p>
+  <div class="site-description" itemprop="description">想做赛车手的Coder</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">webbHou</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

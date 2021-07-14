@@ -135,3 +135,8 @@ $ docker container run --rm -p 8000:3000 -it koa-demo /bin/bash
 - -it参数：容器的 Shell 映射到当前的 Shell，然后你在本机窗口输入的命令，就会传入容器。
 - koa-demo:0.0.1：image 文件的名字（如果有标签，还需要提供标签，默认是 latest 标签）。
 - /bin/bash：容器启动以后，内部第一个执行的命令。这里是启动 Bash，保证用户可以使用 Shell。
+
+
+#### 其他docker命令
+
+docker login

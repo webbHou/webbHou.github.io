@@ -770,7 +770,6 @@ function instanceNew(obj, constructor){
 }
 ```
 
-
 #### 切片上传
 
 ```javascript
@@ -794,4 +793,23 @@ const handleChange = (e) => {
   }
   console.log(chunks);
 }
+```
+
+#### window.open
+
+**当通过window.open打开一个窗口时，打开的窗口可以通过window.opener拿到父窗口的信息。这种可以用于子窗口在作出一些操作时，对父窗口进行一些回调操作。**
+
+```javascript
+///父窗口
+window['callback'] = function() {
+  console.log(111)
+}
+window.open('子窗口');
+
+
+///子窗口
+const callback = window.opener['callback']; //拿到父窗口回调方法
+//do something
+callback()
+
 ```

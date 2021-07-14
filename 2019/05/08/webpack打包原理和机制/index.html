@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>webpack打包原理和机制</title>
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
+</head>
+<body>
+    <a id="cover"></a>
+    <div id="header">
+    <div class="header">
+        <div class="vertical">
+            <div class="inner">
+                <h1 class="header-subtitle">webpack打包原理和机制</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2019-05-08
+                        </span>
+                        
+                            <span id="/2019/05/08/webpack打包原理和机制/" class="leancloud_visitors" data-flag-title="webpack打包原理和机制">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
+                            
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2019/05/08/webpack打包原理和机制/"></span>
+                        </span>  
+                    </p>                 
+                </div>
+            </div>
+        </div>
+        <canvas id="articleHeaderCanvas"></canvas>
+    </div>
+</div>
+    <div id="container">
+    <div id="content">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <p>  在前端模块化和工程化的演变进程中，涌现出了大量模块化规范和工程化工具，这些规范和工具使我们在编码中更规范，提升了我们代码的复用率，使我们的开发效率和编码得到提高，大大解放了我们的生产力，不需要我们去手动引入模块。</p>
+<h4 id="模块化规范"><a href="#模块化规范" class="headerlink" title="模块化规范"></a>模块化规范</h4><ul>
+<li>CMD规范：module.export | require 同步</li>
+<li>Sea.js：类似于CMD规范</li>
+<li>AMD规范：define | require 异步模块规范</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一个参数是该模块依赖的其他模块  第二参数是一个函数 参数是依赖模块的默认导出成员 里边定义了这个模块实现的功能和方法</span></span><br><span class="line">define([<span class="string">'jquery'</span>,<span class="string">'./module.js'</span>],($,module2)=&gt;&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;  <span class="comment">// return 出的东西就是该模块的导出成员</span></span><br><span class="line">    start: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      $(<span class="string">'body'</span>).text(<span class="string">'111'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//第一个参数是该模块引入的其他模块 第一个参数可以对依赖模块进行使用</span></span><br><span class="line"><span class="built_in">require</span>([<span class="string">'./module1.js'</span>],<span class="function"><span class="keyword">function</span>(<span class="params">module1</span>)</span>&#123;</span><br><span class="line">  module1.start();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Es6模块化：export | import</li>
+</ul>
+<h4 id="工程化工具"><a href="#工程化工具" class="headerlink" title="工程化工具"></a>工程化工具</h4><ul>
+<li>Grunt：构建工具 同步 不够灵活</li>
+<li>npm | bower：包管理工具</li>
+<li>Gulp：自动化构建工具 异步 管道式处理 更快</li>
+<li><p>webpack：静态资源打包工具</p>
+<p><strong>在当前前端市场，由于webpack功能的强大和全面，已经在市场上占据了大量的用户，所以本文主要简析webpack</strong></p>
+</li>
+</ul>
+<h4 id="wbepack的几大核心板块"><a href="#wbepack的几大核心板块" class="headerlink" title="wbepack的几大核心板块"></a>wbepack的几大核心板块</h4><ul>
+<li>entry：打包的入口文件，对应用的模块依赖关系做了指示，作为应用构建的开始  默认为’./src/index.js’ 可自定义一个或多个入口</li>
+<li>output：打包的出口，即打包后的文件位置及文件名，path：打包后存放的文件夹路径，filename：打包后的文件名</li>
+<li>loader： 由于webpack只能识别js|json文件，所以需要loader对静态资源文件进行计算处理，根据不同类型文件，使用不同loader并打包成可用的模块，相当于处理器</li>
+<li>plugin：plugin相对于loader更加强大，打包优化(压缩，提取公共，预加载等)，资源的管理(html注入打包后module)，环境变量管理(开发和生产环境)</li>
+<li>mode：设置当前环境模式来做不同处理（development，production，none）</li>
+</ul>
+<h4 id="webpack打包原理"><a href="#webpack打包原理" class="headerlink" title="webpack打包原理"></a>webpack打包原理</h4><ul>
+<li>从打包入口进入，把所有依赖的模块按依赖顺序放入一个空数组中</li>
+<li>把该数组传入一个自执行函数中，该函数被html引入，当页面在浏览器中打开时被执行</li>
+<li>执行第一个模块即入口模块，然后根据入口模块所依赖模块的数组索引找到依赖模块引入</li>
+<li>所有模块被打包进数组时，接受一个module和require方法，module.export对外暴露自己，require用来按索引引入所需模块</li>
+<li>这样按照每个模块的依赖关系来构建起整个应用</li>
+</ul>
+<h5 id="loader原理和实现"><a href="#loader原理和实现" class="headerlink" title="loader原理和实现"></a>loader原理和实现</h5><p>Loader 机制是 Webpack 最核心的机制，因为正是有了 Loader 机制，Webpack 才能足以支撑整个前端项目模块化的大梁，实现通过 Webpack 去加载任何你想要加载的资源。<strong>每一个loader都是一个函数，接收的是需要处理的资源文件内容，输出的是处理完的结果。</strong></p>
+<p>  <strong>webpack的每一个资源处理完后都必须是js的代码格式，因为webpack只能按照JavaScript的语法解析模块。所以使用管道流的方式去处理文件最后生成js code。</strong></p>
+<p>  any source -&gt; loader1 -&gt; loader2 -&gt; javascript</p>
+<p>  其实管道的思想很多地方都在使用，gulp、redux中间件、express中间件、rxjs等。</p>
+<p>  而为什么我们需要把所有的资源引入到js中呢，webpack的设计思想是：<br>    1.方便维护，当一个模块不需要时我们只需要去取这个模块，而不需要再去html去删除相关的引入资源。<br>    2.webpack以js作为入口文件，去按依赖进行模块的引用，所有不会导致资源的遗漏和缺失。</p>
+<p>  下面来具体实现一个loader：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//markdown-loader.js</span></span><br><span class="line"><span class="keyword">const</span> marked = <span class="built_in">require</span>(<span class="string">'marked'</span>)</span><br><span class="line">moudule.export = <span class="function"><span class="params">source</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//具体的loader实现</span></span><br><span class="line">  <span class="keyword">const</span> html = marked(source)</span><br><span class="line">  <span class="comment">//将 html 字符串拼接为一段导出字符串的 JS 代码</span></span><br><span class="line">  <span class="keyword">const</span> code = <span class="string">`module.exports = <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(html)&#125;</span>`</span></span><br><span class="line">  <span class="keyword">return</span> code;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ./webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./src/main.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.md$/</span>,</span><br><span class="line">        <span class="comment">// 直接使用相对路径</span></span><br><span class="line">        use: <span class="string">'./markdown-loader'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="plugin原理和实现"><a href="#plugin原理和实现" class="headerlink" title="plugin原理和实现"></a>plugin原理和实现</h5><p><strong>Webpack 插件机制的目的是为了增强 Webpack 在项目自动化构建方面的能力。</strong></p>
+<p>我在这里先介绍几个插件最常见的应用场景：</p>
+<ul>
+<li><p>实现自动在打包之前清除 dist 目录（上次的打包结果）；</p>
+</li>
+<li><p>自动生成应用所需要的 HTML 文件；</p>
+</li>
+<li><p>根据不同环境为代码注入类似 API 地址这种可能变化的部分；</p>
+</li>
+<li><p>拷贝不需要参与打包的资源文件到输出目录；</p>
+</li>
+<li><p>压缩 Webpack 打包完成后输出的文件；</p>
+</li>
+<li><p>自动发布打包结果到服务器实现自动部署。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> CopyWebpackPlugin = <span class="built_in">require</span>(<span class="string">'copy-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./src/main.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> CleanWebpackPlugin(), <span class="comment">//清楚dist目录 避免缓存</span></span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">      title: <span class="string">'Webpack Plugin Sample'</span>, <span class="comment">//模板需要的title参数</span></span><br><span class="line">      template: <span class="string">'./src/index.html'</span> <span class="comment">//自定义模板 然后去进行生成</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> CopyWebpackPlugin(&#123;</span><br><span class="line">      patterns: [<span class="string">'public'</span>] <span class="comment">// 需要拷贝的目录或者路径通配符</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="plugin实现"><a href="#plugin实现" class="headerlink" title="plugin实现"></a>plugin实现</h5><p><strong>Webpack 要求我们的插件必须是一个函数或者是一个包含 apply 方法的类，这个方法接收compiler 对象参数，这个对象是 Webpack 工作过程中最核心的对象，包含所有配置信息。我们运用这个对象去把函数挂载到哪个钩子上。</strong></p>
+<p>webpack钩子：</p>
+<ul>
+<li>emit：Webpack 即将向输出目录输出文件时执行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./remove-comments-plugin.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RemoveCommentsPlugin</span> </span>&#123;</span><br><span class="line">  apply (compiler) &#123;</span><br><span class="line">    <span class="comment">//把这个插件挂载到emit钩子上</span></span><br><span class="line">    compiler.hooks.emit.tap(<span class="string">'RemoveCommentsPlugin'</span>, compilation =&gt; &#123;</span><br><span class="line">      <span class="comment">// compilation =&gt; 可以理解为此次打包的上下文</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> name <span class="keyword">in</span> compilation.assets) &#123;</span><br><span class="line">        <span class="keyword">if</span> (name.endsWith(<span class="string">'.js'</span>)) &#123;</span><br><span class="line">          <span class="keyword">const</span> contents = compilation.assets[name].source() <span class="comment">//文件内容</span></span><br><span class="line">          <span class="keyword">const</span> noComments = contents.replace(<span class="regexp">/\/\*&#123;2,&#125;\/\s?/g</span>, <span class="string">''</span>) <span class="comment">//去除注释文件</span></span><br><span class="line">          compilation.assets[name] = &#123;  <span class="comment">//webapck插件规定的格式</span></span><br><span class="line">            source: <span class="function"><span class="params">()</span> =&gt;</span> noComments,</span><br><span class="line">            size: <span class="function"><span class="params">()</span> =&gt;</span> noComments.length</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="核心原理和机制"><a href="#核心原理和机制" class="headerlink" title="核心原理和机制"></a>核心原理和机制</h3><ul>
+<li><p>模块化打包：从入口文件开始，根据依赖关系，把整个项目中用到的资源进行一个梳理，形成一个依赖关系树。然后遍历整个树，根据树的依赖关系，把整个项目中散落的js、css、img、font等各种资源文件进行加载，根据配置找到每个资源对应的loader去处理这个模块，把打包结果放入bundle.js中，然后就可以完成整个项目的打包。插件机制是Webpack 打包功能以外的能力，你可以通过钩子在打包的任意环节插入你想要处理的任务。</p>
+</li>
+<li><p>机制：</p>
+</li>
+</ul>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/logo.png" alt="webbHou">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：webbHou
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2019/05/08/webpack打包原理和机制/" target="_blank">webpack打包原理和机制</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：Think twice Code once
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/categories/js常见问题/">js常见问题</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tags/javascript/">javascript</a>
+                
+                    <a href="/tags/webpack/">webpack</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+                <a href="/2019/05/16/单页面应用路由原理与实现浅析/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/05/16/单页面应用路由原理与实现浅析/" title="发布于 2019-05-16 10:15">单页面应用路由原理与实现浅析</a>
+                <br>
+            
+            
+                <a href="/2019/04/02/多参数函数的柯里化实现/" class="next-prefix">» </a> 下一篇：    <a href="/2019/04/02/多参数函数的柯里化实现/" title="发布于 2019-04-02 05:55">多参数函数的柯里化实现</a>
+            
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar"></div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span></span></div>        
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul></ul> 
+            </div> 
+            <div class="menu-link"></div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+    <div class="aplayer"></div>
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
+        <script type="text/javascript">
+            const aplayer = new APlayer({
+                container: document.querySelector(".aplayer"),
+                fixed: true,
+                autoplay: false,
+                loop: "all",
+                order: "random",
+                preload: "auto",
+                volume: 0.67,
+                mutex: true,
+                lrcType: 3,
+                audio: [
+                    
+                        {
+                            name: "aLIEz",
+                            artist: "mizuki（瑞葵）",
+                            cover: "/music/cover/aLIEz.jpg",
+                            url: "/music/song/aLIEz.mp3",
+                            lrc: "/music/lrc/aLIEz.lrc"
+                        },
+                    
+                        {
+                            name: "Endless Tears",
+                            artist: "CLIFF EDGE",
+                            cover: "/music/cover/Endless Tears.jpg",
+                            url: "/music/song/Endless Tears.mp3",
+                            lrc: "/music/lrc/Endless Tears.lrc"
+                        },
+                    
+                        {
+                            name: "Miracle",
+                            artist: "Cascada",
+                            cover: "/music/cover/Miracle.jpg",
+                            url: "/music/song/Miracle.mp3",
+                            lrc: "/music/lrc/Miracle.lrc"
+                        },
+                    
+                        {
+                            name: "Roll The Dice",
+                            artist: "高珊",
+                            cover: "/music/cover/Roll The Dice.jpg",
+                            url: "/music/song/Roll The Dice.mp3",
+                            lrc: "/music/lrc/Roll The Dice.lrc"
+                        },
+                    
+                        {
+                            name: "See You Again",
+                            artist: "Charlie Puth, Wiz Khalifa",
+                            cover: "/music/cover/See You Again.jpg",
+                            url: "/music/song/See You Again.mp3",
+                            lrc: "/music/lrc/See You Again.lrc"
+                        },
+                    
+                ]
+            });
+        </script>
+    
+    
+    <div class="wrap-right"></div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : 'first19326',
+        GitHubRepositories : 'Hexo-LiveForCode',
+
+        BlogUser      : 'webbHou',
+        BlogAvatar    : '/logo.png',
+        BlogStartDate : '2020-01-01',
+
+        WebsiteTitleBlur         : '(◍´꒳`◍) Hi, Live For Code',
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : '/favicon.ico',
+
+        ProgressBar: {
+            id       : 'topProgressBar',
+            color    : '#77B6FF',
+            height   : '2px',
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound: {
+                tension  : 16,
+                friction : 5
+            },
+            spinner: {
+                id     : 'spinner',
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : '#F0F0F0',
+                    stroke     : '#272633',
+                    base       : '',
+                    child      : '#272633'
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : 'rgba(255, 255, 255, .2)',
+            clearOffset : 0.3
+        },
+
+        ArticleHeaderAnimationRendered : false,
+        ArticleHeaderAnimation         : {
+            triW                  : 14,
+            triH                  : 20,
+            neighbours            : [
+                
+                    'side',
+                
+                    'top',
+                
+                    'bottom',
+                
+            ],
+            speedTrailAppear      : 0.1,
+            speedTrailDisappear   : 0.1,
+            speedTriOpen          : 1,
+            trailMaxLength        : 30,
+            trailIntervalCreation : 100,
+            delayBeforeDisappear  : 2,
+            colors                : [
+                
+                    '#96EDA6',
+                
+                    '#5BC6A9',
+                
+                    '#38668C',
+                
+                    '#374D84',
+                
+                    '#BED5CB',
+                
+                    '#62ADC6',
+                
+                    '#8EE5DE',
+                
+                    '#304E7B',
+                
+            ]
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : '60%',
+            colorBrightness  : '50%',
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : 'random',
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpeg',
+            
+        ],
+        HomeBannerText  : '',
+
+        ArticleHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
+            
+        ],
+
+        OtherBannerText : '',
+
+        MenuList : [
+            
+                {
+                    name   : '首页',
+                    href   : '/',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '标签',
+                    href   : '/tag',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '分类',
+                    href   : '/category',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '归档',
+                    href   : '/archives',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '关于',
+                    href   : '/about',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '订阅',
+                    href   : '/atom.xml',    
+                    target : '_blank',
+                    class  : ''
+                },
+            
+                {
+                    name   : '搜索',
+                    href   : '',    
+                    target : '',
+                    class  : 'search'
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        icon : 'icon-weibo', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-wechat', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-qq', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-github', 
+                        url  : 'https://github.com/webbHou'
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : {
+            icon    : 'like-fill',
+            left    : '最美的不是下雨天',
+            right   : '是曾与你躲过雨的屋檐'
+        },
+        ThemeInfo   : true,
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                'Based on cnblogs theme SimpleMemory.',
+                            
+                                '',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'SimpleMemory Author:',
+                            
+                                'BNDong',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'Theme:',
+                            
+                                'LiveForCode',
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : '',
+
+        Donate : {
+            paypal  : '',
+            bitcoin : '',
+            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
+            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
+        },
+
+        Code : {
+            style : 'normal'
+        },  
+
+        Search : {
+            applicationID : '010C3EANT8',
+            apiKey        : 'c7abab9f11b79102b9aff7fe6d41447d',
+            indexName     : 'Notes',
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : '搜索',
+                empty       : '未发现与 「${query}」 相关的内容',
+                stats       : '${hits} 条相关条目，使用了 ${time} 毫秒',
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : '.comments-content',
+            appId          : 'srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz',
+            appKey         : '8uVSP1q6UlALVC5igYfIfv2h',
+            placeholder    : '你是我一生只会遇见一次的惊喜...',
+            avatar         : 'mm',
+            meta           : 'nick,mail,link',
+            requiredFields : 'nick,mail',
+            pageSize       : 5,
+            lang           : 'zh-cn',
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : '.toc',
+            contentSelector       : '.article-body',
+            headingSelector       : 'h1, h2, h3, h4, h5',
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : '.toc',
+            positionFixedClass    : 'toc-fixed',
+            fixedSidebarOffset    : '',
+        },
+
+        Require : {
+            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/',
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : 'APlayer'
+        },
+        APlayer : {
+            container : '.aplayer',
+            fixed     : true,
+            autoplay  : false,
+            loop      : 'all',
+            order     : 'random',
+            preload   : 'auto',
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : 'aLIEz',
+                        artist : 'mizuki（瑞葵）',
+                        cover  : '/music/cover/aLIEz.jpg',
+                        url    : '/music/song/aLIEz.mp3',
+                        lrc    : '/music/lrc/aLIEz.lrc'
+                    },
+                
+                    {
+                        name   : 'Endless Tears',
+                        artist : 'CLIFF EDGE',
+                        cover  : '/music/cover/Endless Tears.jpg',
+                        url    : '/music/song/Endless Tears.mp3',
+                        lrc    : '/music/lrc/Endless Tears.lrc'
+                    },
+                
+                    {
+                        name   : 'Miracle',
+                        artist : 'Cascada',
+                        cover  : '/music/cover/Miracle.jpg',
+                        url    : '/music/song/Miracle.mp3',
+                        lrc    : '/music/lrc/Miracle.lrc'
+                    },
+                
+                    {
+                        name   : 'Roll The Dice',
+                        artist : '高珊',
+                        cover  : '/music/cover/Roll The Dice.jpg',
+                        url    : '/music/song/Roll The Dice.mp3',
+                        lrc    : '/music/lrc/Roll The Dice.lrc'
+                    },
+                
+                    {
+                        name   : 'See You Again',
+                        artist : 'Charlie Puth, Wiz Khalifa',
+                        cover  : '/music/cover/See You Again.jpg',
+                        url    : '/music/song/See You Again.mp3',
+                        lrc    : '/music/lrc/See You Again.lrc'
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : '3778678', 
+            lrcshow  : false, 
+            server   : 'netease', 
+            type     : 'playlist', 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : 'all', 
+            order    : 'random', 
+            preload  : 'auto', 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        LazyLoad : {
+            default : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
+        },
+  
+        Style : {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
+            archive          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
+            donate           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
+            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
+            footer           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
+            iconfont         : 'https://at.alicdn.com/t/font_1546312_l3yohatebw.css',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
+            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
+            page             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
+            post             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
+            search           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
+            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
+            normal           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
+            night            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
+            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
+        },
+
+        Script: {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
+            config           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
+            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
+            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
+            loading          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
+            meting           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
+            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
+            require          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
+        },
+
+        Font: {
+            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
+            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
+            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
+            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
+            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
+            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
+            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
+            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
+        },
+
+        Suffix : {
+            about : 'Think twice Code once'
+        },
+            
+        Theme : {
+            url  : 'https://github.com/first19326/Hexo-LiveForCode',
+            name : 'Hexo - Live For Code'
+        }  
+    };
+</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
+</body>
+</html>

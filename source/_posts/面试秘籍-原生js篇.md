@@ -443,6 +443,12 @@ function throttle(func,wait=5000,immediately=true){
 使用img标签不能访问服务器返回的响应内容，也就是说只能单向的发送get请求。
 而使用script标签实现的jsonp跨域可以将服务器响应文本以函数参数的形式返回，浏览器解析js代码时直接就执行了。
 
+### 跨域站点请求cookie问题
+
+当发送一个跨域请求时不会主动携带cookie，请求头需要设置withCredentials:true，同时服务端设置Access-Control-Allow-Credentials:true
+
+XMLHttpRequest.withCredentials 属性是一个Boolean类型，它指示了是否该使用类似cookies,authorization headers(头部授权)或者TLS客户端证书这一类资格证书来创建一个跨站点访问控制（cross-site Access-Control）请求。该请求依然享受同源策略，因此不能被通过document.cookie或者从头部相应请求的脚本等访问。在同一个站点下使用withCredentials属性是无效的。
+
 ### 安全
 
 - XSS攻击：跨站脚本：利用浏览器的输入输出漏洞进行脚本攻击

@@ -96,11 +96,15 @@
 </ul>
 <p>2.采集方式</p>
 <ul>
-<li>全局捕获：<ul>
-<li>全局监听：window.addEventListener(‘error’) / window.addEventListener(“unhandledrejection”) / document.addEventListener(‘click’)</li>
-<li>框架级别：全局interceptor进行拦截</li>
+<li><p>全局捕获：</p>
+<ul>
+<li>全局监听：window.addEventListener(‘error’) / window.addEventListener(“unhandledrejection”) / document.addEventListener(‘click’) 全局错误上报</li>
+<li>框架级别：全局interceptor进行拦截上报</li>
 <li>全局封装：调用时自动捕获异常</li>
-<li>重新错误方法：对onerror重写，使用方法不变也可以捕获，更易使用</li>
+<li>重写错误监听方法：对onerror重写，使用方法不变也可以捕获，更易使用    js运行错误时触发上报</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">window.onerror = <span class="keyword">function</span>(message, <span class="built_in">source</span>, lineno, colno, error) &#123; ... &#125;</span><br><span class="line">函数参数：</span><br><span class="line">- message：错误信息（字符串）。可用于HTML onerror=<span class="string">""</span>处理程序中的event。</span><br><span class="line">- <span class="built_in">source</span>：发生错误的脚本URL（字符串）</span><br><span class="line">- lineno：发生错误的行号（数字）打包压缩后的代码根据sourceMap获取</span><br><span class="line">- colno：发生错误的列号（数字）</span><br><span class="line">- error：Error对象</span><br><span class="line">若该函数返回<span class="literal">true</span>，则阻止执行默认事件处理函数，如异常信息不会在console中打印。没有返回值或者返回值为<span class="literal">false</span>的时候，异常信息会在console中打印</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 <li><p>单点捕获：全局捕获的补充，在业务中对单个代码块进行包裹，或者在逻辑中进行打点，实现有针对性的捕获。</p>
@@ -111,8 +115,6 @@
 </ul>
 </li>
 <li><p>异常录制<br>往往有时候有异常信息我们也不足以发现错误的本质，所以我们希望对异常现场进行还原。通过录制，从时间和空间来记录异常发生前到发生的整个过程，方便我们更好的找到问题的根源。就是通过技术手段，对用户行为进行记录，先存储在用户本地进行分析过滤，一段时间内将用户产生的event和action进行上报。当异常发生后，我们从数据库拿到数据，进行行为的模拟，还原异常情景。</p>
-</li>
-</ul>
 </li>
 <li><p>日志存储：</p>
 <ul>
@@ -126,7 +128,7 @@
 </li>
 <li><p>修复异常</p>
 <ul>
-<li>sourceMap方式发现问题的源码位置</li>
+<li>sourceMap方式发现问题的源码位置，防止源码外漏，可以把souceMap文件发布在内网 使用nginx进行控制</li>
 <li>智能修复：严格的数据模型，当数据返回时，进行模型校验</li>
 <li>预警信息：根据异常的规律，当下次该类型异常发生前进行预警，及时修复</li>
 </ul>
@@ -184,6 +186,9 @@
             </div>
         
         <div class="article-prev-next">
+            
+                <a href="/2021/07/14/前端微服务的现在及未来的一些思考/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/07/14/前端微服务的现在及未来的一些思考/" title="发布于 2021-07-14 10:46">前端微服务的现在及未来的一些思考</a>
+                <br>
             
             
                 <a href="/2020/12/10/微前端的应用和实践/" class="next-prefix">» </a> 下一篇：    <a href="/2020/12/10/微前端的应用和实践/" title="发布于 2020-12-10 02:34">微前端的应用和实践</a>
@@ -269,38 +274,6 @@
                 mutex: true,
                 lrcType: 3,
                 audio: [
-                    
-                        {
-                            name: "aLIEz",
-                            artist: "mizuki（瑞葵）",
-                            cover: "/music/cover/aLIEz.jpg",
-                            url: "/music/song/aLIEz.mp3",
-                            lrc: "/music/lrc/aLIEz.lrc"
-                        },
-                    
-                        {
-                            name: "Endless Tears",
-                            artist: "CLIFF EDGE",
-                            cover: "/music/cover/Endless Tears.jpg",
-                            url: "/music/song/Endless Tears.mp3",
-                            lrc: "/music/lrc/Endless Tears.lrc"
-                        },
-                    
-                        {
-                            name: "Miracle",
-                            artist: "Cascada",
-                            cover: "/music/cover/Miracle.jpg",
-                            url: "/music/song/Miracle.mp3",
-                            lrc: "/music/lrc/Miracle.lrc"
-                        },
-                    
-                        {
-                            name: "Roll The Dice",
-                            artist: "高珊",
-                            cover: "/music/cover/Roll The Dice.jpg",
-                            url: "/music/song/Roll The Dice.mp3",
-                            lrc: "/music/lrc/Roll The Dice.lrc"
-                        },
                     
                         {
                             name: "See You Again",
@@ -638,38 +611,6 @@
             mutex     : true,
             lrcType   : 3,
             audio     : [
-                
-                    {
-                        name   : 'aLIEz',
-                        artist : 'mizuki（瑞葵）',
-                        cover  : '/music/cover/aLIEz.jpg',
-                        url    : '/music/song/aLIEz.mp3',
-                        lrc    : '/music/lrc/aLIEz.lrc'
-                    },
-                
-                    {
-                        name   : 'Endless Tears',
-                        artist : 'CLIFF EDGE',
-                        cover  : '/music/cover/Endless Tears.jpg',
-                        url    : '/music/song/Endless Tears.mp3',
-                        lrc    : '/music/lrc/Endless Tears.lrc'
-                    },
-                
-                    {
-                        name   : 'Miracle',
-                        artist : 'Cascada',
-                        cover  : '/music/cover/Miracle.jpg',
-                        url    : '/music/song/Miracle.mp3',
-                        lrc    : '/music/lrc/Miracle.lrc'
-                    },
-                
-                    {
-                        name   : 'Roll The Dice',
-                        artist : '高珊',
-                        cover  : '/music/cover/Roll The Dice.jpg',
-                        url    : '/music/song/Roll The Dice.mp3',
-                        lrc    : '/music/lrc/Roll The Dice.lrc'
-                    },
                 
                     {
                         name   : 'See You Again',

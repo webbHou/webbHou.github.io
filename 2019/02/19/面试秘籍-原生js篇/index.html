@@ -330,6 +330,8 @@
 <li>设置domain：同一主域名下</li>
 </ul>
 <h3 id="script的src和img的src跨域的区别"><a href="#script的src和img的src跨域的区别" class="headerlink" title="script的src和img的src跨域的区别"></a>script的src和img的src跨域的区别</h3><p>原理是相同的，都是利用标签的src属性可以跨域请求的特点，但是具体的实现不同。<br>使用img标签不能访问服务器返回的响应内容，也就是说只能单向的发送get请求。<br>而使用script标签实现的jsonp跨域可以将服务器响应文本以函数参数的形式返回，浏览器解析js代码时直接就执行了。</p>
+<h3 id="跨域站点请求cookie问题"><a href="#跨域站点请求cookie问题" class="headerlink" title="跨域站点请求cookie问题"></a>跨域站点请求cookie问题</h3><p>当发送一个跨域请求时不会主动携带cookie，请求头需要设置withCredentials:true，同时服务端设置Access-Control-Allow-Credentials:true</p>
+<p>XMLHttpRequest.withCredentials 属性是一个Boolean类型，它指示了是否该使用类似cookies,authorization headers(头部授权)或者TLS客户端证书这一类资格证书来创建一个跨站点访问控制（cross-site Access-Control）请求。该请求依然享受同源策略，因此不能被通过document.cookie或者从头部相应请求的脚本等访问。在同一个站点下使用withCredentials属性是无效的。</p>
 <h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><ul>
 <li>XSS攻击：跨站脚本：利用浏览器的输入输出漏洞进行脚本攻击<ul>
 <li>危害<ul>
@@ -461,6 +463,9 @@
 <h5 id="react17"><a href="#react17" class="headerlink" title="react17"></a>react17</h5><p>重写调度器系统，把同步长任务变成异步短任务，把渲染分布到每一帧的空隙去执行</p>
 <h4 id="instandof"><a href="#instandof" class="headerlink" title="instandof"></a>instandof</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">instanceNew</span>(<span class="params">obj, constructor</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = obj.__proto__;</span><br><span class="line">  <span class="keyword">while</span>(a)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a === <span class="keyword">constructor</span>.prototype)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    a = a.__proto__;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="切片上传"><a href="#切片上传" class="headerlink" title="切片上传"></a>切片上传</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> handleChange = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> file = e.target.files[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">var</span> start=<span class="number">0</span>,end=<span class="number">0</span>,chunks=[],chunkSize=<span class="number">2</span>*<span class="number">1024</span>*<span class="number">1024</span>;</span><br><span class="line">  <span class="keyword">if</span>(file.size &gt; chunkSize) &#123;</span><br><span class="line">      <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">          end+=chunkSize;</span><br><span class="line">          <span class="keyword">var</span> blob = file.slice(start,end);</span><br><span class="line">          start+=chunkSize;</span><br><span class="line">          </span><br><span class="line">          <span class="keyword">if</span>(!blob.size)&#123;<span class="comment">//截取的数据为空 则结束</span></span><br><span class="line">              <span class="comment">//拆分结束</span></span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          chunks.push(blob);<span class="comment">//保存分段数据</span></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      chunks.push(file)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(chunks);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="window-open"><a href="#window-open" class="headerlink" title="window.open"></a>window.open</h4><p><strong>当通过window.open打开一个窗口时，打开的窗口可以通过window.opener拿到父窗口的信息。这种可以用于子窗口在作出一些操作时，对父窗口进行一些回调操作。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">///父窗口</span></span><br><span class="line"><span class="built_in">window</span>[<span class="string">'callback'</span>] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">111</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.open(<span class="string">'子窗口'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">///子窗口</span></span><br><span class="line"><span class="keyword">const</span> callback = <span class="built_in">window</span>.opener[<span class="string">'callback'</span>]; <span class="comment">//拿到父窗口回调方法</span></span><br><span class="line"><span class="comment">//do something</span></span><br><span class="line">callback()</span><br></pre></td></tr></table></figure>
+
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
             <div class="suffix-box-left">
@@ -587,38 +592,6 @@
                 mutex: true,
                 lrcType: 3,
                 audio: [
-                    
-                        {
-                            name: "aLIEz",
-                            artist: "mizuki（瑞葵）",
-                            cover: "/music/cover/aLIEz.jpg",
-                            url: "/music/song/aLIEz.mp3",
-                            lrc: "/music/lrc/aLIEz.lrc"
-                        },
-                    
-                        {
-                            name: "Endless Tears",
-                            artist: "CLIFF EDGE",
-                            cover: "/music/cover/Endless Tears.jpg",
-                            url: "/music/song/Endless Tears.mp3",
-                            lrc: "/music/lrc/Endless Tears.lrc"
-                        },
-                    
-                        {
-                            name: "Miracle",
-                            artist: "Cascada",
-                            cover: "/music/cover/Miracle.jpg",
-                            url: "/music/song/Miracle.mp3",
-                            lrc: "/music/lrc/Miracle.lrc"
-                        },
-                    
-                        {
-                            name: "Roll The Dice",
-                            artist: "高珊",
-                            cover: "/music/cover/Roll The Dice.jpg",
-                            url: "/music/song/Roll The Dice.mp3",
-                            lrc: "/music/lrc/Roll The Dice.lrc"
-                        },
                     
                         {
                             name: "See You Again",
@@ -956,38 +929,6 @@
             mutex     : true,
             lrcType   : 3,
             audio     : [
-                
-                    {
-                        name   : 'aLIEz',
-                        artist : 'mizuki（瑞葵）',
-                        cover  : '/music/cover/aLIEz.jpg',
-                        url    : '/music/song/aLIEz.mp3',
-                        lrc    : '/music/lrc/aLIEz.lrc'
-                    },
-                
-                    {
-                        name   : 'Endless Tears',
-                        artist : 'CLIFF EDGE',
-                        cover  : '/music/cover/Endless Tears.jpg',
-                        url    : '/music/song/Endless Tears.mp3',
-                        lrc    : '/music/lrc/Endless Tears.lrc'
-                    },
-                
-                    {
-                        name   : 'Miracle',
-                        artist : 'Cascada',
-                        cover  : '/music/cover/Miracle.jpg',
-                        url    : '/music/song/Miracle.mp3',
-                        lrc    : '/music/lrc/Miracle.lrc'
-                    },
-                
-                    {
-                        name   : 'Roll The Dice',
-                        artist : '高珊',
-                        cover  : '/music/cover/Roll The Dice.jpg',
-                        url    : '/music/song/Roll The Dice.mp3',
-                        lrc    : '/music/lrc/Roll The Dice.lrc'
-                    },
                 
                     {
                         name   : 'See You Again',

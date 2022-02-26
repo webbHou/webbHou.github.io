@@ -138,6 +138,7 @@
 <ul>
 <li>str.replace(reg,str|fn) 查找替换 返回替换后的值</li>
 </ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/&lt;\/?.+?\/?&gt;/g</span> <span class="comment">//匹配所有html标签 支持嵌套</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//找出出现次数最多的字符</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">'aabbsbaabbabaslld'</span>;</span><br><span class="line"><span class="keyword">var</span> a =  str.split(<span class="string">''</span>).sort().join(<span class="string">''</span>);</span><br><span class="line"><span class="keyword">var</span> max = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> char = <span class="string">''</span>;</span><br><span class="line">a.replace(<span class="regexp">/(\w)\1+/g</span>,<span class="function"><span class="keyword">function</span>(<span class="params">match,$<span class="number">1</span></span>)</span>&#123;  </span><br><span class="line">  <span class="keyword">if</span>(max&lt;match.length)&#123;</span><br><span class="line">    max = match.length;</span><br><span class="line">    char = match[<span class="number">0</span>];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> match</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//or</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = a.replace(<span class="regexp">/(\w)\1+/g</span>);</span><br><span class="line">arr.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b.length - a.length</span><br><span class="line">&#125;)</span><br><span class="line">max = arr[<span class="number">0</span>].length;</span><br><span class="line">char = arr[<span class="number">0</span>][<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
 
         <p class="suffix-end">__END__</p>
@@ -268,38 +269,6 @@
                 mutex: true,
                 lrcType: 3,
                 audio: [
-                    
-                        {
-                            name: "aLIEz",
-                            artist: "mizuki（瑞葵）",
-                            cover: "/music/cover/aLIEz.jpg",
-                            url: "/music/song/aLIEz.mp3",
-                            lrc: "/music/lrc/aLIEz.lrc"
-                        },
-                    
-                        {
-                            name: "Endless Tears",
-                            artist: "CLIFF EDGE",
-                            cover: "/music/cover/Endless Tears.jpg",
-                            url: "/music/song/Endless Tears.mp3",
-                            lrc: "/music/lrc/Endless Tears.lrc"
-                        },
-                    
-                        {
-                            name: "Miracle",
-                            artist: "Cascada",
-                            cover: "/music/cover/Miracle.jpg",
-                            url: "/music/song/Miracle.mp3",
-                            lrc: "/music/lrc/Miracle.lrc"
-                        },
-                    
-                        {
-                            name: "Roll The Dice",
-                            artist: "高珊",
-                            cover: "/music/cover/Roll The Dice.jpg",
-                            url: "/music/song/Roll The Dice.mp3",
-                            lrc: "/music/lrc/Roll The Dice.lrc"
-                        },
                     
                         {
                             name: "See You Again",
@@ -637,38 +606,6 @@
             mutex     : true,
             lrcType   : 3,
             audio     : [
-                
-                    {
-                        name   : 'aLIEz',
-                        artist : 'mizuki（瑞葵）',
-                        cover  : '/music/cover/aLIEz.jpg',
-                        url    : '/music/song/aLIEz.mp3',
-                        lrc    : '/music/lrc/aLIEz.lrc'
-                    },
-                
-                    {
-                        name   : 'Endless Tears',
-                        artist : 'CLIFF EDGE',
-                        cover  : '/music/cover/Endless Tears.jpg',
-                        url    : '/music/song/Endless Tears.mp3',
-                        lrc    : '/music/lrc/Endless Tears.lrc'
-                    },
-                
-                    {
-                        name   : 'Miracle',
-                        artist : 'Cascada',
-                        cover  : '/music/cover/Miracle.jpg',
-                        url    : '/music/song/Miracle.mp3',
-                        lrc    : '/music/lrc/Miracle.lrc'
-                    },
-                
-                    {
-                        name   : 'Roll The Dice',
-                        artist : '高珊',
-                        cover  : '/music/cover/Roll The Dice.jpg',
-                        url    : '/music/song/Roll The Dice.mp3',
-                        lrc    : '/music/lrc/Roll The Dice.lrc'
-                    },
                 
                     {
                         name   : 'See You Again',

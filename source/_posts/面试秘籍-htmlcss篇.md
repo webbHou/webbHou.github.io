@@ -14,12 +14,22 @@ date: 2019-02-18 14:53:53
 - border-box(怪异盒模型)：元素实际宽=width-padding-border
 - margin-box
 
+### 渐变
+
+conic-gradient：圆锥形渐变，它的两个兄弟line-gradient(线性渐变)、radial-gradient(径向渐变)，算是最早认识的渐变属性。
+
+应用：
+
+- 颜色表盘：background: conic-gradient(red, orange, yellow, green, teal, blue, purple, red);
+- 饼图：background: conic-gradient(pink 0, pink 30%, yellow 30%, yellow 70%, lime 70%, lime 100%);
+- 仪表盘：<https://www.cnblogs.com/EnSnail/p/9771973.html>
 
 ### BFC
 
 块级格式化上下文，一个独立的块渲染区域，让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响。
 
 bfc的形成条件(满足其一)：
+
 - 根元素
 - float不等于none
 - position：absolute/fixed
@@ -27,6 +37,7 @@ bfc的形成条件(满足其一)：
 - overflow不等于visible
 
 bfc的约束条件：
+
 - 属于同一个 BFC 的两个相邻 Box 垂直排列
 - 属于同一个 BFC 的两个相邻 Box 的 margin 会发生重叠
 - BFC 中子元素不会超出他的包含块
@@ -35,46 +46,54 @@ bfc的约束条件：
 - 文字层不会被浮动层覆盖，环绕于周围
 
 bfc应用：
+
 - 阻止margin重叠
 - 清除浮动(解决高度塌陷)
 - 阻止与浮动元素重叠
 - 自适应三栏布局
 
-###居中布局
+### 居中布局
 
 水平居中布局
+
 - 行内元素: text-align: center
 - 块级元素: margin: 0 auto
 - absolute + transform
 - flex + justify-content: center
 
 垂直居中布局
+
 - line-height: height
 - absolute + transform
 - flex + align-items: center
 - table
 
 水平垂直居中
+
 - absolute + transform
 - flex + justify-content: center + align-items: center
 
-###选择器优先级
+### 选择器优先级
+
 !important > 行内样式 > #id > .class > tag > * > 继承 > 默认
 
-###去浮动
+### 去浮动
+
 - 通过增加伪元素清除浮动
 - 创建父级BFC区域
 - 父级设置高度
 
-###link和import区别
+### link和import区别
+
 - link可以用于加载rel、css等 import只能加载css
 - link加载的css会在编译时同步加载并执行 impirt引入的会在页面加载完成后加载
 - @import需要 IE5 以上才能使用
 - link可以使用 js 动态引入，@import不行
 
-###CSS预处理器(Sass/Less/Postcss)
+### CSS预处理器(Sass/Less/Postcss)
 
 CSS预处理器的原理: 是将类 CSS 语言通过 Webpack 编译 转成浏览器可读的真正 CSS。在这层编译之上，便可以赋予 CSS 更多更强大的功能，常用功能:
+
 - 嵌套
 - 变量
 - 循环语句
@@ -83,9 +102,9 @@ CSS预处理器的原理: 是将类 CSS 语言通过 Webpack 编译 转成浏览
 - 单位转换
 - mixin复用
 
-###CSS动画
+### CSS动画
 
-####过渡动画translation
+#### 过渡动画translation
 
 - transition-property: 属性
 - transition-duration: 间隔
@@ -93,7 +112,8 @@ CSS预处理器的原理: 是将类 CSS 语言通过 Webpack 编译 转成浏览
 - transition-delay: 延迟
 - 常用钩子: transitionend(过渡完成事件)
 
-####animation / keyframes
+#### animation / keyframes
+
 - animation-name: 动画名称，对应@keyframes
 - animation-duration: 间隔
 - animation-timing-function: 曲线
@@ -103,18 +123,17 @@ CSS预处理器的原理: 是将类 CSS 语言通过 Webpack 编译 转成浏览
 - animation-fill-mode: 静止模式 （forwards: 停止时，保留最后一帧 backwards: 停止时，回到第一帧 both: 同时运用 forwards / backwards）
 - 常用钩子: (animationend动画完成事件)
 
-###创建一个对象的步骤：
+### 创建一个对象的步骤
+
 1.新建一个对象
 2.把构造函数的this指向这个对象
 3.执行构造函数
 4.返回这个对象
 
-
 ### flex-grow和flex-shrink有什么用
 
-* flex-grow：当元素设置该属性时，当父元素还有剩余空间时会按flex-grow的值比例分给该元素 子元素的flex-grow值总和小于1时 **分配空间是剩余空间*flex-grow值总和**
-* flex-shrink：当元素设置该属性时，当子元素的空间总和大于父元素时，会按flex-grow的值比例收缩，子元素的flex-grow值总和小于1时 **收缩空间是超出空间*flex-grow值总和**
-
+- flex-grow：当元素设置该属性时，当父元素还有剩余空间时会按flex-grow的值比例分给该元素 子元素的flex-grow值总和小于1时 **分配空间是剩余空间*flex-grow值总和**
+- flex-shrink：当元素设置该属性时，当子元素的空间总和大于父元素时，会按flex-grow的值比例收缩，子元素的flex-grow值总和小于1时 **收缩空间是超出空间*flex-grow值总和**
 
 ### 三栏布局
 

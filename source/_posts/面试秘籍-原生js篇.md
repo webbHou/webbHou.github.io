@@ -380,17 +380,50 @@ function throttle(func,wait=5000,immediately=true){
   - ssl加密
   - 443端口
 
-- 缓存策略：强缓存和协商缓存
+- 缓存策略：强缓存和协商缓存 一般对不经常修改资源设置强缓存(图片，字体等) js|html等设置协商缓存
   - 强缓存：浏览器判断缓存是否过期，没过期直接使用强缓存
     - cache-control：设置最大缓存过期时间(秒) 优先于expires
     - expires：设置到期的时间(服务器时间) **客户端可能和服务器时间不同**
   - 协商缓存：当缓存过期时，使用强缓存
     - Last-Modified：最后一次修改时间 Last-Modified(response) & If-Modified-Since (request，上一次返回的Last-Modified)
       - 如果一致，则直接返回 304 通知浏览器使用缓存
-      - 不一致 服务器返回新资源
+      - 不一致 服务器返回新资源 **同一秒修改和获取文件时，获取不到最新**
     - 唯一标识方案：Etag(response 携带) & If-None-Match(request携带，上一次返回的 Etag): 服务器判断资源是否被修改：
       - 修改了则返回新的资源
       - 如果相同则返回304浏览器使用缓存
+
+- 缓存失效：有时候更新了文件，但客户端获取不到最新
+  - 文件名后缀添加版本号 **.js?version=1.00
+  - 现代化构建工具打包 hash值文件名
+
+- 缓存配置
+
+```js
+location / {
+
+  # 其它配置
+  ...
+
+  if ($request_uri ~* .*[.](js|css|map|jpg|png|svg|ico)$) {
+    #非html缓存1个月
+    add_header Cache-Control "public, max-age=2592000";
+  }
+
+  if ($request_filename ~* ^.*[.](html|htm)$) {
+    #html文件使用协商缓存
+    add_header Cache-Control "public, no-cache";
+  }
+}
+```
+
+- 缓存存储位置
+
+在浏览器的network中每个加载文件的size可以看到 如果是memory cache、disk cache、Service Worker则来自于缓存，否则为服务端请求文件
+缓存查找策略为先内存后硬盘
+
+- memory cache：内存缓存
+- disk cache：硬盘缓存
+- Service Worker：浏览器缓存
 
 ### http状态码
 
@@ -571,7 +604,47 @@ function difers(){
 ### vue3.0中proxy相比于defineProperty的优点
 
 - defineProperty只能对属性进行劫持，所以需要深度遍历整个对象。proxy直接对整个对象进行拦截
-- 不能监听到数组的变化  proxy原生支持监听数组
+- 不能监听到对象新增的属性、数组push、unshift方法增加元素的变化   proxy原生全都支持
+
+- proxy后操作的对象为，Proxy后的实例对象而不是原始对象，Proxy后的对象的this也指向新的实例代理对象
+
+```js
+let target = {
+    m() {
+        // 检查this的指向是不是proxyObkj
+        console.log(this === proxyObj)
+    }
+}
+let handler = {}
+let proxyObj = new Proxy(target, handler)
+
+proxyObj.m()//输出:true
+target.m()//输出:false
+```
+
+- proxy缺点：由于proxy后的对象this指向也发生了改变，所以需要this来获取值的对象也不能正确代理，如下：
+
+```js
+const target = new Date();
+const handler = {};
+const proxyObj = new Proxy(target, handler);
+
+proxyObj.getDate(); // TypeError: this is not a Date object.
+
+
+const target = new Date('2015-01-01');
+const handler = {
+    get(target, prop) {
+        if (prop === 'getDate') {
+            // 改变this指向
+            return target.getDate.bind(target);
+        }
+        return Reflect.get(target, prop);
+    }
+};
+const proxy = new Proxy(target, handler);
+proxy.getDate() // 1
+```
 
 ### react-redux和mobx的区别
 
@@ -811,5 +884,189 @@ window.open('子窗口');
 const callback = window.opener['callback']; //拿到父窗口回调方法
 //do something
 callback()
+
+```
+
+##### Objeck.key() 自动排序问题
+
+利用 Object.keys 取得对象所有属性的 key ，然后进行 map 操作是 JavaScript 开发者常用的方法，但是如果后续逻辑依赖于map的索引值，那可能会出现问题。举例如下
+
+```javascript
+const a = { '1a': 'a', '2b': 'b', '3c': 'c' }
+const arr = Object.keys(a)  // ['1a','2b','3c']
+
+const newObj = { ...a, "11": 'd'  } // { '11': 'd', '1a': 'a', '2b': 'b', '3c': 'c' } 自动被排序
+const newArr =  Object.keys(newObj)  // ['11', '1a','2b','3c']  
+
+```
+
+因此当对象中出纯数字或者以数字开头时，使用时可能会被排序，自动排到最前面，可能导致后续Object.keys()操作出现问题。因为不同的引擎的处理不同，所以这个问题有可能会出现。
+
+###### 文档描述
+
+Object.keys() 在执行过程中，若发现 key 是整数类型索引，那它首先按照从小到大排序加入；然后再按照先来先到的创建顺序加入其他元素，最后加入 Symbol 类型的 key。
+
+###### key 何时会被识别为“整数”？
+
+- 当key为数字开头时，也会被识别为整数，按照规则排序。
+- 当纯数字<4294967295,会被识别，否则失效，按照先来先到的顺序排序
+
+##### 总结
+
+Object.keys() 的返回并不总能保持先来后到的顺序。从解决业务需要的角度，我们可以通过维护一个单独的 tag 数组来回避这个问题。
+
+##### 暗黑模式
+
+@media (prefers-color-scheme: dark) {
+    html {
+        filter: invert(100%) hue-rotate(180deg);
+    }
+}
+
+#### 文件上传的几种方式
+
+- action-form： form表单的方式
+- formData：创建formData， 然后append上传的file
+- base64：文件转换成base64 然后接口上传
+
+#### ios上切屏或息屏倒计时停止问题
+
+```javascript
+// 定时器
+const handleTimer = () => {
+    if(!timer) {
+        const remainSec = (info.answerDuration*60 - info.useTime + 1)*1000
+        timer = setInterval(()=>{
+            //第二种方案 进入页面是记录时间戳 -> 定时器每次计算当前所用时间 -> 计算出剩余时间显示出来
+            let diff = moment(moment()).diff(timestamp)  
+            const sec = Math.ceil((remainSec - diff)/1000)
+            let str = ''
+            if(sec == 600) Toast.info('考试时间还剩10分钟',1)
+            if(sec <= 0) {
+                clearInterval(timer)
+                timer = null
+                setVisible(true)
+                str = zerofill(0)+':'+zerofill(0)
+            }else {
+                const min = Math.floor(sec/60)
+                const second = Math.ceil(sec%60)
+                str = zerofill(min)+':'+zerofill(second)
+            }
+            setTimeText(str)
+        },1000)
+    }else if(closeTime) {
+        // 页面显示后 计算息屏时间  剩余倒计时 = 息屏前倒计时时间 - 息屏时间
+        diff = diff2 - ((Date.now() - closeTime) / 1000).toFixed(0)  // 重置倒计时时间
+    }
+}
+
+// 第一种方案 计算息屏时间 重置倒计时时间
+useEffect(()=>{
+  document.addEventListener('visibilitychange', resetTime) // 监听页面显示状态
+  return ()=>{
+      window.removeEventListener('visibilitychange', resetTime)
+  }
+},[])
+
+const resetTime = () => {
+    if (document.hidden) { //页面隐藏 记录当前时间戳和剩余倒计时时间
+        diff2 = diff
+        closeTime = Date.now()
+    } else {
+        handleTimer() //页面显示 重新倒计时
+    }
+}
+
+
+// 进入时开始倒计时  页面摧毁后清楚定时器
+useEffect(()=>{
+    if(info.answerStatus === 1) {
+        clearInterval(timer) 
+        timer = null
+        handleTimer()
+    }
+    return ()=>{
+        console.log(4444);
+        clearInterval(timer) 
+        timer = null
+    }
+},[info])
+
+//第三种方案  
+import Countdown, { zeroPad } from 'react-countdown';
+const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) { //倒计时完成
+        // do something 
+    }
+    if(minutes == 10 && seconds == 0) {
+        // do something 
+    }
+    return <span>{zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>;
+}
+<react-countdown 
+date={Date.now() + diff} //截止时间 未来的某个时间
+renderer={renderer} // 自定义渲染展示的内容
+/>
+
+```
+
+#### Generator模拟async await
+
+都说async await是generator的语法糖实现，那到底是怎么实现的呢，我们使用generator模拟实现一个async await就知道了
+
+```javascript
+const getData = () => new Promise(resolve => setTimeout(() => resolve("data"), 1000))
+
+async function test() {
+  const data = await getData()
+  console.log('data: ', data);
+  const data2 = await getData()
+  console.log('data2: ', data2);
+  return 'success'
+}
+
+// 使用generator表示
+function* testG() {
+  const data = yield getData()
+  console.log('data: ', data);
+  const data2 = yield getData()
+  console.log('data2: ', data2);
+  return 'success'
+}
+
+//async执行后自动从上到下执行 而generator需要每次手动调用
+
+//执行原理
+const gen = testG();  //迭代器
+const { dataPromise, isDone } = gen.next(); //执行yield getData() 返回一个promise和迭代器的结果 但并不会把值赋给data 因为现在值还是promise
+
+dataPromise.then(val=> {
+  const { dataPromise2, isDone } = gen.next(val); //把值赋给data  执行下一个yield getData()
+  dataPromise2.then(val2=> {
+    const { dataPromise3, isDone } = gen.next(val2);  // 同理把值赋给data2  isDone = true 迭代器执行结束
+  })
+})
+
+//知道了执行原理 我们通过函数自动化的执行
+function asyncToGenerator(generatorFn) {
+  const gen = generatorFn.app(this) //迭代器
+  return new Promise((resolve,reject)=> {
+    function step(key,arg) {
+      let result;
+      try {
+        result = step[key](arg)
+      }catch(error) {
+        reject(error)
+      }
+      const { value, isDone } = result
+      if(isDone) {
+        return resolve(value)
+      }else {
+        return Promise.resolve(value).then(val=>step('next',val), error=>reject(error)) // 迭代器未结束 继续执行
+      }
+    }
+    step('next') //第一次执行yield
+  })
+}
 
 ```

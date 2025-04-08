@@ -44,21 +44,11 @@
         </span>
         
     </div>
-    <div class="post-content"><p><strong>多维数组的降维即将一个多维的数组拍平为一个  一维数组，经常出现在各个面试题的笔试中，下面进行几种方式的实现。</strong></p>
-<h3 id="reduce-方式"><a href="#reduce-方式" class="headerlink" title="reduce 方式"></a>reduce 方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const arr = [1,[2,3,[1,2]],[2,5],[1,[2,3],8]];</span><br><span class="line"></span><br><span class="line">const flatterArray = arr =&gt;&#123;</span><br><span class="line">  <span class="built_in">return</span> Array.isArray(arr)?arr.reduce((a,b)=&gt;[...a,...flatterArray(b)],[]):[arr];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">flatterArray(arr);</span><br></pre></td></tr></table></figure>
-
-<p>这种方式是使用数组的 reduce 方法进行累加，遍历中对数组各元素进行递归调用，最后合并为一个数组。</p>
-<h3 id="forEach-方式"><a href="#forEach-方式" class="headerlink" title="forEach 方式"></a>forEach 方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const arr = [1,[2,3,[1,2]],[2,5],[1,[2,3],8]];</span><br><span class="line"><span class="built_in">let</span> a = [];</span><br><span class="line"></span><br><span class="line">const flatterArray = arr =&gt; &#123;</span><br><span class="line">  arr.forEach(e =&gt; &#123;</span><br><span class="line">    <span class="built_in">return</span> Array.isArray(e)?flattenDeep2(e):a.push(e);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">flatterArray(arr);</span><br></pre></td></tr></table></figure>
-
-<p>这种方式是使用数组的 forEach 方法, 也是遍历中对数组各元素进行递归调用，这种方式是使用空数组进行累加。</p>
-<h3 id="类型转换法"><a href="#类型转换法" class="headerlink" title="类型转换法"></a>类型转换法</h3><p>把数组先转为字符串再转为数组,缺点最后  元素为字符串，需要再转化</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const arr = [1,[2,3,[1,2]],[2,5],[1,[2,3],8]];</span><br><span class="line">const arr2 = arr.join(<span class="string">&#x27;,&#x27;</span>).<span class="built_in">split</span>(<span class="string">&#x27;,&#x27;</span>);</span><br><span class="line">console.log(arr2);</span><br><span class="line">//或</span><br><span class="line">console.log(c.toString().<span class="built_in">split</span>(<span class="string">&#x27;,&#x27;</span>))</span><br></pre></td></tr></table></figure>
-
-<h3 id="apply-方法"><a href="#apply-方法" class="headerlink" title="apply 方法"></a>apply 方法</h3><p>只能转换二维数组</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const arr = [1,[2,3],[2,5],[2,3],8];</span><br><span class="line">console.log([].concat.apply([],arr)) //1,2,3,2,5,2,3,8</span><br></pre></td></tr></table></figure>
-
-<p>这种方式是利用 apply 方法和 concat 方法进行结合，利用 apply 数组的传参方式， 把数组一个个元素进行连接，因为只可进行二维数组的转换。</p>
-</div>
+    <div class="post-content">
+          
+        <div></div>
+        
+    </div>
 
     
     <hr class="fhr" />

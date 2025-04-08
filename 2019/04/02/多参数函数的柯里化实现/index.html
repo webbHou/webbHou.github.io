@@ -44,9 +44,11 @@
         </span>
         
     </div>
-    <div class="post-content"><h3 id="为什么需要柯里化"><a href="#为什么需要柯里化" class="headerlink" title="为什么需要柯里化"></a>为什么需要柯里化</h3><p>**函数的柯里化就是把多个参数的函数转化为每次调用接受单一参数的函数。使得某些重复的固定的调用和参数可以进行二次封装，从而实现代码的复用，这也是函数式编程的核心思想。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//加法的柯里化实现</span><br><span class="line"><span class="keyword">function</span> thunk(fn)&#123;</span><br><span class="line">  <span class="built_in">return</span> <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    var args = Array.prototype.slice.call(arguments);</span><br><span class="line">    <span class="built_in">return</span> <span class="keyword">function</span>(call)&#123;</span><br><span class="line">      var arument = argus.push(call);</span><br><span class="line">      fn.apply(this,arument);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> add(a,b)&#123;</span><br><span class="line">  <span class="built_in">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line">var newAdd = thunk(add);</span><br><span class="line"></span><br><span class="line">newAdd(3)(5)</span><br></pre></td></tr></table></figure>
-</div>
+    <div class="post-content">
+          
+        <div></div>
+        
+    </div>
 
     
     <hr class="fhr" />

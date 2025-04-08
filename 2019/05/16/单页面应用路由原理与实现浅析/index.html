@@ -44,51 +44,11 @@
         </span>
         
     </div>
-    <div class="post-content"><p>在现代前端单页面应用中，路由已经变得越来越必不可少。路由描述了url和UI之间的映射关系，这种映射是单向的，即url的变化引发UI的变化。</p>
-<h4 id="如何实现前端路由"><a href="#如何实现前端路由" class="headerlink" title="如何实现前端路由"></a>如何实现前端路由</h4><p>  <strong>实现前端路由，需要解决下面两个核心问题</strong></p>
-<ul>
-<li>改变url如何使页面不刷新？</li>
-<li>如何检测url的变化？</li>
-</ul>
-<h4 id="hash模式实现"><a href="#hash模式实现" class="headerlink" title="hash模式实现"></a>hash模式实现</h4><ul>
-<li>hash是url地址中#及后面的部分，hash值的改变不会导致页面的重载</li>
-<li>需要来监听hashchange事件来渲染不同的页面组件</li>
-</ul>
-<h4 id="history模式"><a href="#history模式" class="headerlink" title="history模式"></a>history模式</h4><ul>
-<li>通过history.pushState&#x2F;history.replaceState 来进行路由的修改</li>
-<li>监听popstate来进行不同组件的渲染</li>
-</ul>
-<h4 id="vuex工作流"><a href="#vuex工作流" class="headerlink" title="vuex工作流"></a>vuex工作流</h4><p>1.new vuex.store({<br>  strtic:true &#x2F;&#x2F;严格<br>  state：{ }  &#x2F;&#x2F;全局唯一<br>  mutation：{<br>    add(state,arg){<br>      state+&#x3D;1;<br>    }<br>  }  &#x2F;&#x2F;进行state修改<br>  action：{ &#x2F;&#x2F;提交action到mutaion<br>    addAction({commit},arg){<br>      commit(mutaion名，arg)<br>    }<br>  }，<br>  getter：{ &#x2F;&#x2F;获取state<br>    getCount(state){</p>
-<pre><code>&#125;
-</code></pre>
-<p>  }<br>})</p>
-<p>2.页面使用</p>
-<ul>
-<li>提交action  this.$store.disptch(action名，arg)</li>
-<li>使用state   this.$store.state</li>
-</ul>
-<h4 id="vue父子通讯"><a href="#vue父子通讯" class="headerlink" title="vue父子通讯"></a>vue父子通讯</h4><ul>
-<li>props  父-&gt;子  $emit&#x2F;$on</li>
-<li>新vue实例做中介  $emit&#x2F;$on</li>
-<li>this.$attrs&#x2F;$listeners   未继承的属性&#x2F;方法</li>
-<li>vuex 全局状态共享 this.$store.state</li>
-</ul>
-<h4 id="vue组件"><a href="#vue组件" class="headerlink" title="vue组件"></a>vue组件</h4><ul>
-<li>watch  自动计算  方法名对应绑定变量名</li>
-<li>comuted：  计算</li>
-<li>method： 方法   手动绑定</li>
-</ul>
-<h4 id="vue生命周期钩子"><a href="#vue生命周期钩子" class="headerlink" title="vue生命周期钩子"></a>vue生命周期钩子</h4><ul>
-<li>beforeCreate  实例创建前</li>
-<li>created   已被创建</li>
-<li>beforeMount   dom挂载前</li>
-<li>mounted 已挂载  可以获取dom结点</li>
-<li>beforeUpdate  有数据更新前</li>
-<li>updated  已更新</li>
-<li>beforeDestory  摧毁前</li>
-<li>destoryed  被摧毁</li>
-</ul>
-</div>
+    <div class="post-content">
+          
+        <div></div>
+        
+    </div>
 
     
     <hr class="fhr" />

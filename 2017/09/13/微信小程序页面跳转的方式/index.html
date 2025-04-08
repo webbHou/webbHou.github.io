@@ -46,14 +46,11 @@
         </span>
         
     </div>
-    <div class="post-content"><h2 id="四种跳转方式"><a href="#四种跳转方式" class="headerlink" title="四种跳转方式"></a>四种跳转方式</h2><p>微信小程序页面跳转有四种方式： </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wx.navigateTo(OBJECT)； </span><br><span class="line">wx.redirectTo(OBJECT)； </span><br><span class="line">wx.switchTab(OBJECT)； </span><br><span class="line">wx.navigateBack(OBJECT) </span><br></pre></td></tr></table></figure>
-
-
-<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">其中navigateTo是将原来的页面保存在页面栈中，在跳入到下一个页面的时候目标页面也进栈，只有在这个情况下点击手机的返回按钮才可以跳转到上一个页面；</span><br><span class="line">redirectTo和switchTab都是先清除栈中原来的页面，然后目标页面进栈，使用这两种跳转方式，都不能通过系统的返回键回到上一个页面，而是直接退出小程序；</span><br><span class="line">redirectTo使用的时候一定要配合tabBar或是页面里面可以再次跳转按钮，否则无法回到上一个页面；</span><br><span class="line">switchTab跳转的页面必须是tabBar中声明的页面；</span><br><span class="line">tabBar中定义的字段不能超过5个页面，小程序的页面栈层次也不能超过5层。</span><br><span class="line">navigateBack只能返回到页面栈中的指定页面，一般和navigateTo配合使用。</span><br><span class="line">wx.navigateTo 和 wx.redirectTo 不允许跳转到 tabbar 页面，只能用 wx.switchTab 跳转到 tabbar 页面</span><br></pre></td></tr></table></figure>
-
-<h2 id="other"><a href="#other" class="headerlink" title="other"></a>other</h2><p>最后一种,使用<navigator/>标签实现页面跳转:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;navigator url=<span class="string">&quot;navigate?title=navigate&quot;</span> hover-class=<span class="string">&quot;navigator-hover&quot;</span>&gt;跳转到新页面&lt;/navigator&gt;</span><br><span class="line">&lt;navigator url=<span class="string">&quot;redirect?title=redirect&quot;</span> open-type=<span class="string">&quot;redirect&quot;</span> hover-class=<span class="string">&quot;other-navigator-hover&quot;</span>&gt;在当前页打开&lt;/navigator&gt;</span><br><span class="line">&lt;navigator url=<span class="string">&quot;index&quot;</span> open-type=<span class="string">&quot;switchTab&quot;</span> hover-class=<span class="string">&quot;other-navigator-hover&quot;</span>&gt;切换 Tab&lt;/navigator&gt;</span><br></pre></td></tr></table></figure></div>
+    <div class="post-content">
+          
+        <div></div>
+        
+    </div>
 
     
     <hr class="fhr" />

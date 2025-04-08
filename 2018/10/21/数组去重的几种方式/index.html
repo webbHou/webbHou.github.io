@@ -44,14 +44,11 @@
         </span>
         
     </div>
-    <div class="post-content"><p><strong>数组去重同样是前端面试的必考题目之一，你如果说你只会一种，那你真不是一个合格的前端，那就赶紧往下看吧</strong></p>
-<h3 id="new-Set-简单直接"><a href="#new-Set-简单直接" class="headerlink" title="new Set 简单直接"></a>new Set 简单直接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> arry = new Set(arr); //搞定 就是这么so easy</span><br><span class="line"></span><br><span class="line">说说原理好了，主要利用了es6的新对象Set的成员不能有重复值的特性  </span><br><span class="line">顺便说一个Es6的数组新方法 Array.from(array)把类数组转为数组 也是面试必问啊</span><br></pre></td></tr></table></figure>
-
-<p>接下来就是两个需要遍历的方法了</p>
-<h3 id="Array-splice"><a href="#Array-splice" class="headerlink" title="Array.splice"></a>Array.splice</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i = 0; i &lt; arr.length; i++)&#123;</span><br><span class="line">  <span class="keyword">for</span>(j = i + 1; j &lt; arr.length; j++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(arr[i] == arr[j])&#123;</span><br><span class="line">      arr.splice(j,1);</span><br><span class="line">      j--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-push"><a href="#Array-push" class="headerlink" title="Array.push"></a>Array.push</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> uniqueArray(arr)&#123;</span><br><span class="line">    var retArray = [];</span><br><span class="line">    <span class="keyword">for</span>(var i = 0; i &lt; arr.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(retArray.indexOf(arr[i]) &lt; 0)&#123;</span><br><span class="line">            retArray.push(arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> retArray;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</div>
+    <div class="post-content">
+          
+        <div></div>
+        
+    </div>
 
     
     <hr class="fhr" />

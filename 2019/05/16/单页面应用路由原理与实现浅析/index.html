@@ -45,8 +45,54 @@
         
     </div>
     <div class="post-content">
-          
-        <div></div>
+         
+         
+        
+        <div>&lt;p&gt;在现代前端单页面应用中，路由已经变得越来越必不可少。路由描述了url和UI之间的映射关系，这种映射是单向的，即url的变化引发UI的变化。&lt;/p&gt;
+&lt;h4 id=&#34;如何实现前端路由&#34;&gt;&lt;a href=&#34;#如何实现前端路由&#34; class=&#34;headerlink&#34; title=&#34;如何实现前端路由&#34;&gt;&lt;/a&gt;如何实现前端路由&lt;/h4&gt;&lt;p&gt;  &lt;strong&gt;实现前端路由，需要解决下面两个核心问题&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;改变url如何使页面不刷新？&lt;/li&gt;
+&lt;li&gt;如何检测url的变化？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;hash模式实现&#34;&gt;&lt;a href=&#34;#hash模式实现&#34; class=&#34;headerlink&#34; title=&#34;hash模式实现&#34;&gt;&lt;/a&gt;hash模式实现&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;hash是url地址中#及后面的部分，hash值的改变不会导致页面的重载&lt;/li&gt;
+&lt;li&gt;需要来监听hashchange事件来渲染不同的页面组件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;history模式&#34;&gt;&lt;a href=&#34;#history模式&#34; class=&#34;headerlink&#34; title=&#34;history模式&#34;&gt;&lt;/a&gt;history模式&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;通过history.pushState&amp;#x2F;history.replaceState 来进行路由的修改&lt;/li&gt;
+&lt;li&gt;监听popstate来进行不同组件的渲染&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;vuex工作流&#34;&gt;&lt;a href=&#34;#vuex工作流&#34; class=&#34;headerlink&#34; title=&#34;vuex工作流&#34;&gt;&lt;/a&gt;vuex工作流&lt;/h4&gt;&lt;p&gt;1.new vuex.store({&lt;br&gt;  strtic:true &amp;#x2F;&amp;#x2F;严格&lt;br&gt;  state：{ }  &amp;#x2F;&amp;#x2F;全局唯一&lt;br&gt;  mutation：{&lt;br&gt;    add(state,arg){&lt;br&gt;      state+&amp;#x3D;1;&lt;br&gt;    }&lt;br&gt;  }  &amp;#x2F;&amp;#x2F;进行state修改&lt;br&gt;  action：{ &amp;#x2F;&amp;#x2F;提交action到mutaion&lt;br&gt;    addAction({commit},arg){&lt;br&gt;      commit(mutaion名，arg)&lt;br&gt;    }&lt;br&gt;  }，&lt;br&gt;  getter：{ &amp;#x2F;&amp;#x2F;获取state&lt;br&gt;    getCount(state){&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;  }&lt;br&gt;})&lt;/p&gt;
+&lt;p&gt;2.页面使用&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;提交action  this.$store.disptch(action名，arg)&lt;/li&gt;
+&lt;li&gt;使用state   this.$store.state&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;vue父子通讯&#34;&gt;&lt;a href=&#34;#vue父子通讯&#34; class=&#34;headerlink&#34; title=&#34;vue父子通讯&#34;&gt;&lt;/a&gt;vue父子通讯&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;props  父-&amp;gt;子  $emit&amp;#x2F;$on&lt;/li&gt;
+&lt;li&gt;新vue实例做中介  $emit&amp;#x2F;$on&lt;/li&gt;
+&lt;li&gt;this.$attrs&amp;#x2F;$listeners   未继承的属性&amp;#x2F;方法&lt;/li&gt;
+&lt;li&gt;vuex 全局状态共享 this.$store.state&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;vue组件&#34;&gt;&lt;a href=&#34;#vue组件&#34; class=&#34;headerlink&#34; title=&#34;vue组件&#34;&gt;&lt;/a&gt;vue组件&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;watch  自动计算  方法名对应绑定变量名&lt;/li&gt;
+&lt;li&gt;comuted：  计算&lt;/li&gt;
+&lt;li&gt;method： 方法   手动绑定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;vue生命周期钩子&#34;&gt;&lt;a href=&#34;#vue生命周期钩子&#34; class=&#34;headerlink&#34; title=&#34;vue生命周期钩子&#34;&gt;&lt;/a&gt;vue生命周期钩子&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;beforeCreate  实例创建前&lt;/li&gt;
+&lt;li&gt;created   已被创建&lt;/li&gt;
+&lt;li&gt;beforeMount   dom挂载前&lt;/li&gt;
+&lt;li&gt;mounted 已挂载  可以获取dom结点&lt;/li&gt;
+&lt;li&gt;beforeUpdate  有数据更新前&lt;/li&gt;
+&lt;li&gt;updated  已更新&lt;/li&gt;
+&lt;li&gt;beforeDestory  摧毁前&lt;/li&gt;
+&lt;li&gt;destoryed  被摧毁&lt;/li&gt;
+&lt;/ul&gt;
+</div>
         
     </div>
 

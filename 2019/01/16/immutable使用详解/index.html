@@ -47,8 +47,65 @@
         
     </div>
     <div class="post-content">
-          
-        <div></div>
+         
+         
+        
+        <div>&lt;h3 id=&#34;什么是immutable-Data&#34;&gt;&lt;a href=&#34;#什么是immutable-Data&#34; class=&#34;headerlink&#34; title=&#34;什么是immutable Data&#34;&gt;&lt;/a&gt;什么是immutable Data&lt;/h3&gt;&lt;p&gt;immutable Data就是一旦创建就不可变的数据，每次的修改和添加删除操作都会返回新的immutable Data数据，Immutable 实现的原理是 Persistent Data Structure（持久化数据结构），immutable会共享相同的数据结构，当两个对象的hashCode相同，值就相同。当修改时只会对有影响的节点进行修改，其余的继续共享，避免了deepclone把所以节点都复制一遍带来的性能损耗，immutable解决了复杂类型引用赋值带来的数据隐患。&lt;/p&gt;
+&lt;h3 id=&#34;immutable的优点&#34;&gt;&lt;a href=&#34;#immutable的优点&#34; class=&#34;headerlink&#34; title=&#34;immutable的优点&#34;&gt;&lt;/a&gt;immutable的优点&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;降低了复杂可变数据带来的复杂度&lt;/li&gt;
+&lt;li&gt;节省内存(共享相同的节点)&lt;/li&gt;
+&lt;li&gt;函数式编程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;常用的immutable数据结构&#34;&gt;&lt;a href=&#34;#常用的immutable数据结构&#34; class=&#34;headerlink&#34; title=&#34;常用的immutable数据结构&#34;&gt;&lt;/a&gt;常用的immutable数据结构&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Map：键值对集合，对应于 Object，ES6 也有专门的 Map 对象&lt;/li&gt;
+&lt;li&gt;List：有序可重复的列表，对应于 Array&lt;/li&gt;
+&lt;li&gt;Set：无序且不可重复的列表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;常见用法&#34;&gt;&lt;a href=&#34;#常见用法&#34; class=&#34;headerlink&#34; title=&#34;常见用法&#34;&gt;&lt;/a&gt;常见用法&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;immutableA.immutableB(bb) A融合B&lt;/li&gt;
+&lt;li&gt;Immutable.Map({1:2}) 创建一个Map&lt;/li&gt;
+&lt;li&gt;Immutable.is(比较两个immutable对象的值 &amp;#x3D;&amp;#x3D;&amp;#x3D;比较内存)&lt;/li&gt;
+&lt;li&gt;Immutable.fromJS([1,2]) 生成不可变对象(支持数据嵌套)&lt;/li&gt;
+&lt;li&gt;Immutable.List([1,2]}) 生成不可变对象(不支持数据嵌套)&lt;/li&gt;
+&lt;li&gt;immutableData.toJS() 不可变数据生成 JavaScript 对象&lt;/li&gt;
+&lt;li&gt;immutableA is immutableB 判断两个数据引用是否一致&lt;/li&gt;
+&lt;li&gt;Immutable.toObject 转化为对象&lt;/li&gt;
+&lt;li&gt;Immutable.toArray 转化为数组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;List常用方法&#34;&gt;&lt;a href=&#34;#List常用方法&#34; class=&#34;headerlink&#34; title=&#34;List常用方法&#34;&gt;&lt;/a&gt;List常用方法&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Immutable.List.of([1,3]) 创建一个List&lt;/li&gt;
+&lt;li&gt;Immutable.List([1,2]) 生成不可变List 数据&lt;/li&gt;
+&lt;li&gt;immutableA.size&amp;#x2F;immutableA.count() 查看List 大小&lt;/li&gt;
+&lt;li&gt;Immutable.List.isList(x) 判断是不是List&lt;/li&gt;
+&lt;li&gt;immutableData.get(0)&amp;#x2F;immutableData.set(0,el) 根据索引读写对象&lt;/li&gt;
+&lt;li&gt;immutableData.getIn [1, 2]&amp;#x2F;immutableData.setIn [1, 2]  读写嵌套数组中的数据&lt;/li&gt;
+&lt;li&gt;immutableB.update(1,(x) -&amp;gt; x + 1)&amp;#x2F;immutableB.updateIn [2, 1], (x) -&amp;gt; x + 1 更新不可变数据  接受函数&lt;/li&gt;
+&lt;li&gt;immutableData.find (x)&amp;#x3D;&amp;gt;x&amp;gt;1 查找&lt;/li&gt;
+&lt;li&gt;immutableData.filter (x) -&amp;gt;x&amp;gt;1 过滤&lt;/li&gt;
+&lt;li&gt;immutableData.filterNot (x) -&amp;gt; x &amp;lt;&amp;#x3D; 1  取反过滤&lt;/li&gt;
+&lt;li&gt;immutableData.sort (a, b) -&amp;gt; return a&amp;gt;b?-1:1 排序&lt;/li&gt;
+&lt;li&gt;immutableData.forEach (a, b)&amp;#x3D;&amp;gt; 遍历&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;Map常用方法&#34;&gt;&lt;a href=&#34;#Map常用方法&#34; class=&#34;headerlink&#34; title=&#34;Map常用方法&#34;&gt;&lt;/a&gt;Map常用方法&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Immutable.Map.isMap(x) 判断是不是map&lt;/li&gt;
+&lt;li&gt;immutableData.get(‘a’)&amp;#x2F;immutableData.getIn([‘a’,’b’]) 直接&amp;#x2F;嵌套更新获取&lt;/li&gt;
+&lt;li&gt;immutableA.set(‘a’, 1)&amp;#x2F;immutableA.setIn( [‘a’, ‘b’], 1) 直接&amp;#x2F;嵌套更新设置&lt;/li&gt;
+&lt;li&gt;immutableA.update (‘a’, (x) -&amp;gt; x + 1)&amp;#x2F;immutableA.updateIn ([‘a’, ‘b’], (x) -&amp;gt; x + 1)  直接&amp;#x2F;嵌套更新数据&lt;/li&gt;
+&lt;li&gt;immutableA.merge(immutableC)  合并对象&lt;/li&gt;
+&lt;li&gt;immutableData.has(‘key’)  判断是否存在该属性&lt;/li&gt;
+&lt;li&gt;immutableData.filter (value, key) -&amp;gt; value is 1  属性过滤&lt;/li&gt;
+&lt;li&gt;immutableData.map(v&amp;#x3D;&amp;gt;v*V)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;Immutable与react搭配使用&#34;&gt;&lt;a href=&#34;#Immutable与react搭配使用&#34; class=&#34;headerlink&#34; title=&#34;Immutable与react搭配使用&#34;&gt;&lt;/a&gt;Immutable与react搭配使用&lt;/h3&gt;&lt;p&gt;React性能优化的重要步骤就是避免重复渲染，使用的react生命周期函数shouldComponentUpdate进行新旧节点的比较，来判断是否需要更新，来减少一些不必要的渲染。&lt;/p&gt;
+&lt;p&gt;利用immutable的is和&amp;#x3D;&amp;#x3D;&amp;#x3D;进行比较，简单且高效，极大的提高了性能。而不像deepclone对性能的极大损耗&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;23&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;import &amp;#123; is &amp;#125; from &lt;span class=&#34;string&#34;&gt;&amp;#x27;immutable&amp;#x27;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;shouldComponentUpdate: (nextProps = &amp;#123;&amp;#125;, nextState = &amp;#123;&amp;#125;) =&amp;gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  const thisProps = this.props || &amp;#123;&amp;#125;, thisState = this.state || &amp;#123;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; (Object.keys(thisProps).length !== Object.keys(nextProps).length ||&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      Object.keys(thisState).length !== Object.keys(nextState).length) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;built_in&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;literal&#34;&gt;true&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; (const key &lt;span class=&#34;keyword&#34;&gt;in&lt;/span&gt; nextProps) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; (thisProps[key] !== nextProps[key] || ！is(thisProps[key], nextProps[key])) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      &lt;span class=&#34;built_in&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;literal&#34;&gt;true&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; (const key &lt;span class=&#34;keyword&#34;&gt;in&lt;/span&gt; nextState) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; (thisState[key] !== nextState[key] || ！is(thisState[key], nextState[key])) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      &lt;span class=&#34;built_in&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;literal&#34;&gt;true&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;built_in&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;literal&#34;&gt;false&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&#34;Immutable与state的搭配使用&#34;&gt;&lt;a href=&#34;#Immutable与state的搭配使用&#34; class=&#34;headerlink&#34; title=&#34;Immutable与state的搭配使用&#34;&gt;&lt;/a&gt;Immutable与state的搭配使用&lt;/h3&gt;&lt;p&gt;其实在React官方是建议把this.state当作Immutable当作，所以如果用deepclone会非常耗性能&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;initData = &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  data: Map(&amp;#123; &lt;span class=&#34;built_in&#34;&gt;times&lt;/span&gt;: 0 &amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;this.setState(&amp;#123; data: this.state.data.update(&lt;span class=&#34;string&#34;&gt;&amp;#x27;times&amp;#x27;&lt;/span&gt;, v =&amp;gt; v + 1) &amp;#125;); //更优 this.setState( (&amp;#123;data&amp;#125;)=&amp;gt; (&amp;#123; data: data.update(&lt;span class=&#34;string&#34;&gt;&amp;#x27;times&amp;#x27;&lt;/span&gt;, v =&amp;gt; v + 1) &amp;#125;) );&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&#34;Immutable与redux的集成&#34;&gt;&lt;a href=&#34;#Immutable与redux的集成&#34; class=&#34;headerlink&#34; title=&#34;Immutable与redux的集成&#34;&gt;&lt;/a&gt;Immutable与redux的集成&lt;/h3&gt;&lt;p&gt;redux是目前流行的共享数据状态管理库，它提供更简洁和清晰的单向数据流（View -&amp;gt; Action -&amp;gt; Middleware -&amp;gt; Reducer-&amp;gt;store）来进行共享的改变&lt;br&gt;为了state和store数据的统一而不至于混乱难以维护，除了向服务器交互发送的数据其余都建议使用Immutable数据，而在请求数据后需要转化为Immutable数据&lt;/p&gt;
+&lt;p&gt;reducers 我们用 redux-immutable 提供的 combineReducers 来处理，他可以将 immutable 类型的全局 state 进行分而治之。&lt;br&gt;redux-immutable也会帮助你在 store 初始化的时候，通过每个子 reducer 的初始值来构建一个全局 Map 作为全局 state。当然，这要求你的每个子 reducer 的默认初始值是 immutable的。&lt;/p&gt;
+</div>
         
     </div>
 

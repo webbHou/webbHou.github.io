@@ -45,8 +45,53 @@
         
     </div>
     <div class="post-content">
-          
-        <div></div>
+         
+         
+        
+        <div>&lt;h4 id=&#34;npm-outdated&#34;&gt;&lt;a href=&#34;#npm-outdated&#34; class=&#34;headerlink&#34; title=&#34;npm outdated&#34;&gt;&lt;/a&gt;npm outdated&lt;/h4&gt;&lt;p&gt;npm 内置 该命令将检查每个已安装的依赖关系，并将当前版本与 npm registry 中的最新版本进行比较。它在终端打印出一个表格，概述了可用的版本。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Current：是当前安装的版本。&lt;/li&gt;
+&lt;li&gt;Wanted：是根据 semver 范围内的软件包的最大版本。&lt;/li&gt;
+&lt;li&gt;Latest：是在 npm registry 中被标记为最新的软件包版本。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;npm update 命令会更新到 wanted 版本&lt;/p&gt;
+&lt;h4 id=&#34;npm-check-updates&#34;&gt;&lt;a href=&#34;#npm-check-updates&#34; class=&#34;headerlink&#34; title=&#34;npm-check-updates&#34;&gt;&lt;/a&gt;npm-check-updates&lt;/h4&gt;&lt;p&gt;npm install -g npm-check-updates 全局安装&lt;/p&gt;
+&lt;p&gt;ncu 类似 npm outdated 会列出所有依赖可升级的版本 不同类型根据颜色标注&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Red （显示红色） &amp;#x3D; major （主版本，或者说是大版本）&lt;/li&gt;
+&lt;li&gt;Cyan （显示青色） &amp;#x3D; minor（次要版本）&lt;/li&gt;
+&lt;li&gt;Green（显示绿色） &amp;#x3D; patch （补丁版本）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ncu –target [patch, minor, latest, newest, greatest] 指定不同类型进行升级&lt;/p&gt;
+&lt;p&gt;ncu –interactive 自定义选择升级&lt;br&gt;ncu –interactive –format group 根据类型分组列出 进行选择升级&lt;/p&gt;
+&lt;h4 id=&#34;npm-安装本地或私有-git-源包&#34;&gt;&lt;a href=&#34;#npm-安装本地或私有-git-源包&#34; class=&#34;headerlink&#34; title=&#34;npm 安装本地或私有 git 源包&#34;&gt;&lt;/a&gt;npm 安装本地或私有 git 源包&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;安装本地包 file 协议 yarn add file:.&amp;#x2F;config 更新 或 yarn install&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;string&#34;&gt;&amp;quot;dependencies&amp;quot;&lt;/span&gt;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;string&#34;&gt;&amp;quot;config&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;file:./config&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;安装私有 git 源 yarn upgrade yii-es6-amd 更新 或 yarn install&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;string&#34;&gt;&amp;quot;dependencies&amp;quot;&lt;/span&gt;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;string&#34;&gt;&amp;quot;yii-es6-amd&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;git+https://git@github.com/yiifaa/yii-es6-amd.git&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h4 id=&#34;使用-npm-link-引入本地-npm-模块进行调试&#34;&gt;&lt;a href=&#34;#使用-npm-link-引入本地-npm-模块进行调试&#34; class=&#34;headerlink&#34; title=&#34;使用 npm link 引入本地 npm 模块进行调试&#34;&gt;&lt;/a&gt;使用 npm link 引入本地 npm 模块进行调试&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;当项目和模块在 相同 目录下，可以使用相对路径，只需 link 一次&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;npm link ../xx-&lt;span class=&#34;variable language_&#34;&gt;module&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;当项目和模块在 不同 目录下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// xx-module为文件名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd ../xx-&lt;span class=&#34;variable language_&#34;&gt;module&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;npm link&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd your-project&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;npm link your-ui-lib &lt;span class=&#34;comment&#34;&gt;// your-ui-lib 为模块名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+
+&lt;h4 id=&#34;npm发布如何只发布打包文件&#34;&gt;&lt;a href=&#34;#npm发布如何只发布打包文件&#34; class=&#34;headerlink&#34; title=&#34;npm发布如何只发布打包文件&#34;&gt;&lt;/a&gt;npm发布如何只发布打包文件&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;白名单&lt;br&gt;在package指定files字段，列出要包含在发布包中的文件和目录(package.json、README.md、LICENSE 和 main 字段指向的文件默认会被包含)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;黑名单&lt;br&gt;新建.npmignore文件，在文件中列出要忽略的文件和目录，如果有.gitignore，npm 默认会使用 .gitignore。当发布的内容与 Git 忽略的内容不同，必须显式创建.npmignore文件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</div>
         
     </div>
 

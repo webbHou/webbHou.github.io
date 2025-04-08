@@ -45,8 +45,73 @@
         
     </div>
     <div class="post-content">
-          
-        <div></div>
+         
+         
+        
+        <div>&lt;p&gt;作为前端工程师，我们日常打交道的就是浏览器了，可是你想过当你输入url回车到页面展示的这一个过程都发生了什么吗？&lt;/p&gt;
+&lt;h3 id=&#34;浏览器渲染之前主要有如下几步&#34;&gt;&lt;a href=&#34;#浏览器渲染之前主要有如下几步&#34; class=&#34;headerlink&#34; title=&#34;浏览器渲染之前主要有如下几步&#34;&gt;&lt;/a&gt;浏览器渲染之前主要有如下几步&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;浏览器根据DNS域名服务器得到域名对应的公网ip&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;浏览器对这个ip发送http请求&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;服务器接受、处理http请求，并响应&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;浏览器收到服务器响应的内容并解析&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;DNS解析：DNS服务器对url进行一对一的ip映射解析&lt;br&gt;一个域名解析的过程：&lt;a href=&#34;http://www.baidu.com/&#34;&gt;www.baidu.com&lt;/a&gt; -&amp;gt; 网络服务商 -&amp;gt; 递归服务器 -&amp;gt; 根DNS服务器 -&amp;gt; .com顶级DNS服务器 -&amp;gt; baidu.com权威DNS服务器 -&amp;gt; IP返回给用户&lt;br&gt;为了下次查找方便，所以递归服务器就会记录下来 就叫做DNS缓存，这一层也是黑客进行DNS攻击的薄弱地方。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;DNS攻击：因为递归服务器会把解析记录存下来，所以我们只需要让他错一个错误的缓存记录就可以了。域名和DNS服务器采用问答的方式去请求和响应，当询问的端口号和回答的端口号相同时就会把该条记录存下来。最早该端口号是规律递增的，黑客只需要赶在DNS服务器响应前进行答复，所以dns缓存极易被污染。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;TCP三次握手：解析完后，就是服务器和浏览器的交互，交互之前就需要创建连接，我们知道tcp协议是全双工传输，需要浏览器和服务端都可以传输数据，都需要确认对方可以接收到，所以需要三次握手&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ACK表示消息收到&lt;/li&gt;
+&lt;li&gt;SYN表示请求创建连接&lt;/li&gt;
+&lt;li&gt;FIN表示请求关闭连接&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;TCP四次挥手：而连接的关闭需要四次，需要双方都确认关闭&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;发送请求，分析 url，设置请求报文(头，主体)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;服务器返回请求的文件 (html)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;浏览器进行渲染&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HTML parser –&amp;gt; DOM Tree&lt;ul&gt;
+&lt;li&gt;标记化算法，进行元素状态的标记&lt;/li&gt;
+&lt;li&gt;dom树构建&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;css parser  –&amp;gt; Style Tree&lt;ul&gt;
+&lt;li&gt;解析 css 代码，生成样式树&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;集合 –&amp;gt;  Render树&lt;ul&gt;
+&lt;li&gt;结合dom树和样式树，生成渲染树&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;layout 根据渲染树布局&lt;/li&gt;
+&lt;li&gt;Gup 绘制：根据样式进行页面绘制&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;解析dom遇到js代码的过程：因为dom解析和js执行是两个引擎完成，为防止渲染发生不可预知的错误，js引擎和渲染引擎是互斥的，所以会阻断dom解析&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;阻断dom解析&lt;/li&gt;
+&lt;li&gt;下载并执行js&lt;/li&gt;
+&lt;li&gt;继续dom解析&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;执行的js操作cssDom的情况：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;阻断dom&lt;/li&gt;
+&lt;li&gt;执行js(操作css)&lt;/li&gt;
+&lt;li&gt;下载css并解析cssDom&lt;/li&gt;
+&lt;li&gt;执行js&lt;/li&gt;
+&lt;li&gt;继续dom解析&lt;/li&gt;
+&lt;/ul&gt;
+</div>
         
     </div>
 

@@ -47,8 +47,105 @@
         
     </div>
     <div class="post-content">
-          
-        <div></div>
+         
+         
+        
+        <div>&lt;h4 id=&#34;基本规则&#34;&gt;&lt;a href=&#34;#基本规则&#34; class=&#34;headerlink&#34; title=&#34;基本规则&#34;&gt;&lt;/a&gt;基本规则&lt;/h4&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;single char(单字符)&lt;/th&gt;
+&lt;th&gt;quantifiers(数量)&lt;/th&gt;
+&lt;th&gt;position(位置)&lt;/th&gt;
+&lt;th&gt;flag&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;\d 匹配数字&lt;/td&gt;
+&lt;td&gt;* 0 个或多个&lt;/td&gt;
+&lt;td&gt;^匹配一行的开头&lt;/td&gt;
+&lt;td&gt;g 全局匹配&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;\w 匹配字母数字&lt;/td&gt;
+&lt;td&gt;+ 1 个或多个 至少一个&lt;/td&gt;
+&lt;td&gt;$匹配一行的结尾&lt;/td&gt;
+&lt;td&gt;i 忽略大小写&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;\W 匹配非数字字母&lt;/td&gt;
+&lt;td&gt;? 匹配 0 个或 1 个&lt;/td&gt;
+&lt;td&gt;\b 单词结界&lt;/td&gt;
+&lt;td&gt;m 多行匹配&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;\s 匹配空格&lt;/td&gt;
+&lt;td&gt;{min,max} 出现次数在范围内的&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;\S 匹配非空格&lt;/td&gt;
+&lt;td&gt;{n} 出现 n 次的&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;. 匹配任意字符&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;h5 id=&#34;字符分类&#34;&gt;&lt;a href=&#34;#字符分类&#34; class=&#34;headerlink&#34; title=&#34;字符分类[]&#34;&gt;&lt;/a&gt;字符分类[]&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;用来表示逻辑关系或，[abc]表示匹配 a 或 b 或 c&lt;/li&gt;
+&lt;li&gt;字符分类里边的特殊字符不需要转义 [.()]&lt;/li&gt;
+&lt;li&gt;当连字符不是第一个字符时 [a-z] 表示匹配从 a 到 z 的任意字符&lt;/li&gt;
+&lt;li&gt;^在字符分类里表示取反 [^ab] 表示匹配非 a 非 b 的任意字符&lt;/li&gt;
+&lt;li&gt;()也可以表示逻辑或 (a|b|c)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;分组捕获&#34;&gt;&lt;a href=&#34;#分组捕获&#34; class=&#34;headerlink&#34; title=&#34;分组捕获()&#34;&gt;&lt;/a&gt;分组捕获()&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;每一个()都是一个组 0 代表整个匹配项 分组编号从 1 开始&lt;/li&gt;
+&lt;li&gt;在进行匹配后的操作时可以通过$1 $2 拿到匹配到的分组 $0 表示整个字符串&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;//把手机号变成通用的 只保留区号&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;let&lt;/span&gt; reg = &lt;span class=&#34;regexp&#34;&gt;/(\d&amp;#123;3&amp;#125;)[.-](\d&amp;#123;3&amp;#125;)[.-](\d&amp;#123;4&amp;#125;)/&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;212-555-1234&amp;quot;&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;replace&lt;/span&gt;(reg, &lt;span class=&#34;string&#34;&gt;&amp;quot;$1-xxx-xxxx&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;//交换单词&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;shiffina, Daniel&amp;quot;&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;replace&lt;/span&gt;(&lt;span class=&#34;regexp&#34;&gt;/(\w+),\s(\w+)/&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&amp;quot;$2, $1&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;如果在正则里边就拿到匹配的分组 可以通过分组编号拿到&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; reg = &lt;span class=&#34;regexp&#34;&gt;/\b(\w+)\s\1\b/&lt;/span&gt;; &lt;span class=&#34;comment&#34;&gt;//匹配连续的相同的单词&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;this is is age&amp;quot;&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;replace&lt;/span&gt;(reg, &lt;span class=&#34;string&#34;&gt;&amp;quot;$1&amp;quot;&lt;/span&gt;); &lt;span class=&#34;comment&#34;&gt;//this is age&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;贪婪的*，如果使用*去匹配 会一直匹配到最后一个&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;let&lt;/span&gt; reg = &lt;span class=&#34;regexp&#34;&gt;/\[.*\]/&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;[baidu]http://www.baodu.com [google]&amp;quot;&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;replace&lt;/span&gt;(reg, &lt;span class=&#34;string&#34;&gt;&amp;quot;&amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;&amp;quot;&lt;/span&gt;); &lt;span class=&#34;comment&#34;&gt;//&amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;//*后边?去掉贪婪模式&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;let&lt;/span&gt; reg2 = &lt;span class=&#34;regexp&#34;&gt;/\[.*?\]/&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;[baidu]http://www.baodu.com [google]&amp;quot;&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;replace&lt;/span&gt;(reg2, &lt;span class=&#34;string&#34;&gt;&amp;quot;&amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;&amp;quot;&lt;/span&gt;); &lt;span class=&#34;comment&#34;&gt;//&amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;http://www.baodu.com [google]&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h5 id=&#34;正则在-js-中的应用&#34;&gt;&lt;a href=&#34;#正则在-js-中的应用&#34; class=&#34;headerlink&#34; title=&#34;正则在 js 中的应用&#34;&gt;&lt;/a&gt;正则在 js 中的应用&lt;/h5&gt;&lt;p&gt;&lt;strong&gt;如何是全局查找(&amp;#x2F;g)，正则表达式方法的执行都会改变表达式的 lastIndex(下一个匹配的起始索引值)，下一次的执行会从 lastIndex 开始匹配&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;reg.test 返回 boolean 测试是不是通过正则规则&lt;/li&gt;
+&lt;li&gt;str.match 返回匹配到的内容 默认返回第一个 有分组的话数组的第二个元素起就是匹配到的分组&lt;/li&gt;
+&lt;li&gt;reg.exec(str) 每次调用，返回一个匹配的结果 匹配结果和分组以数组的形式返回&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; str = &lt;span class=&#34;string&#34;&gt;&amp;quot;Here is a Phone Number 111-2313 and 133-2311&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; srg = &lt;span class=&#34;regexp&#34;&gt;/(\d&amp;#123;3&amp;#125;)[-.]\d&amp;#123;4&amp;#125;/g&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; result = srg.&lt;span class=&#34;title function_&#34;&gt;exec&lt;/span&gt;(str);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;while&lt;/span&gt; (result !== &lt;span class=&#34;literal&#34;&gt;null&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;variable language_&#34;&gt;console&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;log&lt;/span&gt;(result);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  result = srg.&lt;span class=&#34;title function_&#34;&gt;exec&lt;/span&gt;(str);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;str.split(str|reg) 按匹配项分割字符串&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; reg = &lt;span class=&#34;regexp&#34;&gt;/[,.?!\s]+/&lt;/span&gt;; &lt;span class=&#34;comment&#34;&gt;//按单词分割&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; reg = &lt;span class=&#34;regexp&#34;&gt;/([,.?!]+)/&lt;/span&gt;; &lt;span class=&#34;comment&#34;&gt;//按句子分割并保留分割符&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;str.replace(reg,str|fn) 查找替换 返回替换后的值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; reg = &lt;span class=&#34;regexp&#34;&gt;/&amp;lt;\/?.+?\/?&amp;gt;/g&lt;/span&gt;; &lt;span class=&#34;comment&#34;&gt;//匹配所有html标签 支持嵌套&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;//找出出现次数最多的字符&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; str = &lt;span class=&#34;string&#34;&gt;&amp;quot;aabbsbaabbabaslld&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; a = str.&lt;span class=&#34;title function_&#34;&gt;split&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt;).&lt;span class=&#34;title function_&#34;&gt;sort&lt;/span&gt;().&lt;span class=&#34;title function_&#34;&gt;join&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; max = &lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; char = &lt;span class=&#34;string&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;a.&lt;span class=&#34;title function_&#34;&gt;replace&lt;/span&gt;(&lt;span class=&#34;regexp&#34;&gt;/(\w)\1+/g&lt;/span&gt;, &lt;span class=&#34;keyword&#34;&gt;function&lt;/span&gt; (&lt;span class=&#34;params&#34;&gt;match, $1&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; (max &amp;lt; match.&lt;span class=&#34;property&#34;&gt;length&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    max = match.&lt;span class=&#34;property&#34;&gt;length&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    char = match[&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; match;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;//or&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;var&lt;/span&gt; arr = a.&lt;span class=&#34;title function_&#34;&gt;replace&lt;/span&gt;(&lt;span class=&#34;regexp&#34;&gt;/(\w)\1+/g&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;arr.&lt;span class=&#34;title function_&#34;&gt;sort&lt;/span&gt;(&lt;span class=&#34;keyword&#34;&gt;function&lt;/span&gt; (&lt;span class=&#34;params&#34;&gt;a, b&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; b.&lt;span class=&#34;property&#34;&gt;length&lt;/span&gt; - a.&lt;span class=&#34;property&#34;&gt;length&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;max = arr[&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;].&lt;span class=&#34;property&#34;&gt;length&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;char = arr[&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;][&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&#34;QA&#34;&gt;&lt;a href=&#34;#QA&#34; class=&#34;headerlink&#34; title=&#34;QA&#34;&gt;&lt;/a&gt;QA&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;JS 正则为什么 exec 会返回 null, 先输出 test 都返回 true 了，而 exec 为 null?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果正则表达式设置了全局标志，test() 的执行会改变正则表达式 lastIndex 属性。连续的执行 test()方法，后续的执行将会从 lastIndex 处开始匹配字符串，(exec() 同样改变正则本身的 lastIndex 属性值).&lt;/p&gt;
+&lt;/blockquote&gt;
+</div>
         
     </div>
 

@@ -45,8 +45,99 @@
         
     </div>
     <div class="post-content">
-          
-        <div></div>
+         
+         
+        
+        <div>&lt;h4 id=&#34;常见的几种监控类型&#34;&gt;&lt;a href=&#34;#常见的几种监控类型&#34; class=&#34;headerlink&#34; title=&#34;常见的几种监控类型&#34;&gt;&lt;/a&gt;常见的几种监控类型&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;用户行为监控&lt;/li&gt;
+&lt;li&gt;网站异常监控&lt;/li&gt;
+&lt;li&gt;网站性能监控&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;用户行为监控&#34;&gt;&lt;a href=&#34;#用户行为监控&#34; class=&#34;headerlink&#34; title=&#34;用户行为监控&#34;&gt;&lt;/a&gt;用户行为监控&lt;/h5&gt;&lt;p&gt;一般大型的网站为了对产品的体验进行更好的优化和改进，所以会采用监控的方式更细致的对用户行为和习惯进行分析，来收集用户习惯和喜好，进行算法的分析，达到个性化的推送和精准的广告投放。常见方式为前端埋点(打点)上报用户行为。&lt;/p&gt;
+&lt;h5 id=&#34;网站异常监控&#34;&gt;&lt;a href=&#34;#网站异常监控&#34; class=&#34;headerlink&#34; title=&#34;网站异常监控&#34;&gt;&lt;/a&gt;网站异常监控&lt;/h5&gt;&lt;p&gt;一般的网站在进行上线前会在不同的环境进行多轮的测试，已保证在大部分情况下该网站运行良好、功能可用。但网络环境错综复杂，测试环境不可能百分百的模拟到，所以我们需要进行对网站的运行异常进行监控，及时的发现问题和解决用户使用的体验。&lt;/p&gt;
+&lt;h5 id=&#34;网站性能监控&#34;&gt;&lt;a href=&#34;#网站性能监控&#34; class=&#34;headerlink&#34; title=&#34;网站性能监控&#34;&gt;&lt;/a&gt;网站性能监控&lt;/h5&gt;&lt;p&gt;在互联网刚刚出现的时代，开发人员们只需要保证功能可用即可，但是随着互联网高速的发展，从桌面时代到移动时代，从2g到5g，人们的娱乐的方式在大大的改变，也不会再满足于当初的一张图片加载几十秒、网站打开一直等待的速度。所以我们需要改变，需要对网站进行优化，提升用户体验，否则只能被用户所淘汰。所以就需要对网站的打开时间，响应时间等性能相关进行监控，来分析进行如何更好的优化和改进。&lt;/p&gt;
+&lt;h4 id=&#34;网站异常监控-1&#34;&gt;&lt;a href=&#34;#网站异常监控-1&#34; class=&#34;headerlink&#34; title=&#34;网站异常监控&#34;&gt;&lt;/a&gt;网站异常监控&lt;/h4&gt;&lt;p&gt;一个监控系统通常分为四个部分：日志采集、日志存储、统计和分析、报告和警告&lt;/p&gt;
+&lt;p&gt;日志采集：一般在本地先做一定的处理，然后上报&lt;br&gt;日志存储：BE收到前端数据后进行处理后进行存储&lt;br&gt;统计和分析：分为机器自动分析和人工分析。机器分析就是根据预设的条件和算法，对日志进行分析和筛选，触发对应的报警。人工就是根据可视化的数据面板，查看日志数据，根据信息，发现异常问题根源。&lt;br&gt;报告和警告：分为告警和预警。告警按照一定的级别自动报警，通过设定的渠道，按照一定的触发规则进行。预警则在异常发生前，提前预判，给出警告。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;网站异常的几种类型&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;出错：页面展现与预期不符的&lt;/li&gt;
+&lt;li&gt;呆滞：操作无响应的现象，局部功能不可用&lt;/li&gt;
+&lt;li&gt;损坏：界面出现无法实现操作目的的现象&lt;/li&gt;
+&lt;li&gt;假死：界面出现卡顿，无法对任何功能进行使用的现象&lt;/li&gt;
+&lt;li&gt;崩溃：应用出现经常性自动退出或无法操作的现象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;网站异常的原因&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;逻辑错误：逻辑判断、js对象操作、事件绑定顺序、调用栈顺序错误&lt;/li&gt;
+&lt;li&gt;数据类型错误：错误读取property、使用不存在的方法、函数未传参&lt;/li&gt;
+&lt;li&gt;语法出错&lt;/li&gt;
+&lt;li&gt;网络错误、服务器500前端未做错误处理&lt;/li&gt;
+&lt;li&gt;系统错误：浏览器不兼容、内存不够&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;异常日志采集&lt;/p&gt;
+&lt;p&gt;1.采集内容：4W原则：WHO did WHAT and get WHICH exception in WHICH environment?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户信息&lt;/li&gt;
+&lt;li&gt;行为信息&lt;/li&gt;
+&lt;li&gt;异常信息&lt;/li&gt;
+&lt;li&gt;环境信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;2.采集方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;全局捕获：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;全局监听：window.addEventListener(‘error’) &amp;#x2F; window.addEventListener(“unhandledrejection”) &amp;#x2F; document.addEventListener(‘click’) 全局错误上报&lt;/li&gt;
+&lt;li&gt;框架级别：全局interceptor进行拦截上报&lt;/li&gt;
+&lt;li&gt;全局封装：调用时自动捕获异常&lt;/li&gt;
+&lt;li&gt;重写错误监听方法：对onerror重写，使用方法不变也可以捕获，更易使用    js运行错误时触发上报&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;window.onerror = &lt;span class=&#34;keyword&#34;&gt;function&lt;/span&gt;(message, &lt;span class=&#34;built_in&#34;&gt;source&lt;/span&gt;, lineno, colno, error) &amp;#123; ... &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;函数参数：&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- message：错误信息（字符串）。可用于HTML onerror=&lt;span class=&#34;string&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt;处理程序中的event。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- &lt;span class=&#34;built_in&#34;&gt;source&lt;/span&gt;：发生错误的脚本URL（字符串）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- lineno：发生错误的行号（数字）打包压缩后的代码根据sourceMap获取&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- colno：发生错误的列号（数字）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- error：Error对象&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;若该函数返回&lt;span class=&#34;literal&#34;&gt;true&lt;/span&gt;，则阻止执行默认事件处理函数，如异常信息不会在console中打印。没有返回值或者返回值为&lt;span class=&#34;literal&#34;&gt;false&lt;/span&gt;的时候，异常信息会在console中打印&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;单点捕获：全局捕获的补充，在业务中对单个代码块进行包裹，或者在逻辑中进行打点，实现有针对性的捕获。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;try-catch&lt;/li&gt;
+&lt;li&gt;公共的异常收集方法，异常时调用&lt;/li&gt;
+&lt;li&gt;高阶函数：对原函数进行包裹，返回结果相同，只是在异常时会捕获异常。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;异常录制&lt;br&gt;往往有时候有异常信息我们也不足以发现错误的本质，所以我们希望对异常现场进行还原。通过录制，从时间和空间来记录异常发生前到发生的整个过程，方便我们更好的找到问题的根源。就是通过技术手段，对用户行为进行记录，先存储在用户本地进行分析过滤，一段时间内将用户产生的event和action进行上报。当异常发生后，我们从数据库拿到数据，进行行为的模拟，还原异常情景。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;日志存储：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;前端：由于用户操作频繁，我们不可能实时上报，那无异于自己在对日志服务器做DDos攻击，所以我们需要首先在前端进行一个数据的持久化的存储。然后在前端进行日志整理，根据异常级别进行索引分类，然后决定是否要批量上报还是一次全部上报。&lt;/li&gt;
+&lt;li&gt;服务端：一般会通过单独的日志服务器对上报的日志进行接收，然后还需要对日志的安全性、合法性、有效性进行筛选，防止被攻击。再经过处理后进行服务器存储。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;统计和分析：&lt;br&gt;根据日志的信息，从用户、行为、异常、环境的各个纬度进行分析，进行异常级别的标注。然后进行可视化的展示，方便管理员和开发者及时可是发现问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;报告和警告&lt;br&gt;根据自定义的触发条件，判断是否需要进行告警处理。推送告警信息到微信、邮箱、短信等各种方式。更加高级的是可以生成报表、产生bug工单，极大的提升了错误的处理效率并记录问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;修复异常&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;sourceMap方式发现问题的源码位置，防止源码外漏，可以把souceMap文件发布在内网 使用nginx进行控制&lt;/li&gt;
+&lt;li&gt;智能修复：严格的数据模型，当数据返回时，进行模型校验&lt;/li&gt;
+&lt;li&gt;预警信息：根据异常的规律，当下次该类型异常发生前进行预警，及时修复&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;异常测试：在测试阶段就进行异常操作进行测试，发现异常类型并统计，在实际用户发生时进行预警。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;网站性能监控-1&#34;&gt;&lt;a href=&#34;#网站性能监控-1&#34; class=&#34;headerlink&#34; title=&#34;网站性能监控&#34;&gt;&lt;/a&gt;网站性能监控&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;运行时性能：文件级、模块级、函数级、算法级&lt;/li&gt;
+&lt;li&gt;网络请求速率&lt;/li&gt;
+&lt;li&gt;系统性能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;API-Monitor&#34;&gt;&lt;a href=&#34;#API-Monitor&#34; class=&#34;headerlink&#34; title=&#34;API Monitor&#34;&gt;&lt;/a&gt;API Monitor&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;稳定性监控&lt;/li&gt;
+&lt;li&gt;数据格式和类型&lt;/li&gt;
+&lt;li&gt;报错监控&lt;/li&gt;
+&lt;li&gt;数据准确性监控&lt;/li&gt;
+&lt;/ul&gt;
+</div>
         
     </div>
 

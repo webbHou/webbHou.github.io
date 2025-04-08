@@ -27,7 +27,7 @@ date: 2020-10-30 18:47:23
 
 #### 简介及实用性
 
-TypeScript的核心原则之一是对值所具有的结构进行类型检查
+TypeScript 的核心原则之一是对值所具有的结构进行类型检查
 
 - 接口定义 [pont](https://github.com/alibaba/pont)
 - 类型推断、健壮编码
@@ -38,27 +38,27 @@ TypeScript的核心原则之一是对值所具有的结构进行类型检查
 - number
 - string
 - array：number[] | Array<number>
-- Tuple元祖：表示已知元素类型和数量的数组
+- Tuple 元祖：表示已知元素类型和数量的数组
 - enum：枚举
 - any：未知类型时
-- void：没有类型，当一个函数没有返回值时表示   void的类型只能赋值undefined|null
-- null和undefined
+- void：没有类型，当一个函数没有返回值时表示 void 的类型只能赋值 undefined|null
+- null 和 undefined
 - Never：永不到达的值
 - Object： 非原始类型
-- 类型断言：已知某值的类型时，跳过检查，更快的编译  <number>Value | Value as string
+- 类型断言：已知某值的类型时，跳过检查，更快的编译 <number>Value | Value as string
 
 #### 高级类型
 
 - 交叉类型 &
 - 联合类型 |
 - 类型保护：联合类型时为了确切的知道类型时 typeof instanceof 三元表达式
-- 为null类型：可选参数 可选属性
+- 为 null 类型：可选参数 可选属性
 - 类型别名：type
-- 多态this类型
+- 多态 this 类型
 - 索引类型：对函数参数进行限制
 - 映射类型：把一个对象映射编程想要的接口类型
 
-#### 接口interface
+#### 接口 interface
 
 接口的作用就是为这些类型命名和为你的代码或第三方代码定义契约
 
@@ -75,20 +75,20 @@ TypeScript的核心原则之一是对值所具有的结构进行类型检查
 
 - public
 - private：不能在类外访问，子类(派生类)也不可访问
-- protected：跟private不同在可以在子类中访问
+- protected：跟 private 不同在可以在子类中访问
 - readonly：只读属性必须在声明时或构造函数里被初始化。
-- get/set：TypeScript支持通过getters/setters来截取对对象成员的访问。 它能帮助你有效的控制对对象成员的访问。
+- get/set：TypeScript 支持通过 getters/setters 来截取对对象成员的访问。 它能帮助你有效的控制对对象成员的访问。
 - static：静态属性 必须在使用时加上类名来访问
-- abstract：定义抽象类抽象方法 不能进行实例化，包含除抽象方法外方法的实现细节  抽象方法必须在派生类中实现
+- abstract：定义抽象类抽象方法 不能进行实例化，包含除抽象方法外方法的实现细节 抽象方法必须在派生类中实现
 - 把类当做接口使用
 
 #### 函数
 
 - 函数类型：定义函数的参数和返回值类型
 - 推断类型：根据函数定义的参数和返回值类型 推断出参数类型
-- 可选参数和默认参数： 不同于js，没有传参就是undefined
+- 可选参数和默认参数： 不同于 js，没有传参就是 undefined
 - 剩余参数：当你不知道有几个参数时 把剩余参数收集到一个变量里
-- 重载：当参数类型不同 返回值也不同时  可以为同一个函数提供多个函数类型定义来进行函数重载 重载后调用会进行正确的类型检查 其他方式会报错
+- 重载：当参数类型不同 返回值也不同时 可以为同一个函数提供多个函数类型定义来进行函数重载 重载后调用会进行正确的类型检查 其他方式会报错
 
 #### 泛型
 
@@ -111,23 +111,23 @@ TypeScript的核心原则之一是对值所具有的结构进行类型检查
 
 #### 模块
 
-声明一个模块来组织代码，方便复用，x.module.ts  
+声明一个模块来组织代码，方便复用，x.module.ts
 
 - 导入：export default
 - 导出：import
-- 声明模块：declare  
+- 声明模块：declare
 
 #### 命名空间
 
 当一个类型关联的方法或类越来越多，为了防止于其他对象产生命名冲突，我们需要把他包裹在命名空间内，而不是在全局命名空间下
 
-- namespace: 命名空间内的接口和类如果需要在外部访问 需要export 否则不能被访问
-- 分离：当代码越来越多时，我们需要把代码进行拆分进行维护，他们还是一个命名空间  只不过在不同文件中  使用时根据依赖关系进行调用 <reference path="module.ts" />  
-- 别名：我们可以用import q = x.y.z给常用的对象起一个短的名字
-- 其他外部js库：为了描述不是用TypeScript编写的类库的类型，我们用外部命名空间声明 通常在name.d.ts里书写
-- 全局类型声明：比如项目API文件声明，可以在global.d.ts中声明实现
+- namespace: 命名空间内的接口和类如果需要在外部访问 需要 export 否则不能被访问
+- 分离：当代码越来越多时，我们需要把代码进行拆分进行维护，他们还是一个命名空间 只不过在不同文件中 使用时根据依赖关系进行调用 <reference path="module.ts" />
+- 别名：我们可以用 import q = x.y.z 给常用的对象起一个短的名字
+- 其他外部 js 库：为了描述不是用 TypeScript 编写的类库的类型，我们用外部命名空间声明 通常在 name.d.ts 里书写
+- 全局类型声明：比如项目 API 文件声明，可以在 global.d.ts 中声明实现
 
-**在 d.ts 声明文件中，任何的 declare 默认就是 global 的了，等同于declare global 的。只有在模块文件中的定义，如果想要全局就使用 declare global**
+**在 d.ts 声明文件中，任何的 declare 默认就是 global 的了，等同于 declare global 的。只有在模块文件中的定义，如果想要全局就使用 declare global**
 
 ### 声明合并
 
@@ -142,44 +142,44 @@ TypeScript的核心原则之一是对值所具有的结构进行类型检查
 
 ##### type & interface
 
-- type：类型别名  
+- type：类型别名
   - 不仅仅能够表示 object、class、function
   - 不能重名（自然不存在同名聚合了），扩展已有的 type 需要创建新 type
   - 支持复杂的类型操作
-  - 联合类型的不能被继承和implements 但可以和interface互相聚合
+  - 联合类型的不能被继承和 implements 但可以和 interface 互相聚合
 - interface：
   - 同名的 interface 自动聚合，也可以跟同名的 class 自动聚合
   - 只能表示 object、class、function 类型
-  - 可以被继承和implements 可以被拓展  所以尽量使用接口代替类型别名
+  - 可以被继承和 implements 可以被拓展 所以尽量使用接口代替类型别名
 
 ### 工程化
 
 #### 开发体验
 
-- [cli脚手架](https://mp.weixin.qq.com/s/3vYbCV84QE5yJbpIYZdmbw)
-- [UI组件库](https://mp.weixin.qq.com/s/nuwSW8cAv0izEk4GIofI7w)：
+- [cli 脚手架](https://mp.weixin.qq.com/s?__biz=Mzg4MTYwMzY1Mw==&mid=2247496177&idx=1&sn=873f713631392f519f5a7cd0f10c3af3&source=41#wechat_redirect)
+- [UI 组件库](https://mp.weixin.qq.com/s/nuwSW8cAv0izEk4GIofI7w)：
   - 文档[vuepress](https://www.vuepress.cn/config/#%E9%85%8D%E7%BD%AE)
-  - [公共组件、发布npm包](https://mp.weixin.qq.com/s/nuwSW8cAv0izEk4GIofI7w)
+  - [公共组件、发布 npm 包](https://mp.weixin.qq.com/s/nuwSW8cAv0izEk4GIofI7w)
 - [前后端合作](https://github.com/alibaba/pont/blob/master/README.md)
 
 #### 代码质量
 
 - 代码规范
   - eslint
-  - 格式规则：可以--fix自动被修复  
-  - 质量规则：可能出现的bug 不能被二次自动修复 需要prettier去处理格式
+  - 格式规则：可以--fix 自动被修复
+  - 质量规则：可能出现的 bug 不能被二次自动修复 需要 prettier 去处理格式
   - prettier
-  typescript
+    typescript
 - 测试：jest
 - husky：哈士奇
-- npm钩子
+- npm 钩子
   - "preinstall": "npx only-allow pnpm" //一行代码统一规范包管理器 指定允许的包管理器
-- git-hooks：git钩子
+- git-hooks：git 钩子
   - pre-commit
   - commit-msg
   - pre-receive
   - post-receive
-- commitlint：git提交规范
+- commitlint：git 提交规范
 - lint-staged：只检测暂存区代码
 
 #### 项目优化
@@ -189,12 +189,12 @@ TypeScript的核心原则之一是对值所具有的结构进行类型检查
 
 ##### 加载优化
 
-- 文件大小：webpack打包：`/** @type {import('webpack').Configuration} */`
+- 文件大小：webpack 打包：`/** @type {import('webpack').Configuration} */`
 - 并发限制：CDN、合并请求、http2.0
-- 缓存：浏览器缓存、DNS缓存、服务器缓存、数据持久化
+- 缓存：浏览器缓存、DNS 缓存、服务器缓存、数据持久化
 - 前端监控：埋点或错误上报
 - 预加载：强依赖包进行预加载
-- http1/2：1.0->1.1 keep alive、断点续传、缓存->2.0二进制传输、多路复用、服务端push
+- http1/2：1.0->1.1 keep alive、断点续传、缓存->2.0 二进制传输、多路复用、服务端 push
 
 ##### 渲染优化
 
@@ -206,8 +206,8 @@ TypeScript的核心原则之一是对值所具有的结构进行类型检查
 #### 前端安全
 
 - https
-  - 相比http多了层TLS协议，相对安全
-- XSS攻击
+  - 相比 http 多了层 TLS 协议，相对安全
+- XSS 攻击
   - 跨站脚本：利用浏览器的输入输出漏洞进行脚本攻击
 - CSRFF
   - 跨站伪装请求：访问第三方站点时，利用用户的登录态调取接口
@@ -216,45 +216,55 @@ TypeScript的核心原则之一是对值所具有的结构进行类型检查
 
 - 非对称加密：有公钥私钥之分，公钥所有人都可以知道，可以将数据用公钥加密，但是将数据解密必须使用私钥解密，私钥只有分发公钥的一方才知道。
 - 对称加密：对称加密就是两边拥有相同的秘钥，两边都知道如何将密文加密解密。
-- TLS协议：传输层和应用层之间，相对http耗时，需要3次握手过程
-- TLS握手：
+- TLS 协议：传输层和应用层之间，相对 http 耗时，需要 3 次握手过程
+- TLS 握手：
   - 客户端发送一个随机值，需要的协议和加密方式
   - 服务端收到客户端的随机值，自己也产生一个随机值，并根据客户端需求的协议和加密方式来使用对应的方式，发送自己的证书（如果需要验证客户端证书需要说明）
   - 客户端收到服务端的证书并验证是否有效，验证通过会再生成一个随机值，通过服务端证书的公钥去加密这个随机值并发送给服务端，如果服务端需要验证客户端证书的话会附带证书
   - 服务端收到加密过的随机值并使用私钥解密获得第三个随机值，这时候两端都拥有了三个随机值，可以通过这三个随机值按照之前约定的加密方式生成密钥，接下来的通信就可以通过该密钥来加密解密
-- 传输：对称加密(TLS握手生成的秘钥进行加密解密)
+- 传输：对称加密(TLS 握手生成的秘钥进行加密解密)
 
-##### XSS攻击:跨站脚本
+##### XSS 攻击:跨站脚本
 
 - 危害
-  - 窃取cookie信息
+
+  - 窃取 cookie 信息
   - 监听用户行为
-  - 修改dom，伪造登录页面
+  - 修改 dom，伪造登录页面
 
 - 类型
+
   - 存储型：黑客输入脚本然后存入该站点数据库，用户访问时请求就包含了恶意脚本，执行就会被窃取用户信息
-  - 反射型：该类型不需要存储在数据库，恶意链接会携带js脚本，然后在页面中执行，触发恶意操作
-  - 基于DOM：通过手段修改dom，html传输中或使用中被劫持，然后修改dom
+  - 反射型：该类型不需要存储在数据库，恶意链接会携带 js 脚本，然后在页面中执行，触发恶意操作
+  - 基于 DOM：通过手段修改 dom，html 传输中或使用中被劫持，然后修改 dom
 
 - 防范
-  - 重要数据httpOnly
+  - 重要数据 httpOnly
   - 对页面上的输入和输出内容进行转义或过滤
-  - 利用CSP（同源策略）：禁止加载或者执行其他域下的脚本
+  - 利用 CSP（同源策略）：禁止加载或者执行其他域下的脚本
 
 ##### CSRF：跨站伪装请求
 
 - 危害
-  - 窃取cookie信息
+
+  - 窃取 cookie 信息
   - 伪装请求来让操作用户数据或财产
 
 - 类型
-  - 伪造get请求（img\src等标签自动发起请求）
-  - 伪造post请求（表单自动提交）
+
+  - 伪造 get 请求（img\src 等标签自动发起请求）
+  - 伪造 post 请求（表单自动提交）
   - 吸引用户点击第三方站点链接
 
 - 防范
   - get 不修改数据
-  - 禁止第三方网站发送cookie：设置cookit的sameSite（Strict|Lax|None）
-  - CSRF Token：第一次请求下发CSRF Token、接口请求携带并校验
+  - 禁止第三方网站发送 cookie：设置 cookit 的 sameSite（Strict|Lax|None）
+  - CSRF Token：第一次请求下发 CSRF Token、接口请求携带并校验
   - 设置白名单，不被第三方请求
   - 请求来源校验（origin、refer：安全原因有时候没有）
+
+#### webhook
+
+当订阅事件发生后，webhook 主动向订阅地址发送 Http 请求，发送消息。其本质就是发布订阅。
+
+你的应用解析请求，并拿到外部消息体进行展示或其他处理。

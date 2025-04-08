@@ -28,20 +28,22 @@
     <div class="post-title">
         <p>Remach学习和实践</p>
         <hr />
+    </div>
+    <div class="post-category-tag">
         
-        <div class="category">
-            page.categories 
+        <span class="category">
+            分类： 
             <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
             
-        </div>
+        </span>
          
-        <div class="category">
-            page.tags 
+        <span class="tag">
+            标签： 
             <a href="/tags/javascript/">javascript</a>
             
             <a href="/tags/rematch/">rematch</a>
             
-        </div>
+        </span>
         
     </div>
     <div class="post-content"><h4 id="什么是rematch"><a href="#什么是rematch" class="headerlink" title="什么是rematch"></a>什么是rematch</h4><h4 id="为什么不是redux"><a href="#为什么不是redux" class="headerlink" title="为什么不是redux"></a>为什么不是redux</h4><p>在redux中状态管理的流程如下:<br>1.首先需要页面发起一个dispatch函数，接受一个action参数，<br>2.state中定义这个action 并导入都页面中<br>3.action中对异步或逻辑进行处理，然后再dispatch一个action<br>4.定义reducer然后 收集action，并处理<br>5.createStore，对所有的reducer进行合并处理，并添加中间件</p>

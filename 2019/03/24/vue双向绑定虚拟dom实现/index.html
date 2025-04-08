@@ -28,18 +28,20 @@
     <div class="post-title">
         <p>简易版vue双向绑定原理实现</p>
         <hr />
+    </div>
+    <div class="post-category-tag">
         
-        <div class="category">
-            page.categories 
+        <span class="category">
+            分类： 
             <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
             
-        </div>
+        </span>
          
-        <div class="category">
-            page.tags 
+        <span class="tag">
+            标签： 
             <a href="/tags/javascript/">javascript</a>
             
-        </div>
+        </span>
         
     </div>
     <div class="post-content"><h3 id="简易版vue双向绑定原理实现"><a href="#简易版vue双向绑定原理实现" class="headerlink" title="简易版vue双向绑定原理实现"></a>简易版vue双向绑定原理实现</h3><h4 id="初始化数据遍历属性"><a href="#初始化数据遍历属性" class="headerlink" title="初始化数据遍历属性"></a>初始化数据遍历属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> observe(obj) &#123;</span><br><span class="line">    // 判断类型</span><br><span class="line">    <span class="keyword">if</span> (!obj || typeof obj !== <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">        <span class="built_in">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    Object.keys(obj).forEach(key =&gt; &#123;</span><br><span class="line">        defineReactive(obj, key, obj[key])</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

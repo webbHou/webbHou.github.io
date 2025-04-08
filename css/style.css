@@ -110,6 +110,15 @@ hr {
   line-height: 40px;
   margin-bottom: 10px;
 }
+.posts .post-category-tag {
+  font-size: 14px;
+}
+.posts .post-category-tag .tag {
+  margin-left: 20px;
+}
+.posts .post-category-tag a {
+  color: #699be9;
+}
 .posts .post-content a {
   color: #699be9;
 }

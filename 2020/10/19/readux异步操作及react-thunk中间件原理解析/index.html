@@ -28,18 +28,20 @@
     <div class="post-title">
         <p>readux异步操作及react-thunk中间件原理解析</p>
         <hr />
+    </div>
+    <div class="post-category-tag">
         
-        <div class="category">
-            page.categories 
+        <span class="category">
+            分类： 
             <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
             
-        </div>
+        </span>
          
-        <div class="category">
-            page.tags 
+        <span class="tag">
+            标签： 
             <a href="/tags/javascript/">javascript</a>
             
-        </div>
+        </span>
         
     </div>
     <div class="post-content"><h5 id="redux的异步操作是怎么进行的"><a href="#redux的异步操作是怎么进行的" class="headerlink" title="redux的异步操作是怎么进行的"></a>redux的异步操作是怎么进行的</h5><p>用过redux的应该都知道，redux的工作流是同步的过程，用户在页面触发动作dispatch一个action，然后被分配到对应的reducer，然后根据action的type进行同步的处理，然后更新store，subscribe监控store的改变对页面的state进行更新。</p>

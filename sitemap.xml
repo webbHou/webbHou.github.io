@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://webbhou.github.io/category/index.html</loc>
+    
+    <lastmod>2025-04-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://webbhou.github.io/tag/index.html</loc>
+    
+    <lastmod>2025-04-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://webbhou.github.io/2019/02/18/%E9%9D%A2%E8%AF%95%E7%A7%98%E7%B1%8D-htmlcss%E7%AF%87/</loc>
     
     <lastmod>2025-04-08</lastmod>

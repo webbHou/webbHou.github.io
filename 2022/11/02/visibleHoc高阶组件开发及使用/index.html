@@ -28,18 +28,20 @@
     <div class="post-title">
         <p>visibleHoc高阶组件开发及使用</p>
         <hr />
+    </div>
+    <div class="post-category-tag">
         
-        <div class="category">
-            page.categories 
+        <span class="category">
+            分类： 
             <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
             
-        </div>
+        </span>
          
-        <div class="category">
-            page.tags 
+        <span class="tag">
+            标签： 
             <a href="/tags/javascript/">javascript</a>
             
-        </div>
+        </span>
         
     </div>
     <div class="post-content"><h2 id="正常Modal的使用示例"><a href="#正常Modal的使用示例" class="headerlink" title="正常Modal的使用示例"></a>正常Modal的使用示例</h2><h3 id="定义一个普通Modal"><a href="#定义一个普通Modal" class="headerlink" title="定义一个普通Modal"></a>定义一个普通Modal</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const ModalNormal = (props) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    // 关闭Modal</span><br><span class="line">    const hideModal = () =&gt; &#123;</span><br><span class="line">        props.switchVisible(false)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">        &lt;Modal</span><br><span class="line">            title=&quot;普通弹出Modal&quot;</span><br><span class="line">            visible=&#123;props.visible&#125;</span><br><span class="line">           &gt;</span><br><span class="line">            普通弹出Modal</span><br><span class="line">        &lt;/Modal&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default ModalNormal</span><br></pre></td></tr></table></figure>

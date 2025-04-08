@@ -28,20 +28,22 @@
     <div class="post-title">
         <p>小程序常用操作</p>
         <hr />
+    </div>
+    <div class="post-category-tag">
         
-        <div class="category">
-            page.categories 
+        <span class="category">
+            分类： 
             <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
             
-        </div>
+        </span>
          
-        <div class="category">
-            page.tags 
+        <span class="tag">
+            标签： 
             <a href="/tags/javascript/">javascript</a>
             
             <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
             
-        </div>
+        </span>
         
     </div>
     <div class="post-content"><h2 id="小程序业务常用操作"><a href="#小程序业务常用操作" class="headerlink" title="小程序业务常用操作"></a>小程序业务常用操作</h2><h3 id="上拉加载和下拉刷新"><a href="#上拉加载和下拉刷新" class="headerlink" title="上拉加载和下拉刷新:"></a>上拉加载和下拉刷新:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">方法一：onPullDownRefresh和onReachBottom方法实现小程序下拉加载和上拉刷新,在pages页xx.json设置<span class="string">&quot;enablePullDownRefresh&quot;</span>: <span class="string">&quot;true&quot;</span></span><br><span class="line">方法二：在scroll-view里设定bindscrolltoupper和bindscrolltolower实现微信小程序下拉,绑定自定义方法实现</span><br></pre></td></tr></table></figure>

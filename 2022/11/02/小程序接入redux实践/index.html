@@ -28,18 +28,20 @@
     <div class="post-title">
         <p>小程序接入redux实践</p>
         <hr />
+    </div>
+    <div class="post-category-tag">
         
-        <div class="category">
-            page.categories 
+        <span class="category">
+            分类： 
             <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
             
-        </div>
+        </span>
          
-        <div class="category">
-            page.tags 
+        <span class="tag">
+            标签： 
             <a href="/tags/javascript/">javascript</a>
             
-        </div>
+        </span>
         
     </div>
     <div class="post-content"><h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>小程序项目业务体量日渐庞大，越来越需要全局状态管理工具来实现数据管理及更新。 原先使用的<code>storage</code>及小程序的<code>globalData</code>都无法满足现有的业务需求，遂需要新的全局状态管理工具。<br>需求如下：</p>

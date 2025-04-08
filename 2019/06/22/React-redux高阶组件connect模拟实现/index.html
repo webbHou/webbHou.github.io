@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2019/06/22/React-redux高阶组件connect模拟实现/" class="leancloud_visitors" data-flag-title="React-redux高阶组件connect模拟实现">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2019/06/22/React-redux高阶组件connect模拟实现/"></span>
@@ -57,7 +57,7 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-         <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 模拟connect</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">import React,&#123; Component &#125; from <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line">import &#123; PropTypes &#125; from <span class="string">'prop-types'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const connect = (mapStateToProps,mapDispatchToprops) =&gt; (Wrapcompont) =&gt;&#123;</span><br><span class="line">    <span class="built_in">return</span> class extends Component&#123;</span><br><span class="line">        state=&#123;</span><br><span class="line">            allprops:&#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        static contextTypes = &#123;</span><br><span class="line">            store: PropTypes.object</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="title">componentDidMount</span></span>()&#123;</span><br><span class="line">            const store = this.context.store;</span><br><span class="line">            console.log(this.context)</span><br><span class="line">            this._update();</span><br><span class="line">            store.subscribe(() =&gt; this._update());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //数据更新页面更新</span><br><span class="line">        <span class="function"><span class="title">_update</span></span>()&#123;</span><br><span class="line">            const store = this.context.store;</span><br><span class="line">            const state = mapStateToProps?mapStateToProps(store.getState()):&#123;&#125;;</span><br><span class="line">            const dispatch = mapDispatchToprops?mapDispatchToprops(store.dispatch):&#123;&#125;;</span><br><span class="line">            this.setState(&#123;</span><br><span class="line">                allprops:&#123;...state,...dispatch,...this.props&#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="title">render</span></span>()&#123;</span><br><span class="line">            <span class="built_in">return</span> &lt;Wrapcompont &#123;...this.state.allprops&#125; /&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default connect</span><br></pre></td></tr></table></figure>
+         <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 模拟connect</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">import React,&#123; Component &#125; from <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line">import &#123; PropTypes &#125; from <span class="string">&#x27;prop-types&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const connect = (mapStateToProps,mapDispatchToprops) =&gt; (Wrapcompont) =&gt;&#123;</span><br><span class="line">    <span class="built_in">return</span> class extends Component&#123;</span><br><span class="line">        state=&#123;</span><br><span class="line">            allprops:&#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        static contextTypes = &#123;</span><br><span class="line">            store: PropTypes.object</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="title">componentDidMount</span></span>()&#123;</span><br><span class="line">            const store = this.context.store;</span><br><span class="line">            console.log(this.context)</span><br><span class="line">            this._update();</span><br><span class="line">            store.subscribe(() =&gt; this._update());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //数据更新页面更新</span><br><span class="line">        <span class="function"><span class="title">_update</span></span>()&#123;</span><br><span class="line">            const store = this.context.store;</span><br><span class="line">            const state = mapStateToProps?mapStateToProps(store.getState()):&#123;&#125;;</span><br><span class="line">            const dispatch = mapDispatchToprops?mapDispatchToprops(store.dispatch):&#123;&#125;;</span><br><span class="line">            this.setState(&#123;</span><br><span class="line">                allprops:&#123;...state,...dispatch,...this.props&#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="title">render</span></span>()&#123;</span><br><span class="line">            <span class="built_in">return</span> &lt;Wrapcompont &#123;...this.state.allprops&#125; /&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default connect</span><br></pre></td></tr></table></figure>
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
             <div class="suffix-box-left">
@@ -66,7 +66,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2019/06/22/React-redux高阶组件connect模拟实现/" target="_blank">React-redux高阶组件connect模拟实现</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2019/06/22/React-redux%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6connect%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/" target="_blank">React-redux高阶组件connect模拟实现</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -83,7 +83,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/js常见问题/">js常见问题</a>
+                    <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
                 
             </div>
         
@@ -97,11 +97,11 @@
         
         <div class="article-prev-next">
             
-                <a href="/2020/04/10/前端应该了解的http知识/" class="prev-prefix">« </a> 上一篇：    <a href="/2020/04/10/前端应该了解的http知识/" title="发布于 2020-04-10 05:58">前端应该了解的http知识</a>
+                <a href="/2020/04/10/%E5%89%8D%E7%AB%AF%E5%BA%94%E8%AF%A5%E4%BA%86%E8%A7%A3%E7%9A%84http%E7%9F%A5%E8%AF%86/" class="prev-prefix">« </a> 上一篇：    <a href="/2020/04/10/%E5%89%8D%E7%AB%AF%E5%BA%94%E8%AF%A5%E4%BA%86%E8%A7%A3%E7%9A%84http%E7%9F%A5%E8%AF%86/" title="发布于 2020-04-10 05:58">前端应该了解的http知识</a>
                 <br>
             
             
-                <a href="/2019/05/16/单页面应用路由原理与实现浅析/" class="next-prefix">» </a> 下一篇：    <a href="/2019/05/16/单页面应用路由原理与实现浅析/" title="发布于 2019-05-16 10:15">单页面应用路由原理与实现浅析</a>
+                <a href="/2019/05/16/%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8%E8%B7%AF%E7%94%B1%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0%E6%B5%85%E6%9E%90/" class="next-prefix">» </a> 下一篇：    <a href="/2019/05/16/%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8%E8%B7%AF%E7%94%B1%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0%E6%B5%85%E6%9E%90/" title="发布于 2019-05-16 10:15">单页面应用路由原理与实现浅析</a>
             
         </div>
     </div>
@@ -135,7 +135,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

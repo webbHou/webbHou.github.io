@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2020/07/16/数据结构与算法/" class="leancloud_visitors" data-flag-title="数据结构与算法">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2020/07/16/数据结构与算法/"></span>
@@ -63,10 +63,10 @@
 <li>算法：就是这组数据的操作方法，找一本书，你可以一本一本去找，也可以按照类别去找，或者按照编号去找，这些方法都属于算法。</li>
 </ul>
 <h4 id="时间复杂度和空间复杂度"><a href="#时间复杂度和空间复杂度" class="headerlink" title="时间复杂度和空间复杂度"></a>时间复杂度和空间复杂度</h4><ul>
-<li>时间复杂度：一个程序执行消耗的时间，等执行次数趋于无限大时，常数被忽略不计，T(n) = O(n)</li>
+<li>时间复杂度：一个程序执行消耗的时间，等执行次数趋于无限大时，常数被忽略不计，T(n) &#x3D; O(n)</li>
 <li>空间复杂度：一个程序执行所占用的内存空间，</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//出现次数最多的字符</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">'aboocdfhhg'</span>;</span><br><span class="line"><span class="keyword">let</span> a = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">str.replace(<span class="regexp">/(.)/</span>,<span class="function"><span class="keyword">function</span>(<span class="params">$<span class="number">1</span>,$<span class="number">2</span>,$<span class="number">3</span>,$<span class="number">4</span></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log($<span class="number">2</span>)</span><br><span class="line">  <span class="keyword">if</span>(a[$<span class="number">2</span>])&#123;</span><br><span class="line">    a[$<span class="number">2</span>] += <span class="number">1</span>;</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    a[$<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> $<span class="number">4.</span>slice(<span class="number">0</span>,$<span class="number">3</span>).indexOf($<span class="number">2</span>)!==<span class="number">-1</span>?<span class="string">''</span>:$<span class="number">2</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//最长不重复</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">'aboocdfhhg'</span>;</span><br><span class="line"><span class="keyword">let</span> max = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;str.length;i++)&#123;</span><br><span class="line">  <span class="keyword">let</span> num = str[i];</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> j=i+<span class="number">1</span>;j&lt;str.length;j++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(str.slice(i,j).indexOf(str[j]) === <span class="number">-1</span>)&#123;</span><br><span class="line">      num = num + str[j];</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      max = max.length&gt;num.length?max:num;</span><br><span class="line">      num = <span class="string">''</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  max = max.length&gt;num.length?max:num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//出现次数最多的字符</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;aboocdfhhg&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> a = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">str.<span class="title function_">replace</span>(<span class="regexp">/(.)/</span>,<span class="keyword">function</span>(<span class="params">$1,$2,$3,$4</span>)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>($2)</span><br><span class="line">  <span class="keyword">if</span>(a[$2])&#123;</span><br><span class="line">    a[$2] += <span class="number">1</span>;</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    a[$2] = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> $4.<span class="title function_">slice</span>(<span class="number">0</span>,$3).<span class="title function_">indexOf</span>($2)!==-<span class="number">1</span>?<span class="string">&#x27;&#x27;</span>:$2</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//最长不重复</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;aboocdfhhg&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> max = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;str.<span class="property">length</span>;i++)&#123;</span><br><span class="line">  <span class="keyword">let</span> num = str[i];</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> j=i+<span class="number">1</span>;j&lt;str.<span class="property">length</span>;j++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(str.<span class="title function_">slice</span>(i,j).<span class="title function_">indexOf</span>(str[j]) === -<span class="number">1</span>)&#123;</span><br><span class="line">      num = num + str[j];</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      max = max.<span class="property">length</span>&gt;num.<span class="property">length</span>?<span class="attr">max</span>:num;</span><br><span class="line">      num = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  max = max.<span class="property">length</span>&gt;num.<span class="property">length</span>?<span class="attr">max</span>:num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
@@ -76,7 +76,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2020/07/16/数据结构与算法/" target="_blank">数据结构与算法</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2020/07/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" target="_blank">数据结构与算法</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -93,7 +93,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/计算机基础/">计算机基础</a>
+                    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
                 
             </div>
         
@@ -101,21 +101,21 @@
             <div class="tag">
                 标签：
                 
-                    <a href="/tags/计算机基础/">计算机基础</a>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
                 
-                    <a href="/tags/算法/">算法</a>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
                 
-                    <a href="/tags/数据结构/">数据结构</a>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
                 
             </div>
         
         <div class="article-prev-next">
             
-                <a href="/2020/09/12/函数式编程的意义和实践/" class="prev-prefix">« </a> 上一篇：    <a href="/2020/09/12/函数式编程的意义和实践/" title="发布于 2020-09-12 10:59">函数式编程的意义和实践</a>
+                <a href="/2020/09/12/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E6%84%8F%E4%B9%89%E5%92%8C%E5%AE%9E%E8%B7%B5/" class="prev-prefix">« </a> 上一篇：    <a href="/2020/09/12/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E6%84%8F%E4%B9%89%E5%92%8C%E5%AE%9E%E8%B7%B5/" title="发布于 2020-09-12 10:59">函数式编程的意义和实践</a>
                 <br>
             
             
-                <a href="/2020/07/13/flutter学习及实践/" class="next-prefix">» </a> 下一篇：    <a href="/2020/07/13/flutter学习及实践/" title="发布于 2020-07-13 02:50">flutter学习及实践</a>
+                <a href="/2020/07/13/flutter%E5%AD%A6%E4%B9%A0%E5%8F%8A%E5%AE%9E%E8%B7%B5/" class="next-prefix">» </a> 下一篇：    <a href="/2020/07/13/flutter%E5%AD%A6%E4%B9%A0%E5%8F%8A%E5%AE%9E%E8%B7%B5/" title="发布于 2020-07-13 02:50">flutter学习及实践</a>
             
         </div>
     </div>
@@ -149,7 +149,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

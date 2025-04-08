@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2018/08/24/多维数组降维的几种方式/" class="leancloud_visitors" data-flag-title="多维数组降维的几种方式">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2018/08/24/多维数组降维的几种方式/"></span>
@@ -57,16 +57,20 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <p><strong>多维数组的降维即将一个多维的数组拍平为一个一位数组，经常出现在各个面试题的笔试中，下面进行几种方式的实现。</strong></p>
-<h3 id="reduce方式"><a href="#reduce方式" class="headerlink" title="reduce方式"></a>reduce方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const arr = [1,[2,3,[1,2]],[2,5],[1,[2,3],8]];</span><br><span class="line"></span><br><span class="line">const flatterArray = arr =&gt;&#123;</span><br><span class="line">  <span class="built_in">return</span> Array.isArray(arr)?arr.reduce((a,b)=&gt;[...a,...flatterArray(b)],[]):[arr];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">flatterArray(arr);</span><br></pre></td></tr></table></figure>
-<p>这种方式是使用数组的reduce方法进行累加，遍历中对数组各元素进行递归调用，最后合并为一个数组。</p>
-<h3 id="forEach方式"><a href="#forEach方式" class="headerlink" title="forEach方式"></a>forEach方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const arr = [1,[2,3,[1,2]],[2,5],[1,[2,3],8]];</span><br><span class="line"><span class="built_in">let</span> a = [];</span><br><span class="line"></span><br><span class="line">const flatterArray = arr =&gt;&#123;</span><br><span class="line">  arr.forEach(e =&gt; &#123;</span><br><span class="line">    Array.isArray(e)?flattenDeep2(e):a.push(e);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">flatterArray(arr);</span><br></pre></td></tr></table></figure>
-<p>这种方式是使用数组的forEach方法, 也是遍历中对数组各元素进行递归调用，这种方式是使用空数组进行累加。</p>
-<h3 id="类型转换法"><a href="#类型转换法" class="headerlink" title="类型转换法"></a>类型转换法</h3><p>把数组先转为字符串再转为数组,缺点最后元素为字符串，需要再转化</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const arr = [1,[2,3,[1,2]],[2,5],[1,[2,3],8]];</span><br><span class="line">const arr2 = arr.join(<span class="string">','</span>).split(<span class="string">','</span>);</span><br><span class="line">console.log(arr2); </span><br><span class="line">//或</span><br><span class="line">console.log(c.toString().split(<span class="string">','</span>))</span><br></pre></td></tr></table></figure>
-<h3 id="apply方法"><a href="#apply方法" class="headerlink" title="apply方法"></a>apply方法</h3><p>只能转换二维数组</p>
+        <p><strong>多维数组的降维即将一个多维的数组拍平为一个  一维数组，经常出现在各个面试题的笔试中，下面进行几种方式的实现。</strong></p>
+<h3 id="reduce-方式"><a href="#reduce-方式" class="headerlink" title="reduce 方式"></a>reduce 方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const arr = [1,[2,3,[1,2]],[2,5],[1,[2,3],8]];</span><br><span class="line"></span><br><span class="line">const flatterArray = arr =&gt;&#123;</span><br><span class="line">  <span class="built_in">return</span> Array.isArray(arr)?arr.reduce((a,b)=&gt;[...a,...flatterArray(b)],[]):[arr];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">flatterArray(arr);</span><br></pre></td></tr></table></figure>
+
+<p>这种方式是使用数组的 reduce 方法进行累加，遍历中对数组各元素进行递归调用，最后合并为一个数组。</p>
+<h3 id="forEach-方式"><a href="#forEach-方式" class="headerlink" title="forEach 方式"></a>forEach 方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const arr = [1,[2,3,[1,2]],[2,5],[1,[2,3],8]];</span><br><span class="line"><span class="built_in">let</span> a = [];</span><br><span class="line"></span><br><span class="line">const flatterArray = arr =&gt; &#123;</span><br><span class="line">  arr.forEach(e =&gt; &#123;</span><br><span class="line">    <span class="built_in">return</span> Array.isArray(e)?flattenDeep2(e):a.push(e);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">flatterArray(arr);</span><br></pre></td></tr></table></figure>
+
+<p>这种方式是使用数组的 forEach 方法, 也是遍历中对数组各元素进行递归调用，这种方式是使用空数组进行累加。</p>
+<h3 id="类型转换法"><a href="#类型转换法" class="headerlink" title="类型转换法"></a>类型转换法</h3><p>把数组先转为字符串再转为数组,缺点最后  元素为字符串，需要再转化</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const arr = [1,[2,3,[1,2]],[2,5],[1,[2,3],8]];</span><br><span class="line">const arr2 = arr.join(<span class="string">&#x27;,&#x27;</span>).<span class="built_in">split</span>(<span class="string">&#x27;,&#x27;</span>);</span><br><span class="line">console.log(arr2);</span><br><span class="line">//或</span><br><span class="line">console.log(c.toString().<span class="built_in">split</span>(<span class="string">&#x27;,&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="apply-方法"><a href="#apply-方法" class="headerlink" title="apply 方法"></a>apply 方法</h3><p>只能转换二维数组</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const arr = [1,[2,3],[2,5],[2,3],8];</span><br><span class="line">console.log([].concat.apply([],arr)) //1,2,3,2,5,2,3,8</span><br></pre></td></tr></table></figure>
-<p>这种方式是利用apply方法和concat方法进行结合，利用apply数组的传参方式，把数组一个个元素进行连接，因为只可进行二维数组的转换。</p>
+
+<p>这种方式是利用 apply 方法和 concat 方法进行结合，利用 apply 数组的传参方式， 把数组一个个元素进行连接，因为只可进行二维数组的转换。</p>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
@@ -76,7 +80,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2018/08/24/多维数组降维的几种方式/" target="_blank">多维数组降维的几种方式</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2018/08/24/%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E9%99%8D%E7%BB%B4%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" target="_blank">多维数组降维的几种方式</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -93,7 +97,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/js常见问题/">js常见问题</a>
+                    <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
                 
             </div>
         
@@ -107,11 +111,11 @@
         
         <div class="article-prev-next">
             
-                <a href="/2018/09/25/call-apply-bind的区别与模拟实现/" class="prev-prefix">« </a> 上一篇：    <a href="/2018/09/25/call-apply-bind的区别与模拟实现/" title="发布于 2018-09-25 04:24">call-apply-bind的区别与模拟实现</a>
+                <a href="/2018/09/25/call-apply-bind%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/" class="prev-prefix">« </a> 上一篇：    <a href="/2018/09/25/call-apply-bind%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/" title="发布于 2018-09-25 04:24">call-apply-bind的区别与模拟实现</a>
                 <br>
             
             
-                <a href="/2018/03/06/mvvm框架原理/" class="next-prefix">» </a> 下一篇：    <a href="/2018/03/06/mvvm框架原理/" title="发布于 2018-03-06 05:35">mvvm框架原理</a>
+                <a href="/2018/03/06/mvvm%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/" class="next-prefix">» </a> 下一篇：    <a href="/2018/03/06/mvvm%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/" title="发布于 2018-03-06 05:35">mvvm框架原理</a>
             
         </div>
     </div>
@@ -145,7 +149,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2019/02/18/面试秘籍-htmlcss篇/" class="leancloud_visitors" data-flag-title="面试秘籍-htmlcss篇">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2019/02/18/面试秘籍-htmlcss篇/"></span>
@@ -59,17 +59,24 @@
     <div class="article-body">
         <h3 id="盒模型"><a href="#盒模型" class="headerlink" title="盒模型"></a>盒模型</h3><p>页面渲染时，dom 元素所采用的 布局模型。可通过box-sizing进行设置。根据计算宽高的区域可分为：</p>
 <ul>
-<li>content-box(w3c标准模型)：元素实际宽=width</li>
-<li>border-box(怪异盒模型)：元素实际宽=width-padding-border</li>
+<li>content-box(w3c标准模型)：元素实际宽&#x3D;width</li>
+<li>border-box(怪异盒模型)：元素实际宽&#x3D;width-padding-border</li>
 <li>margin-box</li>
+</ul>
+<h3 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h3><p>conic-gradient：圆锥形渐变，它的两个兄弟line-gradient(线性渐变)、radial-gradient(径向渐变)，算是最早认识的渐变属性。</p>
+<p>应用：</p>
+<ul>
+<li>颜色表盘：background: conic-gradient(red, orange, yellow, green, teal, blue, purple, red);</li>
+<li>饼图：background: conic-gradient(pink 0, pink 30%, yellow 30%, yellow 70%, lime 70%, lime 100%);</li>
+<li>仪表盘：<a href="https://www.cnblogs.com/EnSnail/p/9771973.html">https://www.cnblogs.com/EnSnail/p/9771973.html</a></li>
 </ul>
 <h3 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h3><p>块级格式化上下文，一个独立的块渲染区域，让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响。</p>
 <p>bfc的形成条件(满足其一)：</p>
 <ul>
 <li>根元素</li>
 <li>float不等于none</li>
-<li>position：absolute/fixed</li>
-<li>display：inline-block/table-cell</li>
+<li>position：absolute&#x2F;fixed</li>
+<li>display：inline-block&#x2F;table-cell</li>
 <li>overflow不等于visible</li>
 </ul>
 <p>bfc的约束条件：</p>
@@ -88,8 +95,7 @@
 <li>阻止与浮动元素重叠</li>
 <li>自适应三栏布局</li>
 </ul>
-<p>###居中布局</p>
-<p>水平居中布局</p>
+<h3 id="居中布局"><a href="#居中布局" class="headerlink" title="居中布局"></a>居中布局</h3><p>水平居中布局</p>
 <ul>
 <li>行内元素: text-align: center</li>
 <li>块级元素: margin: 0 auto</li>
@@ -108,22 +114,19 @@
 <li>absolute + transform</li>
 <li>flex + justify-content: center + align-items: center</li>
 </ul>
-<p>###选择器优先级<br>!important &gt; 行内样式 &gt; #id &gt; .class &gt; tag &gt; * &gt; 继承 &gt; 默认</p>
-<p>###去浮动</p>
-<ul>
+<h3 id="选择器优先级"><a href="#选择器优先级" class="headerlink" title="选择器优先级"></a>选择器优先级</h3><p>!important &gt; 行内样式 &gt; #id &gt; .class &gt; tag &gt; * &gt; 继承 &gt; 默认</p>
+<h3 id="去浮动"><a href="#去浮动" class="headerlink" title="去浮动"></a>去浮动</h3><ul>
 <li>通过增加伪元素清除浮动</li>
 <li>创建父级BFC区域</li>
 <li>父级设置高度</li>
 </ul>
-<p>###link和import区别</p>
-<ul>
+<h3 id="link和import区别"><a href="#link和import区别" class="headerlink" title="link和import区别"></a>link和import区别</h3><ul>
 <li>link可以用于加载rel、css等 import只能加载css</li>
 <li>link加载的css会在编译时同步加载并执行 impirt引入的会在页面加载完成后加载</li>
 <li>@import需要 IE5 以上才能使用</li>
 <li>link可以使用 js 动态引入，@import不行</li>
 </ul>
-<p>###CSS预处理器(Sass/Less/Postcss)</p>
-<p>CSS预处理器的原理: 是将类 CSS 语言通过 Webpack 编译 转成浏览器可读的真正 CSS。在这层编译之上，便可以赋予 CSS 更多更强大的功能，常用功能:</p>
+<h3 id="CSS预处理器-Sass-Less-Postcss"><a href="#CSS预处理器-Sass-Less-Postcss" class="headerlink" title="CSS预处理器(Sass&#x2F;Less&#x2F;Postcss)"></a>CSS预处理器(Sass&#x2F;Less&#x2F;Postcss)</h3><p>CSS预处理器的原理: 是将类 CSS 语言通过 Webpack 编译 转成浏览器可读的真正 CSS。在这层编译之上，便可以赋予 CSS 更多更强大的功能，常用功能:</p>
 <ul>
 <li>嵌套</li>
 <li>变量</li>
@@ -133,27 +136,24 @@
 <li>单位转换</li>
 <li>mixin复用</li>
 </ul>
-<p>###CSS动画</p>
-<p>####过渡动画translation</p>
-<ul>
+<h3 id="CSS动画"><a href="#CSS动画" class="headerlink" title="CSS动画"></a>CSS动画</h3><h4 id="过渡动画translation"><a href="#过渡动画translation" class="headerlink" title="过渡动画translation"></a>过渡动画translation</h4><ul>
 <li>transition-property: 属性</li>
 <li>transition-duration: 间隔</li>
 <li>transition-timing-function: 曲线</li>
 <li>transition-delay: 延迟</li>
 <li>常用钩子: transitionend(过渡完成事件)</li>
 </ul>
-<p>####animation / keyframes</p>
-<ul>
+<h4 id="animation-keyframes"><a href="#animation-keyframes" class="headerlink" title="animation &#x2F; keyframes"></a>animation &#x2F; keyframes</h4><ul>
 <li>animation-name: 动画名称，对应@keyframes</li>
 <li>animation-duration: 间隔</li>
 <li>animation-timing-function: 曲线</li>
 <li>animation-delay: 延迟</li>
 <li>animation-iteration-count: 次数 （infinite: 无限循环动画）</li>
 <li>animation-direction: 方向 （alternate: 反向播放）</li>
-<li>animation-fill-mode: 静止模式 （forwards: 停止时，保留最后一帧 backwards: 停止时，回到第一帧 both: 同时运用 forwards / backwards）</li>
+<li>animation-fill-mode: 静止模式 （forwards: 停止时，保留最后一帧 backwards: 停止时，回到第一帧 both: 同时运用 forwards &#x2F; backwards）</li>
 <li>常用钩子: (animationend动画完成事件)</li>
 </ul>
-<p>###创建一个对象的步骤：<br>1.新建一个对象<br>2.把构造函数的this指向这个对象<br>3.执行构造函数<br>4.返回这个对象</p>
+<h3 id="创建一个对象的步骤"><a href="#创建一个对象的步骤" class="headerlink" title="创建一个对象的步骤"></a>创建一个对象的步骤</h3><p>1.新建一个对象<br>2.把构造函数的this指向这个对象<br>3.执行构造函数<br>4.返回这个对象</p>
 <h3 id="flex-grow和flex-shrink有什么用"><a href="#flex-grow和flex-shrink有什么用" class="headerlink" title="flex-grow和flex-shrink有什么用"></a>flex-grow和flex-shrink有什么用</h3><ul>
 <li>flex-grow：当元素设置该属性时，当父元素还有剩余空间时会按flex-grow的值比例分给该元素 子元素的flex-grow值总和小于1时 <strong>分配空间是剩余空间*flex-grow值总和</strong></li>
 <li>flex-shrink：当元素设置该属性时，当子元素的空间总和大于父元素时，会按flex-grow的值比例收缩，子元素的flex-grow值总和小于1时 <strong>收缩空间是超出空间*flex-grow值总和</strong></li>
@@ -179,7 +179,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2019/02/18/面试秘籍-htmlcss篇/" target="_blank">面试秘籍-htmlcss篇</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2019/02/18/%E9%9D%A2%E8%AF%95%E7%A7%98%E7%B1%8D-htmlcss%E7%AF%87/" target="_blank">面试秘籍-htmlcss篇</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -196,7 +196,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/面试/">面试</a>
+                    <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
                 
             </div>
         
@@ -210,11 +210,11 @@
         
         <div class="article-prev-next">
             
-                <a href="/2019/02/19/面试秘籍-原生js篇/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/02/19/面试秘籍-原生js篇/" title="发布于 2019-02-19 11:53">面试秘籍-原生js篇</a>
+                <a href="/2019/02/19/%E9%9D%A2%E8%AF%95%E7%A7%98%E7%B1%8D-%E5%8E%9F%E7%94%9Fjs%E7%AF%87/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/02/19/%E9%9D%A2%E8%AF%95%E7%A7%98%E7%B1%8D-%E5%8E%9F%E7%94%9Fjs%E7%AF%87/" title="发布于 2019-02-19 11:53">面试秘籍-原生js篇</a>
                 <br>
             
             
-                <a href="/2019/01/16/immutable使用详解/" class="next-prefix">» </a> 下一篇：    <a href="/2019/01/16/immutable使用详解/" title="发布于 2019-01-16 02:26">immutable使用详解</a>
+                <a href="/2019/01/16/immutable%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="next-prefix">» </a> 下一篇：    <a href="/2019/01/16/immutable%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" title="发布于 2019-01-16 02:26">immutable使用详解</a>
             
         </div>
     </div>
@@ -248,7 +248,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2020/12/05/Proxy的神奇之处/" class="leancloud_visitors" data-flag-title="Proxy的神奇之处">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2020/12/05/Proxy的神奇之处/"></span>
@@ -63,8 +63,9 @@
 <li>target：你要创建代理的对象</li>
 <li>handler：定义要被拦截的操作</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> target = &#123;</span><br><span class="line">  name: <span class="string">'webb'</span>,</span><br><span class="line">  age: <span class="number">23</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> handler = &#123;</span><br><span class="line">  <span class="keyword">get</span>: function(target,prop) &#123; <span class="comment">//拦截get操作</span></span><br><span class="line">    <span class="keyword">if</span>(prop === <span class="string">'name'</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> target[<span class="string">'age'</span>]</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> target[<span class="string">'name'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> a = <span class="keyword">new</span> <span class="built_in">Proxy</span>(target,handler);</span><br><span class="line"></span><br><span class="line">a.name <span class="comment">//23</span></span><br><span class="line">a.age <span class="comment">//webb</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy" target="_blank" rel="noopener">更多支持的自定义handler</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> target = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;webb&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">23</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> handler = &#123;</span><br><span class="line">  <span class="attr">get</span>: <span class="keyword">function</span>(<span class="params">target,prop</span>) &#123; <span class="comment">//拦截get操作</span></span><br><span class="line">    <span class="keyword">if</span>(prop === <span class="string">&#x27;name&#x27;</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> target[<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> target[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> a = <span class="keyword">new</span> <span class="title class_">Proxy</span>(target,handler);</span><br><span class="line"></span><br><span class="line">a.<span class="property">name</span> <span class="comment">//23</span></span><br><span class="line">a.<span class="property">age</span> <span class="comment">//webb</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy">更多支持的自定义handler</a></p>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
@@ -74,7 +75,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2020/12/05/Proxy的神奇之处/" target="_blank">Proxy的神奇之处</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2020/12/05/Proxy%E7%9A%84%E7%A5%9E%E5%A5%87%E4%B9%8B%E5%A4%84/" target="_blank">Proxy的神奇之处</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -107,11 +108,11 @@
         
         <div class="article-prev-next">
             
-                <a href="/2020/12/10/微前端的应用和实践/" class="prev-prefix">« </a> 上一篇：    <a href="/2020/12/10/微前端的应用和实践/" title="发布于 2020-12-10 02:34">微前端的应用和实践</a>
+                <a href="/2020/12/10/%E5%BE%AE%E5%89%8D%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E8%B7%B5/" class="prev-prefix">« </a> 上一篇：    <a href="/2020/12/10/%E5%BE%AE%E5%89%8D%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E8%B7%B5/" title="发布于 2020-12-10 02:34">微前端的应用和实践</a>
                 <br>
             
             
-                <a href="/2020/11/25/Docker入门和实践/" class="next-prefix">» </a> 下一篇：    <a href="/2020/11/25/Docker入门和实践/" title="发布于 2020-11-25 03:20">Docker容器入门和实践</a>
+                <a href="/2020/11/25/Docker%E5%85%A5%E9%97%A8%E5%92%8C%E5%AE%9E%E8%B7%B5/" class="next-prefix">» </a> 下一篇：    <a href="/2020/11/25/Docker%E5%85%A5%E9%97%A8%E5%92%8C%E5%AE%9E%E8%B7%B5/" title="发布于 2020-11-25 03:20">Docker容器入门和实践</a>
             
         </div>
     </div>
@@ -145,7 +146,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

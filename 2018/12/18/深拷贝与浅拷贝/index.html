@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2018/12/18/深拷贝与浅拷贝/" class="leancloud_visitors" data-flag-title="深拷贝与浅拷贝">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2018/12/18/深拷贝与浅拷贝/"></span>
@@ -59,15 +59,24 @@
     <div class="article-body">
         <h3 id="什么情况下用到深拷贝和浅拷贝？"><a href="#什么情况下用到深拷贝和浅拷贝？" class="headerlink" title="什么情况下用到深拷贝和浅拷贝？"></a>什么情况下用到深拷贝和浅拷贝？</h3><p>当对象是引用类型时，直接赋值会导致赋值的对象和被赋值的对象指向同一个引用，一个改变另一个也会改变，有时候不注意会导致代码的灾难性。所以我们需要通过深拷贝或浅拷贝来解决。</p>
 <h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><p><strong>浅拷贝</strong>字面意思，只进行浅显的拷贝，也就是这对引用对象的第一次进行拷贝，大多数情况下都可以解决上述问题。</p>
-<p><strong>Object.assign</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123; age: 1 &#125;</span><br><span class="line"><span class="built_in">let</span> b = Object.assign(&#123;&#125;, a)</span><br><span class="line">a.age = 2</span><br><span class="line">console.log(b.age) // 1</span><br></pre></td></tr></table></figure></p>
-<p><strong>ES6展开符</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123; age: 1 &#125;</span><br><span class="line"><span class="built_in">let</span> b = &#123;...a&#125;</span><br><span class="line">a.age = 2</span><br><span class="line">console.log(b.age) // 1</span><br></pre></td></tr></table></figure></p>
-<p>**但当遇到以下情况就需要用到神拷贝了<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123; age: 1,name:&#123; firstName:<span class="string">'webbhou'</span> &#125; &#125;</span><br><span class="line"><span class="built_in">let</span> b = &#123;...a&#125;</span><br><span class="line">a.name.firstName = <span class="string">'hou'</span></span><br><span class="line">console.log(name.firstName) // hou</span><br></pre></td></tr></table></figure></p>
-<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><p><strong>Json.parse(Json.stringify(obj))</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">  age: 1,</span><br><span class="line">  <span class="built_in">jobs</span>: &#123;</span><br><span class="line">      first: <span class="string">'FE'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> b = JSON.parse(JSON.stringify(a))</span><br><span class="line">a.jobs.first = <span class="string">'native'</span></span><br><span class="line">console.log(b.jobs.first) // FE</span><br></pre></td></tr></table></figure></p>
+<p><strong>Object.assign</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123; age: 1 &#125;</span><br><span class="line"><span class="built_in">let</span> b = Object.assign(&#123;&#125;, a)</span><br><span class="line">a.age = 2</span><br><span class="line">console.log(b.age) // 1</span><br></pre></td></tr></table></figure>
+
+<p><strong>ES6展开符</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123; age: 1 &#125;</span><br><span class="line"><span class="built_in">let</span> b = &#123;...a&#125;</span><br><span class="line">a.age = 2</span><br><span class="line">console.log(b.age) // 1</span><br></pre></td></tr></table></figure>
+
+<p>**但当遇到以下情况就需要用到神拷贝了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123; age: 1,name:&#123; firstName:<span class="string">&#x27;webbhou&#x27;</span> &#125; &#125;</span><br><span class="line"><span class="built_in">let</span> b = &#123;...a&#125;</span><br><span class="line">a.name.firstName = <span class="string">&#x27;hou&#x27;</span></span><br><span class="line">console.log(name.firstName) // hou</span><br></pre></td></tr></table></figure>
+
+<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><p><strong>Json.parse(Json.stringify(obj))</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">  age: 1,</span><br><span class="line">  <span class="built_in">jobs</span>: &#123;</span><br><span class="line">      first: <span class="string">&#x27;FE&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> b = JSON.parse(JSON.stringify(a))</span><br><span class="line">a.jobs.first = <span class="string">&#x27;native&#x27;</span></span><br><span class="line">console.log(b.jobs.first) // FE</span><br></pre></td></tr></table></figure>
+
 <p><strong>缺点</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">    age: undefined,</span><br><span class="line">    sex: Symbol(<span class="string">'male'</span>),</span><br><span class="line">    <span class="built_in">jobs</span>: <span class="function"><span class="title">function</span></span>() &#123;&#125;,</span><br><span class="line">    name: <span class="string">'yck'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> b = JSON.parse(JSON.stringify(a))</span><br><span class="line">console.log(b) // &#123;name: <span class="string">"yck"</span>&#125;  会忽略 undefined symbol 不能序列化函数</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">    age: undefined,</span><br><span class="line">    sex: Symbol(<span class="string">&#x27;male&#x27;</span>),</span><br><span class="line">    <span class="built_in">jobs</span>: <span class="function"><span class="title">function</span></span>() &#123;&#125;,</span><br><span class="line">    name: <span class="string">&#x27;yck&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> b = JSON.parse(JSON.stringify(a))</span><br><span class="line">console.log(b) // &#123;name: <span class="string">&quot;yck&quot;</span>&#125;  会忽略 undefined symbol 不能序列化函数</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> obj = &#123;</span><br><span class="line">  a: 1,</span><br><span class="line">  b: &#123;</span><br><span class="line">    c: 2,</span><br><span class="line">    d: 3,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">obj.c = obj.b</span><br><span class="line">obj.e = obj.a</span><br><span class="line">obj.b.c = obj.c</span><br><span class="line">obj.b.d = obj.b</span><br><span class="line">obj.b.e = obj.b.c</span><br><span class="line"><span class="built_in">let</span> newObj = JSON.parse(JSON.stringify(obj))</span><br><span class="line">console.log(newObj) //error  不能解决循环引用的对象</span><br></pre></td></tr></table></figure>
+
 <p><strong>递归拷贝</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> deepClone(obj)&#123;</span><br><span class="line">    <span class="built_in">let</span> objClone = Array.isArray(obj)?[]:&#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span>(obj &amp;&amp; typeof obj===<span class="string">"object"</span>)&#123;</span><br><span class="line">        <span class="keyword">for</span>(key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                //判断ojb子元素是否为对象，如果是，递归复制</span><br><span class="line">                <span class="keyword">if</span>(obj[key]&amp;&amp;typeof obj[key] ===<span class="string">"object"</span>)&#123;</span><br><span class="line">                    objClone[key] = deepClone(obj[key]);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    //如果不是，简单复制</span><br><span class="line">                    objClone[key] = obj[key];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> objClone;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">    age: undefined,</span><br><span class="line">    sex: Symbol(<span class="string">'male'</span>),</span><br><span class="line">    <span class="built_in">jobs</span>: <span class="function"><span class="title">function</span></span>() &#123;&#125;,</span><br><span class="line">    name: <span class="string">'yck'</span></span><br><span class="line">&#125;</span><br><span class="line">console.log(deepClone(a))  //&#123; age: undefined,sex: Symbol(<span class="string">'male'</span>),<span class="built_in">jobs</span>: <span class="function"><span class="title">function</span></span>() &#123;&#125;,name: <span class="string">'yck'</span> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> deepClone(obj)&#123;</span><br><span class="line">    <span class="built_in">let</span> objClone = Array.isArray(obj)?[]:&#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span>(obj &amp;&amp; typeof obj===<span class="string">&quot;object&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">for</span>(key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                //判断ojb子元素是否为对象，如果是，递归复制</span><br><span class="line">                <span class="keyword">if</span>(obj[key]&amp;&amp;typeof obj[key] ===<span class="string">&quot;object&quot;</span>)&#123;</span><br><span class="line">                    objClone[key] = deepClone(obj[key]);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    //如果不是，简单复制</span><br><span class="line">                    objClone[key] = obj[key];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> objClone;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">    age: undefined,</span><br><span class="line">    sex: Symbol(<span class="string">&#x27;male&#x27;</span>),</span><br><span class="line">    <span class="built_in">jobs</span>: <span class="function"><span class="title">function</span></span>() &#123;&#125;,</span><br><span class="line">    name: <span class="string">&#x27;yck&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">console.log(deepClone(a))  //&#123; age: undefined,sex: Symbol(<span class="string">&#x27;male&#x27;</span>),<span class="built_in">jobs</span>: <span class="function"><span class="title">function</span></span>() &#123;&#125;,name: <span class="string">&#x27;yck&#x27;</span> &#125;</span><br></pre></td></tr></table></figure>
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
             <div class="suffix-box-left">
@@ -76,7 +85,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2018/12/18/深拷贝与浅拷贝/" target="_blank">深拷贝与浅拷贝</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2018/12/18/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/" target="_blank">深拷贝与浅拷贝</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -93,7 +102,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/js常见问题/">js常见问题</a>
+                    <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
                 
             </div>
         
@@ -107,11 +116,11 @@
         
         <div class="article-prev-next">
             
-                <a href="/2019/01/08/防抖与节流/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/01/08/防抖与节流/" title="发布于 2019-01-08 11:55">防抖与节流</a>
+                <a href="/2019/01/08/%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/01/08/%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/" title="发布于 2019-01-08 11:55">防抖与节流</a>
                 <br>
             
             
-                <a href="/2018/11/08/浏览器EventLoop机制/" class="next-prefix">» </a> 下一篇：    <a href="/2018/11/08/浏览器EventLoop机制/" title="发布于 2018-11-08 10:15">浏览器EventLoop机制</a>
+                <a href="/2018/11/08/%E6%B5%8F%E8%A7%88%E5%99%A8EventLoop%E6%9C%BA%E5%88%B6/" class="next-prefix">» </a> 下一篇：    <a href="/2018/11/08/%E6%B5%8F%E8%A7%88%E5%99%A8EventLoop%E6%9C%BA%E5%88%B6/" title="发布于 2018-11-08 10:15">浏览器EventLoop机制</a>
             
         </div>
     </div>
@@ -145,7 +154,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>webpack4-&gt;5升级及优化</title>
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <div id="header">
+    <div class="header">
+        <div class="vertical">
+            <div class="inner">
+                <h1 class="header-subtitle">webpack4->5升级及优化</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-11-02
+                        </span>
+                        
+                            <span id="/2022/11/02/webpack4-5升级及优化/" class="leancloud_visitors" data-flag-title="webpack4->5升级及优化">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/11/02/webpack4-5升级及优化/"></span>
+                        </span>  
+                    </p>                 
+                </div>
+            </div>
+        </div>
+        <canvas id="articleHeaderCanvas"></canvas>
+    </div>
+</div>
+    <div id="container">
+    <div id="content">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="webpack4-升级-webapck5"><a href="#webpack4-升级-webapck5" class="headerlink" title="webpack4 升级 webapck5"></a>webpack4 升级 webapck5</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm i react-dev-utils webpackbar friendly-errors-webpack-plugin -D</span><br><span class="line"></span><br><span class="line">sudo npm i webpack webpack-cli webpack-dev-server webpack-merge -D</span><br></pre></td></tr></table></figure>
+
+<h2 id="升级步骤"><a href="#升级步骤" class="headerlink" title="升级步骤"></a>升级步骤</h2><h2 id="1、自定义开发环境"><a href="#1、自定义开发环境" class="headerlink" title="1、自定义开发环境"></a>1、自定义开发环境</h2><p>对于开发环境，我们更加灵活的自定义配置的方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">&quot;webpack&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">WebpackDevServer</span> = <span class="built_in">require</span>(\<span class="string">&#x27;webpack-dev-server\&#x27;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">const compiler = webpack(config)</span></span><br><span class="line"><span class="string">const devServer = new WebpackDevServer(compiler, devConfig)</span></span><br><span class="line"><span class="string">devServer.listen(Config.port, host, err =&gt; &#123;</span></span><br><span class="line"><span class="string">  if (err) &#123;</span></span><br><span class="line"><span class="string">    return console.log(err);</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  console.log(chalk.cyan(\&#x27;Starting the development server...\</span></span><br><span class="line"><span class="string">\&#x27;));</span></span><br><span class="line"><span class="string">&#125;);</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2、端口号-可能被占用"><a href="#2、端口号-可能被占用" class="headerlink" title="2、端口号(可能被占用)"></a>2、端口号(可能被占用)</h2><blockquote>
+<p>随着项目越来越多，端口号可能会出现重复，所以启动项目时发现端口号已经被占用，需要找到合适的可用端口进行启动项目</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> portfinder = <span class="built_in">require</span>(\<span class="string">&#x27;portfinder\&#x27;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">portfinder.getPortPromise()</span></span><br><span class="line"><span class="string">    .catch((err) =&gt; &#123;</span></span><br><span class="line"><span class="string">        console.log(\&#x27;webpack启动错误\&#x27;, err)</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">    .then((port) =&gt; &#123;</span></span><br><span class="line"><span class="string">   \t// 没有被占用的端口号</span></span><br><span class="line"><span class="string">  \t\tconsole.log(port)</span></span><br><span class="line"><span class="string">\t\t&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3、ip-链接"><a href="#3、ip-链接" class="headerlink" title="3、ip 链接"></a>3、ip 链接</h2><p>需求：由于移动端或者 pc 端，经常会拿 ip 链接进行手机的调试，或者将 ip 链接发送给对方进行联调，这时如果开发工具者控制台有这样的 ip 链接就很方便</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">FriendlyErrorsWebpackPlugin</span> = <span class="built_in">require</span>(\<span class="string">&#x27;friendly-errors-webpack-plugin\&#x27;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">new MyFriendlyErrorsWebpackPlugin(&#123;</span></span><br><span class="line"><span class="string">  compilationSuccessInfo: &#123;</span></span><br><span class="line"><span class="string">    messages: [</span></span><br><span class="line"><span class="string">      \&#x27;App running at:\&#x27;,</span></span><br><span class="line"><span class="string">      `- Local:   $&#123;chalk.cyan(newWorkUrl(host, port, Config.prefix))&#125;`,</span></span><br><span class="line"><span class="string">      `- Network: $&#123;chalk.cyan(newWorkUrl(getNetworkIp(), port, Config.prefix))&#125;`,</span></span><br><span class="line"><span class="string">    ],</span></span><br><span class="line"><span class="string">    notes: [</span></span><br><span class="line"><span class="string">      \&#x27;Note that the development build is not optimized.\&#x27;,</span></span><br><span class="line"><span class="string">      `To create a production build, run $&#123;chalk.cyan(\&#x27;npm run build\&#x27;)&#125;`,</span></span><br><span class="line"><span class="string">    ]</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">&#125;),</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> os = <span class="built_in">require</span>(\<span class="string">&#x27;os\&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">function getNetworkIp() &#123;</span></span><br><span class="line"><span class="string">    let needHost = \&#x27;\&#x27;; // 打开的host</span></span><br><span class="line"><span class="string">    try &#123;</span></span><br><span class="line"><span class="string">        // 获得网络接口列表</span></span><br><span class="line"><span class="string">        let network = os.networkInterfaces();</span></span><br><span class="line"><span class="string">        for (let dev in network) &#123;</span></span><br><span class="line"><span class="string">            let iface = network[dev];</span></span><br><span class="line"><span class="string">            for (let i = 0; i &lt; iface.length; i++) &#123;</span></span><br><span class="line"><span class="string">                let alias = iface[i];</span></span><br><span class="line"><span class="string">                if (alias.family === \&#x27;IPv4\&#x27; &amp;&amp; alias.address !== \&#x27;127.0.0.1\&#x27; &amp;&amp; !alias.internal) &#123;</span></span><br><span class="line"><span class="string">                    needHost = alias.address;</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125; catch (e) &#123;</span></span><br><span class="line"><span class="string">        needHost = \&#x27;localhost\&#x27;;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    return needHost;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">function prettyPrintHost(host) &#123;</span></span><br><span class="line"><span class="string">    const isUnspecifiedHost = host === \&#x27;0.0.0.0\&#x27; || host === \&#x27;::\&#x27;;</span></span><br><span class="line"><span class="string">    if (isUnspecifiedHost) &#123;</span></span><br><span class="line"><span class="string">        return \&#x27;localhost\&#x27;;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    return host</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">function newWorkUrl(host, port, prefix) &#123;</span></span><br><span class="line"><span class="string">    return `http://$&#123;prettyPrintHost(host)&#125;:$&#123;port&#125;/$&#123;prefix ? prefix : \&#x27;\&#x27;&#125;`</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><p>antv 和 webpack5 之间有一些警告问题，一旦有了警告，那么 friendly-errors-webpack-plugin 就不会将我们的 ip 链接暴露出来，所以本地二次封装 friendly-errors-webpack-plugin 插件，达到目的</p>
+<h2 id="4、添加缓存"><a href="#4、添加缓存" class="headerlink" title="4、添加缓存"></a>4、添加缓存</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cache</span>: &#123;</span><br><span class="line">  <span class="attr">type</span>: \<span class="string">&#x27;filesystem\&#x27;,  //\&#x27;memory\&#x27; | \&#x27;filesystem\&#x27;</span></span><br><span class="line"><span class="string">  cacheDirectory: path.resolve(__dirname, \&#x27;../node_modules/.cache/webpack\&#x27;),</span></span><br><span class="line"><span class="string">&#125;,</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1、去除-dll-动态链接库"><a href="#4-1、去除-dll-动态链接库" class="headerlink" title="4.1、去除 dll 动态链接库"></a>4.1、去除 dll 动态链接库</h3><p>create-react-app 以及 vue-cli 在 webpack4.x 的时候就已经移除 dll,原因：就是 webpack4.x 的性能足够好，使用 dll 后收益非常小，而且 dll 还需要进行额外的繁琐配置</p>
+<ul>
+<li><a href="https://github.com/vuejs/vue-cli/issues/1205">vue-cli 去除 dll 原因解释</a></li>
+<li><a href="https://github.com/facebook/create-react-app/pull/2710">create-react-app 去除 dll 原因解释</a></li>
+</ul>
+<p>结论：我们也去除 dll,配置中将所有关于 dll 的全部删除掉</p>
+<h2 id="5、关于图片和图标"><a href="#5、关于图片和图标" class="headerlink" title="5、关于图片和图标"></a>5、关于图片和图标</h2><p>去除 file-loader 和 url-loader</p>
+<p>方式一：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">output</span>:&#123;</span><br><span class="line">  <span class="attr">assetModuleFilename</span>: <span class="string">&quot;images/[contenthash][ext][query]&quot;</span>,</span><br><span class="line">&#125;,</span><br><span class="line"><span class="attr">module</span>:&#123;</span><br><span class="line">  <span class="attr">rules</span>:[</span><br><span class="line">    &#123; <span class="comment">// 图标的转化</span></span><br><span class="line">      <span class="attr">test</span>: <span class="regexp">/\\.(woff|woff2|eot|ttf|otf|svg)$/i</span>,</span><br><span class="line">      <span class="attr">type</span>: \<span class="string">&#x27;asset/resource\&#x27;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    &#123; // 图片的转化</span></span><br><span class="line"><span class="string">      test: /\\.(jpe?g|png|gif|bmp)$/i,</span></span><br><span class="line"><span class="string">      type: \&#x27;asset\&#x27;,</span></span><br><span class="line"><span class="string">      parser: &#123;</span></span><br><span class="line"><span class="string">        dataUrlCondition: &#123;</span></span><br><span class="line"><span class="string">          maxSize: 8192,// 8kb</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">  ]</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<p>方式二：(采用)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">module</span>:&#123;</span><br><span class="line">  <span class="attr">rules</span>:[</span><br><span class="line">    &#123; <span class="comment">// 图标的转化</span></span><br><span class="line">      <span class="attr">test</span>: <span class="regexp">/\\.(woff|woff2|eot|ttf|otf|svg)$/i</span>,</span><br><span class="line">      <span class="attr">type</span>: \<span class="string">&#x27;asset/resource\&#x27;,</span></span><br><span class="line"><span class="string">      generator: &#123;</span></span><br><span class="line"><span class="string">        filename: \&#x27;fonts/[contenthash][ext][query]\&#x27;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    &#123; // 图片的转化</span></span><br><span class="line"><span class="string">      test: /\\.(jpe?g|png|gif|bmp)$/i,</span></span><br><span class="line"><span class="string">      type: \&#x27;asset\&#x27;,</span></span><br><span class="line"><span class="string">      parser: &#123;</span></span><br><span class="line"><span class="string">        dataUrlCondition: &#123;</span></span><br><span class="line"><span class="string">          maxSize: 8192,// 8kb</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      &#125;,</span></span><br><span class="line"><span class="string">      generator: &#123;</span></span><br><span class="line"><span class="string">        filename: \&#x27;images/[contenthash][ext][query]\&#x27;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">  ]</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6、css-的路径问题"><a href="#6、css-的路径问题" class="headerlink" title="6、css 的路径问题"></a>6、css 的路径问题</h2><p>因为 css 和 images 是单独打包成一个独立的文件夹，那么 css 中寻找图片路径是从 css 目录开始找的，所以需要配置下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">isDevelopment ? &#123;</span><br><span class="line">  <span class="attr">loader</span>: <span class="string">&quot;style-loader&quot;</span>,</span><br><span class="line">  <span class="attr">options</span>: &#123; <span class="attr">esModule</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">&#125; : &#123;</span><br><span class="line">  <span class="attr">loader</span>: <span class="title class_">MiniCssExtractPlugin</span>.<span class="property">loader</span>,</span><br><span class="line">  <span class="attr">options</span>: &#123; <span class="attr">esModule</span>: <span class="literal">true</span>, <span class="attr">publicPath</span>: \<span class="string">&#x27;../\&#x27; &#125;, // 在原来配置的基础上添加publicPath属性</span></span><br><span class="line"><span class="string">&#125;,</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="7、package-中的-scripts-改造"><a href="#7、package-中的-scripts-改造" class="headerlink" title="7、package 中的 scripts 改造"></a>7、package 中的 scripts 改造</h2><p>改造前:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">     <span class="string">&quot;preview&quot;</span>: <span class="string">&quot;node scripts/preview.js&quot;</span>,</span><br><span class="line">     <span class="string">&quot;ka&quot;</span>: <span class="string">&quot;terser ./js/utils/ka.js -m -c -o ./js/utils/ka-min.js&quot;</span>,</span><br><span class="line">     <span class="string">&quot;dll&quot;</span>: <span class="string">&quot;webpack --config ./scripts/dll.webpack.js&quot;</span>,</span><br><span class="line">     <span class="string">&quot;start&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=development webpack-dev-server --hot --progress --colors --PACKAGE_ENV development --config ./scripts/webpack.dev.js&quot;</span>,</span><br><span class="line">     <span class="string">&quot;local&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production webpack --PACKAGE_ENV local --progress --config ./scripts/webpack.prod.js&quot;</span>,</span><br><span class="line">     <span class="string">&quot;test&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production webpack --PACKAGE_ENV test --progress --config ./scripts/webpack.prod.js&quot;</span>,</span><br><span class="line">     <span class="string">&quot;pre&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production webpack --PACKAGE_ENV pre --progress --config ./scripts/webpack.prod.js&quot;</span>,</span><br><span class="line">     <span class="string">&quot;build&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production webpack --PACKAGE_ENV production --progress --config ./scripts/webpack.prod.js&quot;</span></span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>开发：npm run start</p>
+<p>打包：npm run local&#x2F;test&#x2F;pre&#x2F;build</p>
+<p>改造后</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">       <span class="string">&quot;preview&quot;</span>: <span class="string">&quot;node scripts/preview.js&quot;</span>,</span><br><span class="line">       <span class="string">&quot;ka&quot;</span>: <span class="string">&quot;terser ./js/utils/ka.js -m -c -o ./js/utils/ka-min.js&quot;</span>,</span><br><span class="line">       <span class="string">&quot;dev&quot;</span>: <span class="string">&quot;node ./scripts/webpack.dev&quot;</span>,</span><br><span class="line">       <span class="string">&quot;build:hr&quot;</span>: <span class="string">&quot;webpack --config ./scripts/webpack.prod&quot;</span>,</span><br><span class="line">       <span class="string">&quot;start&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=development PACKAGE_ENV=development npm run dev&quot;</span>,</span><br><span class="line">       <span class="string">&quot;local&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production PACKAGE_ENV=local npm run build:hr&quot;</span>,</span><br><span class="line">       <span class="string">&quot;test&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production PACKAGE_ENV=test npm run build:hr&quot;</span>,</span><br><span class="line">       <span class="string">&quot;pre&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production PACKAGE_ENV=pre npm run build:hr&quot;</span>,</span><br><span class="line">       <span class="string">&quot;build&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production PACKAGE_ENV=production npm run build:hr&quot;</span></span><br><span class="line">   &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>开发：npm run start</p>
+<p>打包：npm run local&#x2F;test&#x2F;pre&#x2F;build</p>
+<h2 id="8、细节问题"><a href="#8、细节问题" class="headerlink" title="8、细节问题"></a>8、细节问题</h2><h3 id="8-1、webpack5-和-cnpm-有兼容性"><a href="#8-1、webpack5-和-cnpm-有兼容性" class="headerlink" title="8.1、webpack5 和 cnpm 有兼容性"></a>8.1、webpack5 和 cnpm 有兼容性</h3><blockquote>
+<p>因为 webpack5 里面的解析包是按照 npm 标准的@babel 这样的格式，如果违反规则直接失败，而 cnpm 是_@babel 多了一个下划线</p>
+</blockquote>
+<p>结论：避免使用 cnpm，使用 npm 和 yarn 的方式</p>
+<h3 id="8-2、webpack-NamedChunksPlugin-被废弃"><a href="#8-2、webpack-NamedChunksPlugin-被废弃" class="headerlink" title="8.2、webpack.NamedChunksPlugin 被废弃"></a>8.2、webpack.NamedChunksPlugin 被废弃</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">optimization</span>: &#123;</span><br><span class="line">    <span class="attr">moduleIds</span>: \<span class="string">&#x27;deterministic\&#x27;, // 模块名称的生成规则 -&gt; 根据模块名称生成简短的hash值</span></span><br><span class="line"><span class="string">    chunkIds: \&#x27;deterministic\&#x27;, // 代码块名称的生成规则</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3、watermark-dom"><a href="#8-3、watermark-dom" class="headerlink" title="8.3、watermark-dom"></a>8.3、watermark-dom</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># webpack4引用</span><br><span class="line"><span class="keyword">import</span> watermark <span class="keyword">from</span> \<span class="string">&#x27;watermark-dom\&#x27;</span></span><br><span class="line"><span class="string">watermark.loading(&#123;&#125;)</span></span><br><span class="line"><span class="string"># webapack5</span></span><br><span class="line"><span class="string">改成</span></span><br><span class="line"><span class="string">import \&#x27;watermark-dom\&#x27;</span></span><br><span class="line"><span class="string">watermark.loading(&#123;&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<p>原因：webpack4 和 webpack5 对非【commonjs 和 esmodule】打包方式不一致，webpack5 是直接将其注入到 window 属性中</p>
+<h3 id="8-4、mac-启动项目默认打开一个-tab"><a href="#8-4、mac-启动项目默认打开一个-tab" class="headerlink" title="8.4、mac 启动项目默认打开一个 tab"></a>8.4、mac 启动项目默认打开一个 tab</h3><p>举例：如果本地已经启动了 <a href="http://localhost:8080/web/">http://localhost:8080/web/</a> 的项目，并且在浏览器中打开了(不关闭)，如果我们将 8080 端口的项目关掉，在重新启动项目，则会在浏览器中找到刚才运行的项目页面开始编译，不会重新在浏览器中重新打开一个新的页面</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const openBrowser = require(\&#x27;react-dev-utils/openBrowser\&#x27;);</span><br><span class="line"></span><br><span class="line">devServer.listen(Config.port, host, err =&gt; &#123;</span><br><span class="line">  if (err) &#123;</span><br><span class="line">    return console.log(err);</span><br><span class="line">  &#125;</span><br><span class="line">  console.log(chalk.cyan(\&#x27;Starting the development server...\</span><br><span class="line">\&#x27;));</span><br><span class="line"><span class="addition">+  openBrowser(`http://localhost:$&#123;port&#125;/$&#123;Config.prefix&#125;`)</span></span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-5、清空控制台信息"><a href="#8-5、清空控制台信息" class="headerlink" title="8.5、清空控制台信息"></a>8.5、清空控制台信息</h3><p>原因：开发中，启动项目时，我们并不需要控制台这么多信息，本着简洁的原则需要：编译时间、以及项目链接</p>
+<p>开发</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">WebpackDevServer</span>(compiler, &#123;</span><br><span class="line">  <span class="attr">overlay</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">quiet</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>生产</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stats</span>: &#123;</span><br><span class="line">         <span class="attr">all</span>: <span class="literal">false</span>,</span><br><span class="line">         <span class="attr">errors</span>: <span class="literal">true</span>,</span><br><span class="line">         <span class="attr">moduleTrace</span>: <span class="literal">true</span>,</span><br><span class="line">         <span class="attr">logging</span>: \<span class="string">&#x27;error\&#x27;,</span></span><br><span class="line"><span class="string">         assets: true,</span></span><br><span class="line"><span class="string">     &#125;,</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-6-移除-clean-webpack-plugin"><a href="#8-6-移除-clean-webpack-plugin" class="headerlink" title="8.6 移除 clean-webpack-plugin"></a>8.6 移除 clean-webpack-plugin</h3><ul>
+<li>5.20 版本以后 output 新增特性 clean，用于清除 dist 文件</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">clean</span>: <span class="literal">true</span>, <span class="comment">// Clean the output directory before emit.</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="移除插件"><a href="#移除插件" class="headerlink" title="移除插件"></a>移除插件</h2><ul>
+<li>add-asset-html-webpack-plugin 不再需要</li>
+<li>open-browser-webpack-plugin 新插件替换</li>
+<li>url-loader、file-loader 对于图片&#x2F;图标 webpack5 有新的写法</li>
+<li>hard-source-webpack-plugin 不再需要，有新的缓存方式</li>
+<li>clean-webpack-plugin 移除</li>
+</ul>
+<h2 id="添加插件"><a href="#添加插件" class="headerlink" title="添加插件"></a>添加插件</h2><ul>
+<li><p>react-dev-utils 辅助工具</p>
+</li>
+<li><p>friendly-errors-webpack-plugin 启动提示</p>
+</li>
+<li><p>webpackbar 启动进度条&#x2F;编译时间</p>
+</li>
+</ul>
+<h2 id="升级前后编译对比"><a href="#升级前后编译对比" class="headerlink" title="升级前后编译对比"></a>升级前后编译对比</h2><table>
+<thead>
+<tr>
+<th>webpack 版本</th>
+<th>首次编译(s)</th>
+<th>二次启动(s)</th>
+<th>修改文件编译(s)</th>
+<th>打包时间(s)</th>
+<th>打包体积</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4.41.0</td>
+<td>25s 左右</td>
+<td>25s 左右</td>
+<td>1s 左右</td>
+<td>40 左右</td>
+<td>2730kb</td>
+<td></td>
+</tr>
+<tr>
+<td>5.43.0</td>
+<td>25s 左右</td>
+<td>3s 左右</td>
+<td>1s 左右</td>
+<td>40 左右</td>
+<td>2669kb</td>
+<td></td>
+</tr>
+</tbody></table>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/logo.png" alt="webbHou">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：webbHou
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2022/11/02/webpack4-5%E5%8D%87%E7%BA%A7%E5%8F%8A%E4%BC%98%E5%8C%96/" target="_blank">webpack4->5升级及优化</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：Think twice Code once
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tags/javascript/">javascript</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+                <a href="/2022/11/02/visibleHoc%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8F%8A%E4%BD%BF%E7%94%A8/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/11/02/visibleHoc%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8F%8A%E4%BD%BF%E7%94%A8/" title="发布于 2022-11-02 06:12">visibleHoc高阶组件开发及使用</a>
+                <br>
+            
+            
+                <a href="/2022/11/02/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/" class="next-prefix">» </a> 下一篇：    <a href="/2022/11/02/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/" title="发布于 2022-11-02 06:08">企业微信开发</a>
+            
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar"></div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span></span></div>        
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul></ul> 
+            </div> 
+            <div class="menu-link"></div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+    <div class="aplayer"></div>
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
+        <script type="text/javascript">
+            const aplayer = new APlayer({
+                container: document.querySelector(".aplayer"),
+                fixed: true,
+                autoplay: false,
+                loop: "all",
+                order: "random",
+                preload: "auto",
+                volume: 0.67,
+                mutex: true,
+                lrcType: 3,
+                audio: [
+                    
+                        {
+                            name: "See You Again",
+                            artist: "Charlie Puth, Wiz Khalifa",
+                            cover: "/music/cover/See You Again.jpg",
+                            url: "/music/song/See You Again.mp3",
+                            lrc: "/music/lrc/See You Again.lrc"
+                        },
+                    
+                ]
+            });
+        </script>
+    
+    
+    <div class="wrap-right"></div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : 'first19326',
+        GitHubRepositories : 'Hexo-LiveForCode',
+
+        BlogUser      : 'webbHou',
+        BlogAvatar    : '/logo.png',
+        BlogStartDate : '2020-01-01',
+
+        WebsiteTitleBlur         : '(◍´꒳`◍) Hi, Live For Code',
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : '/favicon.ico',
+
+        ProgressBar: {
+            id       : 'topProgressBar',
+            color    : '#77B6FF',
+            height   : '2px',
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound: {
+                tension  : 16,
+                friction : 5
+            },
+            spinner: {
+                id     : 'spinner',
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : '#F0F0F0',
+                    stroke     : '#272633',
+                    base       : '',
+                    child      : '#272633'
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : 'rgba(255, 255, 255, .2)',
+            clearOffset : 0.3
+        },
+
+        ArticleHeaderAnimationRendered : false,
+        ArticleHeaderAnimation         : {
+            triW                  : 14,
+            triH                  : 20,
+            neighbours            : [
+                
+                    'side',
+                
+                    'top',
+                
+                    'bottom',
+                
+            ],
+            speedTrailAppear      : 0.1,
+            speedTrailDisappear   : 0.1,
+            speedTriOpen          : 1,
+            trailMaxLength        : 30,
+            trailIntervalCreation : 100,
+            delayBeforeDisappear  : 2,
+            colors                : [
+                
+                    '#96EDA6',
+                
+                    '#5BC6A9',
+                
+                    '#38668C',
+                
+                    '#374D84',
+                
+                    '#BED5CB',
+                
+                    '#62ADC6',
+                
+                    '#8EE5DE',
+                
+                    '#304E7B',
+                
+            ]
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : '60%',
+            colorBrightness  : '50%',
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : 'random',
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpeg',
+            
+        ],
+        HomeBannerText  : '',
+
+        ArticleHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
+            
+        ],
+
+        OtherBannerText : '',
+
+        MenuList : [
+            
+                {
+                    name   : '首页',
+                    href   : '/',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '标签',
+                    href   : '/tag',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '分类',
+                    href   : '/category',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '归档',
+                    href   : '/archives',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '关于',
+                    href   : '/about',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '订阅',
+                    href   : '/atom.xml',    
+                    target : '_blank',
+                    class  : ''
+                },
+            
+                {
+                    name   : '搜索',
+                    href   : '',    
+                    target : '',
+                    class  : 'search'
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        icon : 'icon-weibo', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-wechat', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-qq', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-github', 
+                        url  : 'https://github.com/webbHou'
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : {
+            icon    : 'like-fill',
+            left    : '最美的不是下雨天',
+            right   : '是曾与你躲过雨的屋檐'
+        },
+        ThemeInfo   : true,
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                'Based on cnblogs theme SimpleMemory.',
+                            
+                                '',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'SimpleMemory Author:',
+                            
+                                'BNDong',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'Theme:',
+                            
+                                'LiveForCode',
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : '',
+
+        Donate : {
+            paypal  : '',
+            bitcoin : '',
+            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
+            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
+        },
+
+        Code : {
+            style : 'normal'
+        },  
+
+        Search : {
+            applicationID : '010C3EANT8',
+            apiKey        : 'c7abab9f11b79102b9aff7fe6d41447d',
+            indexName     : 'Notes',
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : '搜索',
+                empty       : '未发现与 「${query}」 相关的内容',
+                stats       : '${hits} 条相关条目，使用了 ${time} 毫秒',
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : '.comments-content',
+            appId          : 'srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz',
+            appKey         : '8uVSP1q6UlALVC5igYfIfv2h',
+            placeholder    : '你是我一生只会遇见一次的惊喜...',
+            avatar         : 'mm',
+            meta           : 'nick,mail,link',
+            requiredFields : 'nick,mail',
+            pageSize       : 5,
+            lang           : 'zh-cn',
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : '.toc',
+            contentSelector       : '.article-body',
+            headingSelector       : 'h1, h2, h3, h4, h5',
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : '.toc',
+            positionFixedClass    : 'toc-fixed',
+            fixedSidebarOffset    : '',
+        },
+
+        Require : {
+            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/',
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : 'APlayer'
+        },
+        APlayer : {
+            container : '.aplayer',
+            fixed     : true,
+            autoplay  : false,
+            loop      : 'all',
+            order     : 'random',
+            preload   : 'auto',
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : 'See You Again',
+                        artist : 'Charlie Puth, Wiz Khalifa',
+                        cover  : '/music/cover/See You Again.jpg',
+                        url    : '/music/song/See You Again.mp3',
+                        lrc    : '/music/lrc/See You Again.lrc'
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : '3778678', 
+            lrcshow  : false, 
+            server   : 'netease', 
+            type     : 'playlist', 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : 'all', 
+            order    : 'random', 
+            preload  : 'auto', 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        LazyLoad : {
+            default : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
+        },
+  
+        Style : {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
+            archive          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
+            donate           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
+            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
+            footer           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
+            iconfont         : 'https://at.alicdn.com/t/font_1546312_l3yohatebw.css',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
+            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
+            page             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
+            post             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
+            search           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
+            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
+            normal           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
+            night            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
+            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
+        },
+
+        Script: {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
+            config           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
+            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
+            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
+            loading          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
+            meting           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
+            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
+            require          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
+        },
+
+        Font: {
+            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
+            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
+            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
+            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
+            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
+            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
+            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
+            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
+        },
+
+        Suffix : {
+            about : 'Think twice Code once'
+        },
+            
+        Theme : {
+            url  : 'https://github.com/first19326/Hexo-LiveForCode',
+            name : 'Hexo - Live For Code'
+        }  
+    };
+</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
+</body>
+</html>

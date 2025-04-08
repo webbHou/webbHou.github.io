@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2019/01/11/常见的几种前端算法/" class="leancloud_visitors" data-flag-title="常见的几种前端算法">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2019/01/11/常见的几种前端算法/"></span>
@@ -57,11 +57,15 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><p><strong>原理：每次都从第一个开始两两比较 直到最后一个是本次遍历最大的 下次遍历忽略上次遍历的最后一个  时间复杂度 n+(n-1)+(n-2)+…+1 = n*n</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> sort(arr)&#123;</span><br><span class="line">  <span class="built_in">let</span> len = arr.length;</span><br><span class="line">  <span class="keyword">for</span>(<span class="built_in">let</span> i =len-1;i&gt;0;i--)&#123;</span><br><span class="line">      <span class="keyword">for</span>(j=0;j&lt;i;j++)&#123;</span><br><span class="line">          <span class="keyword">if</span>(arr[j]&gt;arr[j+1])&#123; //两两比较</span><br><span class="line">              [arr[j],arr[j+1]] = [arr[j+1],arr[j]]  //较大的替换到后边</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h4><p><strong>原理：每次遍历找出本次遍历的最小值的索引，然后把该最小值放到arr[i]的位置，下次从i+1开始，重复操作  时间复杂度 n+(n-1)+(n-2)+…+1 = n*n</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> sort2(arr)&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="built_in">let</span> i = 0;i&lt;arr.length-1;i++)&#123;</span><br><span class="line">    <span class="built_in">let</span> minIndex = i; //默认最小值下标</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">let</span> j = i+1;j&lt;arr.length;j++)&#123;</span><br><span class="line">        minIndex = arr[j]&lt;arr[minIndex]?j:minIndex  //找到本次遍历的最小值下标</span><br><span class="line">    &#125;</span><br><span class="line">    [arr[i],arr[minIndex]]  = [arr[minIndex],arr[i]];  //最小值与默认值替换</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><p><strong>原理：扑克牌思想  和左边的比较 小则交换位置再继续 直到成为第一个或者比左边的都大 每次遍历重复此操作 时间复杂度 n+(n-1)+(n-2)+…+1 = n*n</strong></p>
+        <h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><p><strong>原理：每次都从第一个开始两两比较 直到最后一个是本次遍历最大的 下次遍历忽略上次遍历的最后一个  时间复杂度 n+(n-1)+(n-2)+…+1 &#x3D; n*n</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="built_in">sort</span>(arr)&#123;</span><br><span class="line">  <span class="built_in">let</span> len = arr.length;</span><br><span class="line">  <span class="keyword">for</span>(<span class="built_in">let</span> i =len-1;i&gt;0;i--)&#123;</span><br><span class="line">      <span class="keyword">for</span>(j=0;j&lt;i;j++)&#123;</span><br><span class="line">          <span class="keyword">if</span>(arr[j]&gt;arr[j+1])&#123; //两两比较</span><br><span class="line">              [arr[j],arr[j+1]] = [arr[j+1],arr[j]]  //较大的替换到后边</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h4><p><strong>原理：每次遍历找出本次遍历的最小值的索引，然后把该最小值放到arr[i]的位置，下次从i+1开始，重复操作  时间复杂度 n+(n-1)+(n-2)+…+1 &#x3D; n*n</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> sort2(arr)&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="built_in">let</span> i = 0;i&lt;arr.length-1;i++)&#123;</span><br><span class="line">    <span class="built_in">let</span> minIndex = i; //默认最小值下标</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">let</span> j = i+1;j&lt;arr.length;j++)&#123;</span><br><span class="line">        minIndex = arr[j]&lt;arr[minIndex]?j:minIndex  //找到本次遍历的最小值下标</span><br><span class="line">    &#125;</span><br><span class="line">    [arr[i],arr[minIndex]]  = [arr[minIndex],arr[i]];  //最小值与默认值替换</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><p><strong>原理：扑克牌思想  和左边的比较 小则交换位置再继续 直到成为第一个或者比左边的都大 每次遍历重复此操作 时间复杂度 n+(n-1)+(n-2)+…+1 &#x3D; n*n</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> sort3(arr)&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="built_in">let</span> i = 1;i&lt;arr.length;i++)&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="built_in">let</span> j = i;j&gt;0;j--)&#123;</span><br><span class="line">          <span class="keyword">if</span>(arr[j]&lt;arr[j-1])&#123;  //按顺序每次从数组中取一个与左边的比较  </span><br><span class="line">              [arr[j-1],arr[j]] = [arr[j],arr[j-1]]; //较大的替换到后边</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">              <span class="built_in">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><p><strong>原理：通过取基准值分为两队（大于基准和小于基准的） 然后再进行递归调用</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> sort4(arr)&#123;</span><br><span class="line">  <span class="keyword">if</span>(arr.length&lt;=1)&#123;</span><br><span class="line">      <span class="built_in">return</span> arr</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">let</span> left = [];</span><br><span class="line">  <span class="built_in">let</span> right = [];</span><br><span class="line">  <span class="built_in">let</span> middle = arr.splice(0,1);</span><br><span class="line">  <span class="keyword">for</span>(<span class="built_in">let</span> i = 0;i&lt;arr.length;i++)&#123;</span><br><span class="line">      n+=1;</span><br><span class="line">      <span class="keyword">if</span>(arr[i]&gt;middle)&#123;</span><br><span class="line">          right.push(arr[i])</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          left.push(arr[i])</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> sort4(left).concat(middle,sort4(right));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         <p class="suffix-end">__END__</p>
@@ -72,7 +76,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2019/01/11/常见的几种前端算法/" target="_blank">常见的几种前端算法</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2019/01/11/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%89%8D%E7%AB%AF%E7%AE%97%E6%B3%95/" target="_blank">常见的几种前端算法</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -89,7 +93,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/js常见问题/">js常见问题</a>
+                    <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
                 
             </div>
         
@@ -99,17 +103,17 @@
                 
                     <a href="/tags/javascript/">javascript</a>
                 
-                    <a href="/tags/算法/">算法</a>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
                 
             </div>
         
         <div class="article-prev-next">
             
-                <a href="/2019/01/14/js-继承/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/01/14/js-继承/" title="发布于 2019-01-14 11:32">js 继承</a>
+                <a href="/2019/01/14/js-%E7%BB%A7%E6%89%BF/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/01/14/js-%E7%BB%A7%E6%89%BF/" title="发布于 2019-01-14 11:32">js 继承</a>
                 <br>
             
             
-                <a href="/2019/01/08/手写实现一个promise/" class="next-prefix">» </a> 下一篇：    <a href="/2019/01/08/手写实现一个promise/" title="发布于 2019-01-08 01:58">手写实现一个promise</a>
+                <a href="/2019/01/08/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AApromise/" class="next-prefix">» </a> 下一篇：    <a href="/2019/01/08/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AApromise/" title="发布于 2019-01-08 01:58">手写实现一个promise</a>
             
         </div>
     </div>
@@ -143,7 +147,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

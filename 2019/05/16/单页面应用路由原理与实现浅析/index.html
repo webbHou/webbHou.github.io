@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2019/05/16/单页面应用路由原理与实现浅析/" class="leancloud_visitors" data-flag-title="单页面应用路由原理与实现浅析">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2019/05/16/单页面应用路由原理与实现浅析/"></span>
@@ -68,21 +68,22 @@
 <li>需要来监听hashchange事件来渲染不同的页面组件</li>
 </ul>
 <h4 id="history模式"><a href="#history模式" class="headerlink" title="history模式"></a>history模式</h4><ul>
-<li>通过history.pushState/history.replaceState 来进行路由的修改</li>
+<li>通过history.pushState&#x2F;history.replaceState 来进行路由的修改</li>
 <li>监听popstate来进行不同组件的渲染</li>
 </ul>
-<h4 id="vuex工作流"><a href="#vuex工作流" class="headerlink" title="vuex工作流"></a>vuex工作流</h4><p>1.new vuex.store({<br>  strtic:true //严格<br>  state：{ }  //全局唯一<br>  mutation：{<br>    add(state,arg){<br>      state+=1;<br>    }<br>  }  //进行state修改<br>  action：{ //提交action到mutaion<br>    addAction({commit},arg){<br>      commit(mutaion名，arg)<br>    }<br>  }，<br>  getter：{ //获取state<br>    getCount(state){</p>
-<pre><code>}
-</code></pre><p>  }<br>})</p>
+<h4 id="vuex工作流"><a href="#vuex工作流" class="headerlink" title="vuex工作流"></a>vuex工作流</h4><p>1.new vuex.store({<br>  strtic:true &#x2F;&#x2F;严格<br>  state：{ }  &#x2F;&#x2F;全局唯一<br>  mutation：{<br>    add(state,arg){<br>      state+&#x3D;1;<br>    }<br>  }  &#x2F;&#x2F;进行state修改<br>  action：{ &#x2F;&#x2F;提交action到mutaion<br>    addAction({commit},arg){<br>      commit(mutaion名，arg)<br>    }<br>  }，<br>  getter：{ &#x2F;&#x2F;获取state<br>    getCount(state){</p>
+<pre><code>&#125;
+</code></pre>
+<p>  }<br>})</p>
 <p>2.页面使用</p>
 <ul>
 <li>提交action  this.$store.disptch(action名，arg)</li>
 <li>使用state   this.$store.state</li>
 </ul>
 <h4 id="vue父子通讯"><a href="#vue父子通讯" class="headerlink" title="vue父子通讯"></a>vue父子通讯</h4><ul>
-<li>props  父-&gt;子  $emit/$on</li>
-<li>新vue实例做中介  $emit/$on</li>
-<li>this.$attrs/$listeners   未继承的属性/方法</li>
+<li>props  父-&gt;子  $emit&#x2F;$on</li>
+<li>新vue实例做中介  $emit&#x2F;$on</li>
+<li>this.$attrs&#x2F;$listeners   未继承的属性&#x2F;方法</li>
 <li>vuex 全局状态共享 this.$store.state</li>
 </ul>
 <h4 id="vue组件"><a href="#vue组件" class="headerlink" title="vue组件"></a>vue组件</h4><ul>
@@ -109,7 +110,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2019/05/16/单页面应用路由原理与实现浅析/" target="_blank">单页面应用路由原理与实现浅析</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2019/05/16/%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8%E8%B7%AF%E7%94%B1%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0%E6%B5%85%E6%9E%90/" target="_blank">单页面应用路由原理与实现浅析</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -126,7 +127,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/js常见问题/">js常见问题</a>
+                    <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
                 
             </div>
         
@@ -140,11 +141,11 @@
         
         <div class="article-prev-next">
             
-                <a href="/2019/06/22/React-redux高阶组件connect模拟实现/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/06/22/React-redux高阶组件connect模拟实现/" title="发布于 2019-06-22 01:55">React-redux高阶组件connect模拟实现</a>
+                <a href="/2019/06/22/React-redux%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6connect%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/06/22/React-redux%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6connect%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/" title="发布于 2019-06-22 01:55">React-redux高阶组件connect模拟实现</a>
                 <br>
             
             
-                <a href="/2019/05/08/webpack打包原理和机制/" class="next-prefix">» </a> 下一篇：    <a href="/2019/05/08/webpack打包原理和机制/" title="发布于 2019-05-08 07:48">webpack打包原理和机制</a>
+                <a href="/2019/05/08/webpack%E6%89%93%E5%8C%85%E5%8E%9F%E7%90%86%E5%92%8C%E6%9C%BA%E5%88%B6/" class="next-prefix">» </a> 下一篇：    <a href="/2019/05/08/webpack%E6%89%93%E5%8C%85%E5%8E%9F%E7%90%86%E5%92%8C%E6%9C%BA%E5%88%B6/" title="发布于 2019-05-08 07:48">webpack打包原理和机制</a>
             
         </div>
     </div>
@@ -178,7 +179,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

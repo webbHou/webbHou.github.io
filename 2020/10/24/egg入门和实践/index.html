@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2020/10/24/egg入门和实践/" class="leancloud_visitors" data-flag-title="egg入门和实践">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2020/10/24/egg入门和实践/"></span>
@@ -57,12 +57,13 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <h4 id="egg和koa的区别"><a href="#egg和koa的区别" class="headerlink" title="egg和koa的区别"></a>egg和koa的区别</h4><ul>
-<li>api上：更好的封装，使开发人员只注重于业务而不需要原理，更简单方便的去写业务</li>
+        <h3 id="egg、koa、express、nest-直接关系"><a href="#egg、koa、express、nest-直接关系" class="headerlink" title="egg、koa、express、nest 直接关系"></a>egg、koa、express、nest 直接关系</h3><p>express 是最早的 nodejs 框架，使用回调函数处理异步。<br>koa 是 express 原班人马打造的，丢掉回调方式，使用 async 函数处理异步（koa1 使用 generator 函数），不绑定任何框架，插件化，随意定制，轻量级。<br>nest 是使用 typescript 封装的 koa，使用依赖注入，装饰器等特性，使代码更易维护，更易扩展，更易测试。<br>egg 是使用 koa 封装的，使用插件系统，使开发人员只注重于业务而不需要原理，更简单方便的去写业务。</p>
+<h4 id="egg-和-koa-的区别"><a href="#egg-和-koa-的区别" class="headerlink" title="egg 和 koa 的区别"></a>egg 和 koa 的区别</h4><ul>
+<li>api 上：更好的封装，使开发人员只注重于业务而不需要原理，更简单方便的去写业务</li>
 <li>脚手架：<ul>
-<li>文件分割：根据controller、service、config去存放和管理，便于后期维护</li>
-<li>ts支持：会自动生成相关文件的d.ts类型文件，存放于typings文件夹下，与业务目录形成映射</li>
-<li>test、eslint、log支持</li>
+<li>文件分割：根据 controller、service、config 去存放和管理，便于后期维护</li>
+<li>ts 支持：会自动生成相关文件的 d.ts 类型文件，存放于 typings 文件夹下，与业务目录形成映射</li>
+<li>test、eslint、log 支持</li>
 </ul>
 </li>
 <li>插件系统：强大的插件系统让你可以直接使用第三方插件，配置简单</li>
@@ -77,7 +78,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2020/10/24/egg入门和实践/" target="_blank">egg入门和实践</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2020/10/24/egg%E5%85%A5%E9%97%A8%E5%92%8C%E5%AE%9E%E8%B7%B5/" target="_blank">egg入门和实践</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -110,11 +111,11 @@
         
         <div class="article-prev-next">
             
-                <a href="/2020/10/30/Typescript入门和工程化搭建/" class="prev-prefix">« </a> 上一篇：    <a href="/2020/10/30/Typescript入门和工程化搭建/" title="发布于 2020-10-30 06:47">Typescript+工程化</a>
+                <a href="/2020/10/30/Typescript%E5%85%A5%E9%97%A8%E5%92%8C%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%90%AD%E5%BB%BA/" class="prev-prefix">« </a> 上一篇：    <a href="/2020/10/30/Typescript%E5%85%A5%E9%97%A8%E5%92%8C%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%90%AD%E5%BB%BA/" title="发布于 2020-10-30 06:47">Typescript+工程化</a>
                 <br>
             
             
-                <a href="/2020/10/19/readux异步操作及react-thunk中间件原理解析/" class="next-prefix">» </a> 下一篇：    <a href="/2020/10/19/readux异步操作及react-thunk中间件原理解析/" title="发布于 2020-10-19 06:55">readux异步操作及react-thunk中间件原理解析</a>
+                <a href="/2020/10/19/readux%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E5%8F%8Areact-thunk%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" class="next-prefix">» </a> 下一篇：    <a href="/2020/10/19/readux%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E5%8F%8Areact-thunk%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" title="发布于 2020-10-19 06:55">readux异步操作及react-thunk中间件原理解析</a>
             
         </div>
     </div>
@@ -148,7 +149,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

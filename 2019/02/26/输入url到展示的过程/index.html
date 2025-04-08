@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2019/02/26/输入url到展示的过程/" class="leancloud_visitors" data-flag-title="输入url到展示的过程">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2019/02/26/输入url到展示的过程/"></span>
@@ -59,12 +59,15 @@
     <div class="article-body">
         <p>作为前端工程师，我们日常打交道的就是浏览器了，可是你想过当你输入url回车到页面展示的这一个过程都发生了什么吗？</p>
 <h3 id="浏览器渲染之前主要有如下几步"><a href="#浏览器渲染之前主要有如下几步" class="headerlink" title="浏览器渲染之前主要有如下几步"></a>浏览器渲染之前主要有如下几步</h3><ul>
-<li>浏览器根据DNS域名服务器得到域名对应的公网ip</li>
-<li>浏览器对这个ip发送http请求</li>
-<li>服务器接受、处理http请求，并响应</li>
+<li><p>浏览器根据DNS域名服务器得到域名对应的公网ip</p>
+</li>
+<li><p>浏览器对这个ip发送http请求</p>
+</li>
+<li><p>服务器接受、处理http请求，并响应</p>
+</li>
 <li><p>浏览器收到服务器响应的内容并解析</p>
 </li>
-<li><p>DNS解析：DNS服务器对url进行一对一的ip映射解析<br>一个域名解析的过程：<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> -&gt; 网络服务商 -&gt; 递归服务器 -&gt; 根DNS服务器 -&gt; .com顶级DNS服务器 -&gt; baidu.com权威DNS服务器 -&gt; IP返回给用户<br>为了下次查找方便，所以递归服务器就会记录下来 就叫做DNS缓存，这一层也是黑客进行DNS攻击的薄弱地方。</p>
+<li><p>DNS解析：DNS服务器对url进行一对一的ip映射解析<br>一个域名解析的过程：<a href="http://www.baidu.com/">www.baidu.com</a> -&gt; 网络服务商 -&gt; 递归服务器 -&gt; 根DNS服务器 -&gt; .com顶级DNS服务器 -&gt; baidu.com权威DNS服务器 -&gt; IP返回给用户<br>为了下次查找方便，所以递归服务器就会记录下来 就叫做DNS缓存，这一层也是黑客进行DNS攻击的薄弱地方。</p>
 </li>
 <li><p>DNS攻击：因为递归服务器会把解析记录存下来，所以我们只需要让他错一个错误的缓存记录就可以了。域名和DNS服务器采用问答的方式去请求和响应，当询问的端口号和回答的端口号相同时就会把该条记录存下来。最早该端口号是规律递增的，黑客只需要赶在DNS服务器响应前进行答复，所以dns缓存极易被污染。</p>
 </li>
@@ -75,9 +78,12 @@
 <li>FIN表示请求关闭连接</li>
 </ul>
 </li>
-<li>TCP四次挥手：而连接的关闭需要四次，需要双方都确认关闭</li>
-<li>发送请求，分析 url，设置请求报文(头，主体)</li>
-<li>服务器返回请求的文件 (html)</li>
+<li><p>TCP四次挥手：而连接的关闭需要四次，需要双方都确认关闭</p>
+</li>
+<li><p>发送请求，分析 url，设置请求报文(头，主体)</p>
+</li>
+<li><p>服务器返回请求的文件 (html)</p>
+</li>
 <li><p>浏览器进行渲染</p>
 <ul>
 <li>HTML parser –&gt; DOM Tree<ul>
@@ -123,7 +129,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2019/02/26/输入url到展示的过程/" target="_blank">输入url到展示的过程</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2019/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E5%B1%95%E7%A4%BA%E7%9A%84%E8%BF%87%E7%A8%8B/" target="_blank">输入url到展示的过程</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -140,7 +146,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/js常见问题/">js常见问题</a>
+                    <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
                 
             </div>
         
@@ -154,11 +160,11 @@
         
         <div class="article-prev-next">
             
-                <a href="/2019/03/24/vue双向绑定虚拟dom实现/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/03/24/vue双向绑定虚拟dom实现/" title="发布于 2019-03-24 04:49">简易版vue双向绑定原理实现</a>
+                <a href="/2019/03/24/vue%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E8%99%9A%E6%8B%9Fdom%E5%AE%9E%E7%8E%B0/" class="prev-prefix">« </a> 上一篇：    <a href="/2019/03/24/vue%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E8%99%9A%E6%8B%9Fdom%E5%AE%9E%E7%8E%B0/" title="发布于 2019-03-24 04:49">简易版vue双向绑定原理实现</a>
                 <br>
             
             
-                <a href="/2019/02/19/面试秘籍-原生js篇/" class="next-prefix">» </a> 下一篇：    <a href="/2019/02/19/面试秘籍-原生js篇/" title="发布于 2019-02-19 11:53">面试秘籍-原生js篇</a>
+                <a href="/2019/02/19/%E9%9D%A2%E8%AF%95%E7%A7%98%E7%B1%8D-%E5%8E%9F%E7%94%9Fjs%E7%AF%87/" class="next-prefix">» </a> 下一篇：    <a href="/2019/02/19/%E9%9D%A2%E8%AF%95%E7%A7%98%E7%B1%8D-%E5%8E%9F%E7%94%9Fjs%E7%AF%87/" title="发布于 2019-02-19 11:53">面试秘籍-原生js篇</a>
             
         </div>
     </div>
@@ -192,7 +198,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

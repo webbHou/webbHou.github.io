@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2017/09/13/微信小程序页面跳转的方式/" class="leancloud_visitors" data-flag-title="微信小程序页面跳转的方式">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2017/09/13/微信小程序页面跳转的方式/"></span>
@@ -57,10 +57,14 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <h2 id="四种跳转方式"><a href="#四种跳转方式" class="headerlink" title="四种跳转方式"></a>四种跳转方式</h2><p>微信小程序页面跳转有四种方式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wx.navigateTo(OBJECT)； </span><br><span class="line">wx.redirectTo(OBJECT)； </span><br><span class="line">wx.switchTab(OBJECT)； </span><br><span class="line">wx.navigateBack(OBJECT)</span><br></pre></td></tr></table></figure></p>
+        <h2 id="四种跳转方式"><a href="#四种跳转方式" class="headerlink" title="四种跳转方式"></a>四种跳转方式</h2><p>微信小程序页面跳转有四种方式： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wx.navigateTo(OBJECT)； </span><br><span class="line">wx.redirectTo(OBJECT)； </span><br><span class="line">wx.switchTab(OBJECT)； </span><br><span class="line">wx.navigateBack(OBJECT) </span><br></pre></td></tr></table></figure>
+
+
 <h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">其中navigateTo是将原来的页面保存在页面栈中，在跳入到下一个页面的时候目标页面也进栈，只有在这个情况下点击手机的返回按钮才可以跳转到上一个页面；</span><br><span class="line">redirectTo和switchTab都是先清除栈中原来的页面，然后目标页面进栈，使用这两种跳转方式，都不能通过系统的返回键回到上一个页面，而是直接退出小程序；</span><br><span class="line">redirectTo使用的时候一定要配合tabBar或是页面里面可以再次跳转按钮，否则无法回到上一个页面；</span><br><span class="line">switchTab跳转的页面必须是tabBar中声明的页面；</span><br><span class="line">tabBar中定义的字段不能超过5个页面，小程序的页面栈层次也不能超过5层。</span><br><span class="line">navigateBack只能返回到页面栈中的指定页面，一般和navigateTo配合使用。</span><br><span class="line">wx.navigateTo 和 wx.redirectTo 不允许跳转到 tabbar 页面，只能用 wx.switchTab 跳转到 tabbar 页面</span><br></pre></td></tr></table></figure>
-<h2 id="other"><a href="#other" class="headerlink" title="other"></a>other</h2><p>最后一种,使用<navigator>标签实现页面跳转:</navigator></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;navigator url=<span class="string">"navigate?title=navigate"</span> hover-class=<span class="string">"navigator-hover"</span>&gt;跳转到新页面&lt;/navigator&gt;</span><br><span class="line">&lt;navigator url=<span class="string">"redirect?title=redirect"</span> open-type=<span class="string">"redirect"</span> hover-class=<span class="string">"other-navigator-hover"</span>&gt;在当前页打开&lt;/navigator&gt;</span><br><span class="line">&lt;navigator url=<span class="string">"index"</span> open-type=<span class="string">"switchTab"</span> hover-class=<span class="string">"other-navigator-hover"</span>&gt;切换 Tab&lt;/navigator&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="other"><a href="#other" class="headerlink" title="other"></a>other</h2><p>最后一种,使用<navigator/>标签实现页面跳转:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;navigator url=<span class="string">&quot;navigate?title=navigate&quot;</span> hover-class=<span class="string">&quot;navigator-hover&quot;</span>&gt;跳转到新页面&lt;/navigator&gt;</span><br><span class="line">&lt;navigator url=<span class="string">&quot;redirect?title=redirect&quot;</span> open-type=<span class="string">&quot;redirect&quot;</span> hover-class=<span class="string">&quot;other-navigator-hover&quot;</span>&gt;在当前页打开&lt;/navigator&gt;</span><br><span class="line">&lt;navigator url=<span class="string">&quot;index&quot;</span> open-type=<span class="string">&quot;switchTab&quot;</span> hover-class=<span class="string">&quot;other-navigator-hover&quot;</span>&gt;切换 Tab&lt;/navigator&gt;</span><br></pre></td></tr></table></figure>
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
             <div class="suffix-box-left">
@@ -69,7 +73,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2017/09/13/微信小程序页面跳转的方式/" target="_blank">微信小程序页面跳转的方式</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2017/09/13/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E7%9A%84%E6%96%B9%E5%BC%8F/" target="_blank">微信小程序页面跳转的方式</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -86,7 +90,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/微信小程序/">微信小程序</a>
+                    <a href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a>
                 
             </div>
         
@@ -96,17 +100,17 @@
                 
                     <a href="/tags/javascript/">javascript</a>
                 
-                    <a href="/tags/小程序/">小程序</a>
+                    <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
                 
             </div>
         
         <div class="article-prev-next">
             
-                <a href="/2017/09/13/小程序常用操作/" class="prev-prefix">« </a> 上一篇：    <a href="/2017/09/13/小程序常用操作/" title="发布于 2017-09-13 11:56">小程序常用操作</a>
+                <a href="/2017/09/13/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" class="prev-prefix">« </a> 上一篇：    <a href="/2017/09/13/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" title="发布于 2017-09-13 11:56">小程序常用操作</a>
                 <br>
             
             
-                <a href="/2017/08/31/移动端返回上一页/" class="next-prefix">» </a> 下一篇：    <a href="/2017/08/31/移动端返回上一页/" title="发布于 2017-08-31 01:24">移动端返回上一页</a>
+                <a href="/2017/08/31/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%BF%94%E5%9B%9E%E4%B8%8A%E4%B8%80%E9%A1%B5/" class="next-prefix">» </a> 下一篇：    <a href="/2017/08/31/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%BF%94%E5%9B%9E%E4%B8%8A%E4%B8%80%E9%A1%B5/" title="发布于 2017-08-31 01:24">移动端返回上一页</a>
             
         </div>
     </div>
@@ -140,7 +144,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

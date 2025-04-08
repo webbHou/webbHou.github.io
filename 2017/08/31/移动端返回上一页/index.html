@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="referrer" content="origin">
@@ -24,7 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
-</head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
@@ -39,8 +39,8 @@
                         </span>
                         
                             <span id="/2017/08/31/移动端返回上一页/" class="leancloud_visitors" data-flag-title="移动端返回上一页">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></sapn></span>
-                            
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
                         
                         <span>
                             <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2017/08/31/移动端返回上一页/"></span>
@@ -59,19 +59,23 @@
     <div class="article-body">
         <h2 id="移动端返回上一页问题"><a href="#移动端返回上一页问题" class="headerlink" title="移动端返回上一页问题"></a>移动端返回上一页问题</h2><p>实际工作中往往有这样的需求,需要返回上一页。</p>
 <h3 id="pc"><a href="#pc" class="headerlink" title="pc"></a>pc</h3><p>在pc上我们可以使用window.history.go(-1)或者window.history.back()都可以实现需求,而无需知道上一页的具体url。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">"javascript:history.go(-1)"</span> class=<span class="string">"header-back jsBack"</span>&gt;返回&lt;/a&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">"javascript:history.back()"</span> class=<span class="string">"header-back jsBack"</span>&gt;返回&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">&quot;javascript:history.go(-1)&quot;</span> class=<span class="string">&quot;header-back jsBack&quot;</span>&gt;返回&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">&quot;javascript:history.back()&quot;</span> class=<span class="string">&quot;header-back jsBack&quot;</span>&gt;返回&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
 <h3 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h3><p>但是在移动端，如果想要返回上一页。比如从A页面跳到B页面，如果B页面想返回A页面，为了防止不会跳错，必须要有一个 &lt;  按钮，给它加 history.go(-1) ，返回上一层。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">"javascript:history.go(-1)"</span> class=<span class="string">"header-back jsBack"</span>&gt;返回&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">&quot;javascript:history.go(-1)&quot;</span> class=<span class="string">&quot;header-back jsBack&quot;</span>&gt;返回&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
 <p>但链接来源错综复杂，往往有些情况下根本没有上一页,这时候点击返回按钮根本没有用,用户体验性很差。很多时候会以为只是一个BUG。</p>
 <p>移动端无论是原生app还是传统的网页，返回上页是一个比较强烈的需求。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascript 有一个可以获取前一页面的URL地址的方法：document.referrer</span><br></pre></td></tr></table></figure>
+
 <p>允许客户端通过document.referrer访问http头部来获取当前网页的来源。</p>
 <p>根据document.referrer 的来源来判断是否有来源信息，如果来源信息为空，则返回首页：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (typeof document.referrer === <span class="string">''</span>) &#123;</span><br><span class="line">    // 没有来源页面信息的时候，改成首页URL地址</span><br><span class="line">    $(<span class="string">'.jsBack'</span>).attr(<span class="string">'href'</span>, <span class="string">'/'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (typeof document.referrer === <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">    // 没有来源页面信息的时候，改成首页URL地址</span><br><span class="line">    $(<span class="string">&#x27;.jsBack&#x27;</span>).attr(<span class="string">&#x27;href&#x27;</span>, <span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>以此来达到返回上一页的效果。</p>
 <h3 id="无法获取referrer"><a href="#无法获取referrer" class="headerlink" title="无法获取referrer"></a>无法获取referrer</h3><p>下面的场景无法获得 referrer 信息，以下前8条属于【张鑫旭】：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">直接在浏览器中输入地址</span><br><span class="line">使用location.reload()刷新（location.href或者location.replace()刷新有信息）</span><br><span class="line">在微信对话框中，点击进入微信自身浏览器</span><br><span class="line">扫码进入微信或QQ的浏览器</span><br><span class="line">直接新窗口打开一个页面</span><br><span class="line">从https的网站直接进入一个http协议的网站（Chrome下亲测）</span><br><span class="line">a标签设置rel=<span class="string">"noreferrer"</span>（兼容IE7+）</span><br><span class="line">meta标签来控制不让浏览器发送referer</span><br><span class="line">点击 flash 内部链接</span><br><span class="line">Chrome4.0以下，IE 5.5+以下返回空的字符串</span><br><span class="line">使用 修改 Location 进行页面导航的方法，会导致在IE下丢失 referrer，这可能是IE的一个BUG</span><br><span class="line">跨域</span><br><span class="line">&lt;meta content=<span class="string">"never"</span> name=<span class="string">"referrer"</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">直接在浏览器中输入地址</span><br><span class="line">使用location.reload()刷新（location.href或者location.replace()刷新有信息）</span><br><span class="line">在微信对话框中，点击进入微信自身浏览器</span><br><span class="line">扫码进入微信或QQ的浏览器</span><br><span class="line">直接新窗口打开一个页面</span><br><span class="line">从https的网站直接进入一个http协议的网站（Chrome下亲测）</span><br><span class="line">a标签设置rel=<span class="string">&quot;noreferrer&quot;</span>（兼容IE7+）</span><br><span class="line">meta标签来控制不让浏览器发送referer</span><br><span class="line">点击 flash 内部链接</span><br><span class="line">Chrome4.0以下，IE 5.5+以下返回空的字符串</span><br><span class="line">使用 修改 Location 进行页面导航的方法，会导致在IE下丢失 referrer，这可能是IE的一个BUG</span><br><span class="line">跨域</span><br><span class="line">&lt;meta content=<span class="string">&quot;never&quot;</span> name=<span class="string">&quot;referrer&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
@@ -81,7 +85,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：webbHou
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2017/08/31/移动端返回上一页/" target="_blank">移动端返回上一页</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2017/08/31/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%BF%94%E5%9B%9E%E4%B8%8A%E4%B8%80%E9%A1%B5/" target="_blank">移动端返回上一页</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Think twice Code once
                 <br>
@@ -98,7 +102,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/categories/js常见问题/">js常见问题</a>
+                    <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
                 
             </div>
         
@@ -108,13 +112,13 @@
                 
                     <a href="/tags/javascript/">javascript</a>
                 
-                    <a href="/tags/移动端/">移动端</a>
+                    <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/">移动端</a>
                 
             </div>
         
         <div class="article-prev-next">
             
-                <a href="/2017/09/13/微信小程序页面跳转的方式/" class="prev-prefix">« </a> 上一篇：    <a href="/2017/09/13/微信小程序页面跳转的方式/" title="发布于 2017-09-13 10:09">微信小程序页面跳转的方式</a>
+                <a href="/2017/09/13/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E7%9A%84%E6%96%B9%E5%BC%8F/" class="prev-prefix">« </a> 上一篇：    <a href="/2017/09/13/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E7%9A%84%E6%96%B9%E5%BC%8F/" title="发布于 2017-09-13 10:09">微信小程序页面跳转的方式</a>
                 <br>
             
             
@@ -150,7 +154,7 @@
         </nav>
         <button class="menu-button-close"></button>
         <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 100 800" preserveaspectratio="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
             </svg>
         </div>

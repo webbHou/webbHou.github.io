@@ -1,0 +1,51 @@
+<div class="hd posts">
+    <a href="/index.html"
+        ><i class="fa fa-reply replay-btn" aria-hidden="true"></i
+    ></a>
+    <div class="post-title">
+        <p><%= page.title %></p>
+        <hr />
+    </div>
+    <div class="post-category-tag">
+        <% if (page.categories) { %>
+        <span class="category">
+            <%= __('分类：') %> <% page.categories.each((category) => { %>
+            <a href="<%- url_for(category.path) %>"><%- category.name %></a>
+            <% }) %>
+        </span>
+        <% } %> <% if (page.tags) { %>
+        <span class="tag">
+            <%= __('标签：') %> <% page.tags.each((tag) => { %>
+            <a href="<%- url_for(tag.path) %>"><%- tag.name %></a>
+            <% }) %>
+        </span>
+        <% } %>
+    </div>
+    <div class="post-content">
+        <% var title = page.title; %> 
+        <% if (title == "文章") { %>
+        <div>
+            <% site.posts.each(function (post) { %>
+            <a class="flink" href="<%- url_for(post.path) %>">
+                <div class="list">
+                    <div class="postname"></div>
+                        <%= post.title %>
+                    </div>
+                    <div class="posttime">
+                        <%- full_date(post.date,'YYYY-MM-DD HH:mm:ss') %>
+                    </div>
+                </div>
+            </a>
+            <% }) %>
+        </div>
+        <% } %> 
+        <% if(title !== "文章") { %>
+        <div><%= page.content %></div>
+        <% } %>
+    </div>
+
+    <% if (theme.valine.enable && page.comments) { %>
+    <hr class="fhr" />
+    <div id="vcomments"></div>
+    <% } %>
+</div>

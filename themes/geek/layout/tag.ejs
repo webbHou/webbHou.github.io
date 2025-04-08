@@ -1,0 +1,13 @@
+<div class="hd posts">
+    <a href="/index.html"
+        ><i class="fa fa-reply replay-btn" aria-hidden="true"></i
+    ></a>
+    <div class="post-title">
+        <%= _p('标签', site.tags.count()) %>
+        <hr />
+    </div>
+    <div class="tags-content">
+        <%- tagcloud({min_font: 12, max_font: 25, amount: 300, color: true,
+        start_color: '#CCC', end_color: '#111'}) %>
+    </div>
+</div>

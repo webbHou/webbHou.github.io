@@ -1,0 +1,10 @@
+<div class="hd posts">
+    <a href="/index.html"
+        ><i class="fa fa-reply replay-btn" aria-hidden="true"></i
+    ></a>
+    <div class="post-title">
+        <%= _p('分类', site.categories.count()) %>
+        <hr />
+    </div>
+    <div class="categories-content"><%- list_categories() %></div>
+</div>

@@ -22,25 +22,18 @@
         <% } %>
     </div>
     <div class="post-content">
-        <% var title = page.title; %> 
-        <% if (title == "文章") { %>
-        <div>
-            <% site.posts.each(function (post) { %>
-            <a class="flink" href="<%- url_for(post.path) %>">
-                <div class="list">
-                    <div class="postname"></div>
-                        <%= post.title %>
-                    </div>
-                    <div class="posttime">
-                        <%- full_date(post.date,'YYYY-MM-DD HH:mm:ss') %>
-                    </div>
+        <% var title = page.title; %> <% if (title == "文章") { %> <%
+        site.posts.each(function (post) { %>
+        <a class="flink" href="<%- url_for(post.path) %>">
+            <div class="list">
+                <div class="postname"><%= post.title %></div>
+                <div class="posttime">
+                    <%- full_date(post.date,'YYYY-MM-DD HH:mm:ss') %>
                 </div>
-            </a>
-            <% }) %>
-        </div>
-        <% } %> 
-        <% if(title !== "文章") { %>
-        <div><%= page.content %></div>
+            </div>
+        </a>
+        <% }) %> <% } %> <% if(title !== "文章") { %>
+        <div><%- page.content %></div>
         <% } %>
     </div>
 

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        大圣博客
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="大圣博客" type="application/atom+xml">
+</head>
+
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"
+        ><i class="fa fa-reply replay-btn" aria-hidden="true"></i
+    ></a>
+    <div class="post-title">
+        <p>egg入门和实践</p>
+        <hr />
+        
+        <div class="category">
+            page.categories 
+            <a href="/categories/nodejs/">nodejs</a>
+            
+        </div>
+         
+        <div class="category">
+            page.tags 
+            <a href="/tags/egg/">egg</a>
+            
+            <a href="/tags/nodejs/">nodejs</a>
+            
+        </div>
+        
+    </div>
+    <div class="post-content"><h3 id="egg、koa、express、nest-直接关系"><a href="#egg、koa、express、nest-直接关系" class="headerlink" title="egg、koa、express、nest 直接关系"></a>egg、koa、express、nest 直接关系</h3><p>express 是最早的 nodejs 框架，使用回调函数处理异步。<br>koa 是 express 原班人马打造的，丢掉回调方式，使用 async 函数处理异步（koa1 使用 generator 函数），不绑定任何框架，插件化，随意定制，轻量级。<br>nest 是使用 typescript 封装的 koa，使用依赖注入，装饰器等特性，使代码更易维护，更易扩展，更易测试。<br>egg 是使用 koa 封装的，使用插件系统，使开发人员只注重于业务而不需要原理，更简单方便的去写业务。</p>
+<h4 id="egg-和-koa-的区别"><a href="#egg-和-koa-的区别" class="headerlink" title="egg 和 koa 的区别"></a>egg 和 koa 的区别</h4><ul>
+<li>api 上：更好的封装，使开发人员只注重于业务而不需要原理，更简单方便的去写业务</li>
+<li>脚手架：<ul>
+<li>文件分割：根据 controller、service、config 去存放和管理，便于后期维护</li>
+<li>ts 支持：会自动生成相关文件的 d.ts 类型文件，存放于 typings 文件夹下，与业务目录形成映射</li>
+<li>test、eslint、log 支持</li>
+</ul>
+</li>
+<li>插件系统：强大的插件系统让你可以直接使用第三方插件，配置简单</li>
+<li>configs：根据环境进行区分，可以配置不同环境的数据和参数</li>
+</ul>
+</div>
+
+    
+    <hr class="fhr" />
+    <div id="vcomments"></div>
+    
+</div>
+
+    <div class="footer" id="footer">
+    <p>Copyright © 2020 <a class="flink" href="https://hexo.io">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
+            <input type="checkbox" name="switch" id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+<!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="4QJZu2oB7BcbrCJACqhWnmt2-gzGzoHsz">
+<input type="hidden" id="valine_appKey" value="QAjplUsOViSYZJg9F7UAozl8">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+    color: #698fca;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    color: #3a3e4a;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #638fd5;
+}
+
+.v .vlist .vcard .vhead .vnick {
+    color: #6ba1ff;
+}
+
+.v a {
+    color: #8696b1;
+}
+
+.v .vlist .vcard .vhead .vnick:hover {
+    color: #669bfc;
+}
+</style>
+</body>
+
+</html>

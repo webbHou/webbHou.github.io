@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        大圣博客
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="大圣博客" type="application/atom+xml">
+</head>
+
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"
+        ><i class="fa fa-reply replay-btn" aria-hidden="true"></i
+    ></a>
+    <div class="post-title">
+        <p>readux异步操作及react-thunk中间件原理解析</p>
+        <hr />
+        
+        <div class="category">
+            page.categories 
+            <a href="/categories/js%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">js常见问题</a>
+            
+        </div>
+         
+        <div class="category">
+            page.tags 
+            <a href="/tags/javascript/">javascript</a>
+            
+        </div>
+        
+    </div>
+    <div class="post-content"><h5 id="redux的异步操作是怎么进行的"><a href="#redux的异步操作是怎么进行的" class="headerlink" title="redux的异步操作是怎么进行的"></a>redux的异步操作是怎么进行的</h5><p>用过redux的应该都知道，redux的工作流是同步的过程，用户在页面触发动作dispatch一个action，然后被分配到对应的reducer，然后根据action的type进行同步的处理，然后更新store，subscribe监控store的改变对页面的state进行更新。</p>
+<p>action必须要由dispatch去发起，还有action必须返回object，所以如果一个异步操作需要进行，有下面两种方式：</p>
+<ul>
+<li>闭包：改写dispatch可以接受一个函数，函数执行返回一个异步函数，在异步完成后进行dispatch的调用。但是dispatch不是全局变量，所以需要进行保存，所以用闭包的方式进行保存，来保证异步完成后可以去dispatch，这就是Redux-thunk的做法。</li>
+<li>监听action：一般的流程是dispatch后的action会进入reducer，但是reducer是同步操作，所以我们需要去监听这个action异步处理后再发起真正的action，redux-saga就是这样的原理。</li>
+</ul>
+<h5 id="为什么要使用chunk"><a href="#为什么要使用chunk" class="headerlink" title="为什么要使用chunk"></a>为什么要使用chunk</h5><p>上边说过我们可以在异步完成后去disptach一个action，所以我们可以这样</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">props</span>.<span class="title function_">dispatch</span>(action)</span><br><span class="line">&#125;,<span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>但是当我们需要大量的重复操作，我们需要给每一个发出异步的组件都必须注入dispatch，还需要去区分同步还是异步的操作。还有的甚至还需要逻辑操作，需要获取state。这样以后就变得很难维护。所以在thunk中我们直接将dispatch和getState注入到返回的函数参数中，直接可以使用。</p>
+<h5 id="redux-thunk原理"><a href="#redux-thunk原理" class="headerlink" title="redux-thunk原理"></a>redux-thunk原理</h5><p>上边说到通过改造dispatch方法接受一个函数，然后运用闭包的方式在函数执行结束后去dispatch一个action。</p>
+<h6 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(</span><br><span class="line">  reducer,</span><br><span class="line">  <span class="title function_">applyMiddleware</span>(thunk),</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">increment</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;INCREMENT&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">incrementAsync</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">dispatch,getState</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">dispatch</span>(<span class="title function_">increment</span>()); <span class="comment">//异步操作</span></span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> store.<span class="title function_">dispatch</span>(incrementAsync);</span><br></pre></td></tr></table></figure>
+
+<h6 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">thunk</span>(<span class="params">store</span>) &#123;  <span class="comment">//一个中间件首先接受一个store</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">next</span>) &#123;  <span class="comment">//然后接受一个next 类似express的中间件 洋葱模型</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">action</span>) &#123; <span class="comment">//真正的action</span></span><br><span class="line">      <span class="keyword">const</span> &#123; dispatch, getState &#125; = store;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> action === <span class="string">&#x27;function&#x27;</span>) &#123;  <span class="comment">//如果是函数则先去执行  再去发起真正的action</span></span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">action</span>(dispatch, getState);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">let</span> result = <span class="title function_">next</span>(action); <span class="comment">//普通action会进入next 按洋葱模型的方式 去到下一个中间件被处理 最后被返回</span></span><br><span class="line">      <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="额外的参数"><a href="#额外的参数" class="headerlink" title="额外的参数"></a>额外的参数</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(</span><br><span class="line">  reducer,</span><br><span class="line">  <span class="title function_">applyMiddleware</span>(thunk.<span class="title function_">withExtraArgument</span>(&#123; api, whatever &#125;)),</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fetchUser</span>(<span class="params">id</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">dispatch, getState, &#123; api, whatever &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 现在你可以使用这个额外的参数api和whatever了</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以我们需要给thunk一个额外的方法去接受参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createThunkMiddleware</span>(<span class="params">extraArgument</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">thunk</span>(<span class="params">store</span>) &#123;  <span class="comment">//一个中间件首先接受一个store</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">next</span>) &#123;  <span class="comment">//然后接受一个next 类似express的中间件 洋葱模型</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">action</span>) &#123; <span class="comment">//真正的action</span></span><br><span class="line">        <span class="keyword">const</span> &#123; dispatch, getState &#125; = store;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> action === <span class="string">&#x27;function&#x27;</span>) &#123;  <span class="comment">//如果是函数则先去执行  再去发起真正的action</span></span><br><span class="line">          <span class="keyword">return</span> <span class="title function_">action</span>(dispatch, getState, extraArgument);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> result = <span class="title function_">next</span>(action); <span class="comment">//普通action会进入next 按洋葱模型的方式 去到下一个中间件被处理 最后被返回</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> thunk = <span class="title function_">createThunkMiddleware</span>();</span><br><span class="line">thunk.<span class="property">withExtraArgument</span> = createThunkMiddleware;</span><br></pre></td></tr></table></figure>
+
+<p>最后放出官方源码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createThunkMiddleware</span>(<span class="params">extraArgument</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">&#123; dispatch, getState &#125;</span>) =&gt;</span> <span class="function">(<span class="params">next</span>) =&gt;</span> <span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> action === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">action</span>(dispatch, getState, extraArgument);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">next</span>(action);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> thunk = <span class="title function_">createThunkMiddleware</span>();</span><br><span class="line">thunk.<span class="property">withExtraArgument</span> = createThunkMiddleware;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> thunk;</span><br></pre></td></tr></table></figure>
+</div>
+
+    
+    <hr class="fhr" />
+    <div id="vcomments"></div>
+    
+</div>
+
+    <div class="footer" id="footer">
+    <p>Copyright © 2020 <a class="flink" href="https://hexo.io">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
+            <input type="checkbox" name="switch" id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+<!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="4QJZu2oB7BcbrCJACqhWnmt2-gzGzoHsz">
+<input type="hidden" id="valine_appKey" value="QAjplUsOViSYZJg9F7UAozl8">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+    color: #698fca;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    color: #3a3e4a;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #638fd5;
+}
+
+.v .vlist .vcard .vhead .vnick {
+    color: #6ba1ff;
+}
+
+.v a {
+    color: #8696b1;
+}
+
+.v .vlist .vcard .vhead .vnick:hover {
+    color: #669bfc;
+}
+</style>
+</body>
+
+</html>

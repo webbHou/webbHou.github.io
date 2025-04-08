@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        大圣博客
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="大圣博客" type="application/atom+xml">
+</head>
+
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"
+        ><i class="fa fa-reply replay-btn" aria-hidden="true"></i
+    ></a>
+    <div class="post-title">
+        <p>node做中间层的优势和必要</p>
+        <hr />
+        
+        <div class="category">
+            page.categories 
+            <a href="/categories/nodejs/">nodejs</a>
+            
+        </div>
+         
+        <div class="category">
+            page.tags 
+            <a href="/tags/javascript/">javascript</a>
+            
+            <a href="/tags/node/">node</a>
+            
+        </div>
+        
+    </div>
+    <div class="post-content"><h3 id="为什么用Node-js搭建中间层"><a href="#为什么用Node-js搭建中间层" class="headerlink" title="为什么用Node.js搭建中间层"></a>为什么用Node.js搭建中间层</h3><h4 id="什么是中间层"><a href="#什么是中间层" class="headerlink" title="什么是中间层"></a>什么是中间层</h4><p>在翻看很多技术文章时，大家都提到“中间层”，在很多大型企业中，Node确实承担了“中间层”的角色，那么，Node为什么被广泛的应用在“中间层”呢？</p>
+<p>要回答这个问题，先来陈述下什么是中间层。</p>
+<p>通常我们把Web领域分为客户端和服务端，也就是前端和后端，这里的后端就包含了网关，静态资源，接口，缓存，数据库等。而中间层呢，就是在后端这里再抽离一层出来，在业务上处理和客户端衔接更紧密的部分，比如页面渲染（SSR），数据聚合，接口转发等等。</p>
+<p>以SSR来说，在服务端将页面渲染好，可以加快用户的首屏加载速度，避免请求时白屏，还有利于网站做SEO，他的好处是比较好理解的。那么对于数据的聚合，接口转发来说，这样做有什么意义呢？</p>
+<h4 id="用Node的4点意义"><a href="#用Node的4点意义" class="headerlink" title="用Node的4点意义"></a>用Node的4点意义</h4><h5 id="业务驱动"><a href="#业务驱动" class="headerlink" title="业务驱动"></a>业务驱动</h5><p>Node有个突出的优势，他的开发者可以是前端。</p>
+<p>前端对于页面所需要的数据有更好的理解，每个页面要用到哪些接口，每个接口要用到哪些字段前端是最清楚的。再加上实际业务开发中，前端页面需求经常会发生变化，需要修改字段或者数据结构，所以对接页面的这部分接口由前端直接开发非常合适，尤其配合GraphQL可以只关注于业务，字段和数据结构直接由前端定义，可以显著的减少沟通成本。</p>
+<h5 id="架构需要"><a href="#架构需要" class="headerlink" title="架构需要"></a>架构需要</h5><p>面向用户的接口由Node中间层负责以后，真正的服务端可以专注于提供基于领域模型的对内接口，做微服务。</p>
+<p>比如可以基于Goods模型，提供所有商品相关的接口；基于Users模型，提供所有用户相关接口。当一个接口需要商品+用户信息时，由Node分别查询组装。从整体业务代码维护角度来说，变得更容易，不会因为业务发展使得每个接口都异常繁杂。</p>
+<h5 id="性能满足"><a href="#性能满足" class="headerlink" title="性能满足"></a>性能满足</h5><p>如果仅仅是架构层面的需求，需要有一个中间层来沉淀业务，那用Java，PHP也可以做到，为什么说Node更适合做呢？</p>
+<p>因为Node天生异步！</p>
+<p>众所周知，js是一门单线程语言，所以Node在实现的时候，需要借助libuv来实现异步。</p>
+<p>如图所示，libuv为Node提供了线程池，事件池，异步I&#x2F;O等能力。正是因为其中网络I&#x2F;O的异步能力，可以让Node做接口聚合时，能够更高效的异步并发处理。</p>
+<h5 id="成本较低"><a href="#成本较低" class="headerlink" title="成本较低"></a>成本较低</h5><p>Node使用js开发，只需要学习简单的api，前端开发者就可以无障碍使用，学习成本很低。</p>
+<p>而且，Node具有活跃的社区和丰富的模块池，拥有很多现成的功能实现。框架方面，也有成熟的koa，express等基本框架和egg等二次封装框架，可根据需求选择上手也比较方便。</p>
+</div>
+
+    
+    <hr class="fhr" />
+    <div id="vcomments"></div>
+    
+</div>
+
+    <div class="footer" id="footer">
+    <p>Copyright © 2020 <a class="flink" href="https://hexo.io">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
+            <input type="checkbox" name="switch" id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+<!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="4QJZu2oB7BcbrCJACqhWnmt2-gzGzoHsz">
+<input type="hidden" id="valine_appKey" value="QAjplUsOViSYZJg9F7UAozl8">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+    color: #698fca;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    color: #3a3e4a;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #638fd5;
+}
+
+.v .vlist .vcard .vhead .vnick {
+    color: #6ba1ff;
+}
+
+.v a {
+    color: #8696b1;
+}
+
+.v .vlist .vcard .vhead .vnick:hover {
+    color: #669bfc;
+}
+</style>
+</body>
+
+</html>

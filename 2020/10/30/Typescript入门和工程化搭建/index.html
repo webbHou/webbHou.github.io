@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        大圣博客
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="大圣博客" type="application/atom+xml">
+</head>
+
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"
+        ><i class="fa fa-reply replay-btn" aria-hidden="true"></i
+    ></a>
+    <div class="post-title">
+        <p>Typescript+工程化</p>
+        <hr />
+        
+        <div class="category">
+            page.categories 
+            <a href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+            
+        </div>
+         
+        <div class="category">
+            page.tags 
+            <a href="/tags/typescript/">typescript</a>
+            
+            <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+            
+        </div>
+        
+    </div>
+    <div class="post-content"><h3 id="Typescript-工程化-text-shadow"><a href="#Typescript-工程化-text-shadow" class="headerlink" title="Typescript+工程化 {.text-shadow}"></a>Typescript+工程化 {.text-shadow}</h3><h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><h3 id="Typescript"><a href="#Typescript" class="headerlink" title="Typescript"></a>Typescript</h3><ul>
+<li><a href="https://www.tslang.cn/index.html">简介</a></li>
+<li>基础类型</li>
+<li>高级类型</li>
+<li>接口</li>
+<li>类</li>
+<li>函数</li>
+<li>泛型</li>
+<li>模块</li>
+<li>命名空间</li>
+<li>装饰器</li>
+<li>type &amp; interface</li>
+</ul>
+<h4 id="简介及实用性"><a href="#简介及实用性" class="headerlink" title="简介及实用性"></a>简介及实用性</h4><p>TypeScript 的核心原则之一是对值所具有的结构进行类型检查</p>
+<ul>
+<li>接口定义 <a href="https://github.com/alibaba/pont">pont</a></li>
+<li>类型推断、健壮编码</li>
+</ul>
+<h4 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h4><ul>
+<li>boolean</li>
+<li>number</li>
+<li>string</li>
+<li>array：number[] | Array<number></li>
+<li>Tuple 元祖：表示已知元素类型和数量的数组</li>
+<li>enum：枚举</li>
+<li>any：未知类型时</li>
+<li>void：没有类型，当一个函数没有返回值时表示 void 的类型只能赋值 undefined|null</li>
+<li>null 和 undefined</li>
+<li>Never：永不到达的值</li>
+<li>Object： 非原始类型</li>
+<li>类型断言：已知某值的类型时，跳过检查，更快的编译 <number>Value | Value as string</li>
+</ul>
+<h4 id="高级类型"><a href="#高级类型" class="headerlink" title="高级类型"></a>高级类型</h4><ul>
+<li>交叉类型 &amp;</li>
+<li>联合类型 |</li>
+<li>类型保护：联合类型时为了确切的知道类型时 typeof instanceof 三元表达式</li>
+<li>为 null 类型：可选参数 可选属性</li>
+<li>类型别名：type</li>
+<li>多态 this 类型</li>
+<li>索引类型：对函数参数进行限制</li>
+<li>映射类型：把一个对象映射编程想要的接口类型</li>
+</ul>
+<h4 id="接口-interface"><a href="#接口-interface" class="headerlink" title="接口 interface"></a>接口 interface</h4><p>接口的作用就是为这些类型命名和为你的代码或第三方代码定义契约</p>
+<ul>
+<li>可选属性：color?：string</li>
+<li>只读属性：readonly length:number</li>
+<li>额外的属性检查：字符串索引签名[props:string]:any</li>
+<li>函数类型：定义参数类型和返回值类型</li>
+<li>可索引：[props:string|number]:type</li>
+<li>继承接口：extend 可以继承多个接口</li>
+<li>继承接口类：当一个接口继承了一个拥有私有或受保护的成员的类时，这个接口类型只能被这个类或其子类所实现（implement）</li>
+<li>对象字面量：会被特殊对待而且会经过额外属性检查，当将它们赋值给变量或作为参数传递的时候</li>
+</ul>
+<h4 id="类"><a href="#类" class="headerlink" title="类"></a>类</h4><ul>
+<li>public</li>
+<li>private：不能在类外访问，子类(派生类)也不可访问</li>
+<li>protected：跟 private 不同在可以在子类中访问</li>
+<li>readonly：只读属性必须在声明时或构造函数里被初始化。</li>
+<li>get&#x2F;set：TypeScript 支持通过 getters&#x2F;setters 来截取对对象成员的访问。 它能帮助你有效的控制对对象成员的访问。</li>
+<li>static：静态属性 必须在使用时加上类名来访问</li>
+<li>abstract：定义抽象类抽象方法 不能进行实例化，包含除抽象方法外方法的实现细节 抽象方法必须在派生类中实现</li>
+<li>把类当做接口使用</li>
+</ul>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><ul>
+<li>函数类型：定义函数的参数和返回值类型</li>
+<li>推断类型：根据函数定义的参数和返回值类型 推断出参数类型</li>
+<li>可选参数和默认参数： 不同于 js，没有传参就是 undefined</li>
+<li>剩余参数：当你不知道有几个参数时 把剩余参数收集到一个变量里</li>
+<li>重载：当参数类型不同 返回值也不同时 可以为同一个函数提供多个函数类型定义来进行函数重载 重载后调用会进行正确的类型检查 其他方式会报错</li>
+</ul>
+<h4 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h4><p>类型的可重用性，不仅支持现在的、也要考虑未来的数据类型</p>
+<ul>
+<li>泛型函数：传入的参数类型被捕获 然后就可以使用这个类型</li>
+<li>泛型接口：把泛型参数当作整个接口的一个参数，就可以锁定接口的类型</li>
+<li>泛型类：</li>
+<li>泛型约束：对函数传入的参数进行约定</li>
+</ul>
+<h4 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h4><ul>
+<li>数字枚举：自增长</li>
+<li>字符串枚举：可以自定义一个有意义的可读值</li>
+</ul>
+<h4 id="类型推断和类型兼容性"><a href="#类型推断和类型兼容性" class="headerlink" title="类型推断和类型兼容性"></a>类型推断和类型兼容性</h4><ul>
+<li>类型推断：在没有明确类型的地方，会推断提供类型</li>
+<li>类型兼容性：赋值的属性必须要在被赋值中找到对应属性</li>
+</ul>
+<h4 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h4><p>声明一个模块来组织代码，方便复用，x.module.ts</p>
+<ul>
+<li>导入：export default</li>
+<li>导出：import</li>
+<li>声明模块：declare</li>
+</ul>
+<h4 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h4><p>当一个类型关联的方法或类越来越多，为了防止于其他对象产生命名冲突，我们需要把他包裹在命名空间内，而不是在全局命名空间下</p>
+<ul>
+<li>namespace: 命名空间内的接口和类如果需要在外部访问 需要 export 否则不能被访问</li>
+<li>分离：当代码越来越多时，我们需要把代码进行拆分进行维护，他们还是一个命名空间 只不过在不同文件中 使用时根据依赖关系进行调用 <reference path="module.ts" /></li>
+<li>别名：我们可以用 import q &#x3D; x.y.z 给常用的对象起一个短的名字</li>
+<li>其他外部 js 库：为了描述不是用 TypeScript 编写的类库的类型，我们用外部命名空间声明 通常在 name.d.ts 里书写</li>
+<li>全局类型声明：比如项目 API 文件声明，可以在 global.d.ts 中声明实现</li>
+</ul>
+<p><strong>在 d.ts 声明文件中，任何的 declare 默认就是 global 的了，等同于 declare global 的。只有在模块文件中的定义，如果想要全局就使用 declare global</strong></p>
+<h3 id="声明合并"><a href="#声明合并" class="headerlink" title="声明合并"></a>声明合并</h3><ul>
+<li>合并接口：<ul>
+<li>当一个接口多次被声明时，会被自动合并</li>
+<li>非函数成员：如果声明的非函数成员多次被声明，且类型不同则会报错</li>
+<li>函数成员：每个同名函数声明都会被当成这个函数的一个重载</li>
+</ul>
+</li>
+<li>合并命名空间<ul>
+<li>当一个命名空间多次被声明时，会被自动合并</li>
+<li>非导出成员只在之前的命名空间内可用</li>
+</ul>
+</li>
+<li>命名空间、类、函数、枚举的合并：当两个不同的类型具有相同相同的名称时会被合并，调用时会被查找</li>
+</ul>
+<h5 id="type-interface"><a href="#type-interface" class="headerlink" title="type &amp; interface"></a>type &amp; interface</h5><ul>
+<li>type：类型别名<ul>
+<li>不仅仅能够表示 object、class、function</li>
+<li>不能重名（自然不存在同名聚合了），扩展已有的 type 需要创建新 type</li>
+<li>支持复杂的类型操作</li>
+<li>联合类型的不能被继承和 implements 但可以和 interface 互相聚合</li>
+</ul>
+</li>
+<li>interface：<ul>
+<li>同名的 interface 自动聚合，也可以跟同名的 class 自动聚合</li>
+<li>只能表示 object、class、function 类型</li>
+<li>可以被继承和 implements 可以被拓展 所以尽量使用接口代替类型别名</li>
+</ul>
+</li>
+</ul>
+<h3 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h3><h4 id="开发体验"><a href="#开发体验" class="headerlink" title="开发体验"></a>开发体验</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=Mzg4MTYwMzY1Mw==&mid=2247496177&idx=1&sn=873f713631392f519f5a7cd0f10c3af3&source=41#wechat_redirect">cli 脚手架</a></li>
+<li><a href="https://mp.weixin.qq.com/s/nuwSW8cAv0izEk4GIofI7w">UI 组件库</a>：<ul>
+<li>文档<a href="https://www.vuepress.cn/config/#%E9%85%8D%E7%BD%AE">vuepress</a></li>
+<li><a href="https://mp.weixin.qq.com/s/nuwSW8cAv0izEk4GIofI7w">公共组件、发布 npm 包</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/alibaba/pont/blob/master/README.md">前后端合作</a></li>
+</ul>
+<h4 id="代码质量"><a href="#代码质量" class="headerlink" title="代码质量"></a>代码质量</h4><ul>
+<li>代码规范<ul>
+<li>eslint</li>
+<li>格式规则：可以–fix 自动被修复</li>
+<li>质量规则：可能出现的 bug 不能被二次自动修复 需要 prettier 去处理格式</li>
+<li>prettier<br>typescript</li>
+</ul>
+</li>
+<li>测试：jest</li>
+<li>husky：哈士奇</li>
+<li>npm 钩子<ul>
+<li>“preinstall”: “npx only-allow pnpm” &#x2F;&#x2F;一行代码统一规范包管理器 指定允许的包管理器</li>
+</ul>
+</li>
+<li>git-hooks：git 钩子<ul>
+<li>pre-commit</li>
+<li>commit-msg</li>
+<li>pre-receive</li>
+<li>post-receive</li>
+</ul>
+</li>
+<li>commitlint：git 提交规范</li>
+<li>lint-staged：只检测暂存区代码</li>
+</ul>
+<h4 id="项目优化"><a href="#项目优化" class="headerlink" title="项目优化"></a>项目优化</h4><ul>
+<li>加载优化</li>
+<li>渲染优化</li>
+</ul>
+<h5 id="加载优化"><a href="#加载优化" class="headerlink" title="加载优化"></a>加载优化</h5><ul>
+<li>文件大小：webpack 打包：<code>/** @type &#123;import(&#39;webpack&#39;).Configuration&#125; */</code></li>
+<li>并发限制：CDN、合并请求、http2.0</li>
+<li>缓存：浏览器缓存、DNS 缓存、服务器缓存、数据持久化</li>
+<li>前端监控：埋点或错误上报</li>
+<li>预加载：强依赖包进行预加载</li>
+<li>http1&#x2F;2：1.0-&gt;1.1 keep alive、断点续传、缓存-&gt;2.0 二进制传输、多路复用、服务端 push</li>
+</ul>
+<h5 id="渲染优化"><a href="#渲染优化" class="headerlink" title="渲染优化"></a>渲染优化</h5><ul>
+<li>预渲染、预解析、懒加载</li>
+<li>按需加载</li>
+<li>SSR</li>
+<li>vdom:减少回流重回操作</li>
+</ul>
+<h4 id="前端安全"><a href="#前端安全" class="headerlink" title="前端安全"></a>前端安全</h4><ul>
+<li>https<ul>
+<li>相比 http 多了层 TLS 协议，相对安全</li>
+</ul>
+</li>
+<li>XSS 攻击<ul>
+<li>跨站脚本：利用浏览器的输入输出漏洞进行脚本攻击</li>
+</ul>
+</li>
+<li>CSRFF<ul>
+<li>跨站伪装请求：访问第三方站点时，利用用户的登录态调取接口</li>
+</ul>
+</li>
+</ul>
+<h5 id="https"><a href="#https" class="headerlink" title="https"></a>https</h5><ul>
+<li>非对称加密：有公钥私钥之分，公钥所有人都可以知道，可以将数据用公钥加密，但是将数据解密必须使用私钥解密，私钥只有分发公钥的一方才知道。</li>
+<li>对称加密：对称加密就是两边拥有相同的秘钥，两边都知道如何将密文加密解密。</li>
+<li>TLS 协议：传输层和应用层之间，相对 http 耗时，需要 3 次握手过程</li>
+<li>TLS 握手：<ul>
+<li>客户端发送一个随机值，需要的协议和加密方式</li>
+<li>服务端收到客户端的随机值，自己也产生一个随机值，并根据客户端需求的协议和加密方式来使用对应的方式，发送自己的证书（如果需要验证客户端证书需要说明）</li>
+<li>客户端收到服务端的证书并验证是否有效，验证通过会再生成一个随机值，通过服务端证书的公钥去加密这个随机值并发送给服务端，如果服务端需要验证客户端证书的话会附带证书</li>
+<li>服务端收到加密过的随机值并使用私钥解密获得第三个随机值，这时候两端都拥有了三个随机值，可以通过这三个随机值按照之前约定的加密方式生成密钥，接下来的通信就可以通过该密钥来加密解密</li>
+</ul>
+</li>
+<li>传输：对称加密(TLS 握手生成的秘钥进行加密解密)</li>
+</ul>
+<h5 id="XSS-攻击-跨站脚本"><a href="#XSS-攻击-跨站脚本" class="headerlink" title="XSS 攻击:跨站脚本"></a>XSS 攻击:跨站脚本</h5><ul>
+<li><p>危害</p>
+<ul>
+<li>窃取 cookie 信息</li>
+<li>监听用户行为</li>
+<li>修改 dom，伪造登录页面</li>
+</ul>
+</li>
+<li><p>类型</p>
+<ul>
+<li>存储型：黑客输入脚本然后存入该站点数据库，用户访问时请求就包含了恶意脚本，执行就会被窃取用户信息</li>
+<li>反射型：该类型不需要存储在数据库，恶意链接会携带 js 脚本，然后在页面中执行，触发恶意操作</li>
+<li>基于 DOM：通过手段修改 dom，html 传输中或使用中被劫持，然后修改 dom</li>
+</ul>
+</li>
+<li><p>防范</p>
+<ul>
+<li>重要数据 httpOnly</li>
+<li>对页面上的输入和输出内容进行转义或过滤</li>
+<li>利用 CSP（同源策略）：禁止加载或者执行其他域下的脚本</li>
+</ul>
+</li>
+</ul>
+<h5 id="CSRF：跨站伪装请求"><a href="#CSRF：跨站伪装请求" class="headerlink" title="CSRF：跨站伪装请求"></a>CSRF：跨站伪装请求</h5><ul>
+<li><p>危害</p>
+<ul>
+<li>窃取 cookie 信息</li>
+<li>伪装请求来让操作用户数据或财产</li>
+</ul>
+</li>
+<li><p>类型</p>
+<ul>
+<li>伪造 get 请求（img\src 等标签自动发起请求）</li>
+<li>伪造 post 请求（表单自动提交）</li>
+<li>吸引用户点击第三方站点链接</li>
+</ul>
+</li>
+<li><p>防范</p>
+<ul>
+<li>get 不修改数据</li>
+<li>禁止第三方网站发送 cookie：设置 cookit 的 sameSite（Strict|Lax|None）</li>
+<li>CSRF Token：第一次请求下发 CSRF Token、接口请求携带并校验</li>
+<li>设置白名单，不被第三方请求</li>
+<li>请求来源校验（origin、refer：安全原因有时候没有）</li>
+</ul>
+</li>
+</ul>
+<h4 id="webhook"><a href="#webhook" class="headerlink" title="webhook"></a>webhook</h4><p>当订阅事件发生后，webhook 主动向订阅地址发送 Http 请求，发送消息。其本质就是发布订阅。</p>
+<p>你的应用解析请求，并拿到外部消息体进行展示或其他处理。</p>
+</div>
+
+    
+    <hr class="fhr" />
+    <div id="vcomments"></div>
+    
+</div>
+
+    <div class="footer" id="footer">
+    <p>Copyright © 2020 <a class="flink" href="https://hexo.io">Hexo</a>-<a class="flink" href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <label class="el-switch el-switch-green el-switch-sm" style="vertical-align: sub;">
+            <input type="checkbox" name="switch" id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+<!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="4QJZu2oB7BcbrCJACqhWnmt2-gzGzoHsz">
+<input type="hidden" id="valine_appKey" value="QAjplUsOViSYZJg9F7UAozl8">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+    color: #698fca;
+}
+
+.v .vlist .vcard .vhead .vsys {
+    color: #3a3e4a;
+}
+
+.v .vlist .vcard .vh .vmeta .vat {
+    color: #638fd5;
+}
+
+.v .vlist .vcard .vhead .vnick {
+    color: #6ba1ff;
+}
+
+.v a {
+    color: #8696b1;
+}
+
+.v .vlist .vcard .vhead .vnick:hover {
+    color: #669bfc;
+}
+</style>
+</body>
+
+</html>

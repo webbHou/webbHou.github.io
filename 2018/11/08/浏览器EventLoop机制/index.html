@@ -46,26 +46,26 @@
     </div>
     <div class="post-content">
           
-        <div>&lt;p&gt;&lt;strong&gt;文章开始之前先说一下浏览器的渲染机制&lt;/strong&gt;&lt;/p&gt;
-&lt;h3 id=&#34;渲染机制&#34;&gt;&lt;a href=&#34;#渲染机制&#34; class=&#34;headerlink&#34; title=&#34;渲染机制&#34;&gt;&lt;/a&gt;渲染机制&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;处理 HTML 并构建 DOM 树。&lt;/li&gt;
-&lt;li&gt;处理 CSS 构建 CSSOM 树。&lt;/li&gt;
-&lt;li&gt;将 DOM 与 CSSOM 合并成一个渲染树。&lt;/li&gt;
-&lt;li&gt;根据渲染树来布局，计算每个节点的位置。&lt;/li&gt;
-&lt;li&gt;调用 GPU 绘制，合成图层，显示在屏幕上。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;为什么会存在EventLoop机制-EventLoop有什么作用？&#34;&gt;&lt;a href=&#34;#为什么会存在EventLoop机制-EventLoop有什么作用？&#34; class=&#34;headerlink&#34; title=&#34;为什么会存在EventLoop机制?EventLoop有什么作用？&#34;&gt;&lt;/a&gt;为什么会存在EventLoop机制?EventLoop有什么作用？&lt;/h3&gt;&lt;p&gt;为了较好的用户体验性，我们一般会把js代码放在页面的最后执行。&lt;br&gt;为什么呢？从上面的渲染机制知道，用户在打开一个页面时，浏览器解析器开始进行自上而下的解析执行，遇到css会解析成cssdom树，遇到html会解析成dom树。但是如果此时我们把js放在其中，也会进行解析和执行，如果遇到一些执行时间较长的方法，那么页面呢，会一片空白，大大降低了用户的体验性。而且此时dom还没有被解析，因此一些dom操作是不能进行的。这也就造成了页面渲染的阻塞。因此放在后面等页面渲染完再执行js代码，这也是EventLoop的核心概念。&lt;/p&gt;
-&lt;p&gt;在js代码中，我们一般会把代码分为同步代码和异步代码，异步代码也就是需要执行时间的方法、请求等代码块。同步代码会合并执行后进行渲染。众所周知JS是单进程的，也就是一次只能执行一个任务（或方法），如果遇到当前代码执行时间过长的情况，就会造成编译的阻塞，其他后续的代码难以执行，严重影响效率和体验，所以 JS 还增加了异步队列 (task queue) 来解决这个问题。当每次碰到异步任务（方法）就会插入到异步队列中，但异步队列中的这些任务什么时候执行呢？这时就需要EventLoop的介入，每次当主线程中执行完成为空时，就会从异步队列取出一个异步任务进行执行，每次只执行一个。当执行完成后，再次执行主线程中的任务活或渲染任务，再次为空时再从异步队列取出一个异步任务进行执行，不断循环这个步骤，这就是EventLoop的机制。&lt;/p&gt;
-&lt;h3 id=&#34;特殊的异步队列&#34;&gt;&lt;a href=&#34;#特殊的异步队列&#34; class=&#34;headerlink&#34; title=&#34;特殊的异步队列&#34;&gt;&lt;/a&gt;特殊的异步队列&lt;/h3&gt;&lt;h4 id=&#34;requestAnimationFrame&#34;&gt;&lt;a href=&#34;#requestAnimationFrame&#34; class=&#34;headerlink&#34; title=&#34;requestAnimationFrame&#34;&gt;&lt;/a&gt;requestAnimationFrame&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;requestAnimationFrame&lt;/strong&gt;也是一个异步任务，只是注册的方法不加入异步队列，而是加入渲染这一边的队列中，它在渲染的三个步骤之前被执行。通常用来处理渲染相关的工作。因为浏览器每16ms执行一次渲染，所以它时定时执行，不需要等待主线程是为否为空。setTimeOut可能会在每个渲染期间执行多次，会造成掉帧的情况，这也就是为什么requestAnimationFrame的动画更加流畅的原因。&lt;/p&gt;
-&lt;h4 id=&#34;Microtasks&#34;&gt;&lt;a href=&#34;#Microtasks&#34; class=&#34;headerlink&#34; title=&#34;Microtasks&#34;&gt;&lt;/a&gt;Microtasks&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;Microtasks&lt;/strong&gt; 就是在&lt;strong&gt;当次&lt;/strong&gt;事件循环的&lt;strong&gt;结尾立刻执行&lt;/strong&gt;的任务，但是不同于异步队列每次只执行一个，它会执行全部队列任务，知道队列为空。所以有可能导致页面阻塞。&lt;/p&gt;
-&lt;h3 id=&#34;区别和特点&#34;&gt;&lt;a href=&#34;#区别和特点&#34; class=&#34;headerlink&#34; title=&#34;区别和特点&#34;&gt;&lt;/a&gt;区别和特点&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Tasks 只执行一个。执行完了就进入主进程，主进程可能决定进入其他两个异步队列，也可能自己执行到空了再回来。&lt;br&gt;补充：对于“只执行一个”的理解，可以考虑设置 2 个相同时间的 timeout，两个并不会一起执行，而依然是分批的。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Animation callbacks 执行队列里的全部任务，但如果任务本身又新增 Animation callback 就不会当场执行了，因为那是下一个循环&lt;br&gt;补充：同 Tasks，可以考虑连续调用两句 requestAnimationFrame，它们会在同一次事件循环内执行，有别于 Tasks&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Microtasks 直接执行到空队列才继续。因此如果任务本身又新增 Microtasks，也会一直执行下去。所以上面的例子才会产生阻塞。&lt;br&gt;补充：因为是当次执行，因此如果既设置了 setTimeout(0) 又设置了 Promise.then()，优先执行 Microtasks。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+        <div><p><strong>文章开始之前先说一下浏览器的渲染机制</strong></p>
+<h3 id="渲染机制"><a href="#渲染机制" class="headerlink" title="渲染机制"></a>渲染机制</h3><ol>
+<li>处理 HTML 并构建 DOM 树。</li>
+<li>处理 CSS 构建 CSSOM 树。</li>
+<li>将 DOM 与 CSSOM 合并成一个渲染树。</li>
+<li>根据渲染树来布局，计算每个节点的位置。</li>
+<li>调用 GPU 绘制，合成图层，显示在屏幕上。</li>
+</ol>
+<h3 id="为什么会存在EventLoop机制-EventLoop有什么作用？"><a href="#为什么会存在EventLoop机制-EventLoop有什么作用？" class="headerlink" title="为什么会存在EventLoop机制?EventLoop有什么作用？"></a>为什么会存在EventLoop机制?EventLoop有什么作用？</h3><p>为了较好的用户体验性，我们一般会把js代码放在页面的最后执行。<br>为什么呢？从上面的渲染机制知道，用户在打开一个页面时，浏览器解析器开始进行自上而下的解析执行，遇到css会解析成cssdom树，遇到html会解析成dom树。但是如果此时我们把js放在其中，也会进行解析和执行，如果遇到一些执行时间较长的方法，那么页面呢，会一片空白，大大降低了用户的体验性。而且此时dom还没有被解析，因此一些dom操作是不能进行的。这也就造成了页面渲染的阻塞。因此放在后面等页面渲染完再执行js代码，这也是EventLoop的核心概念。</p>
+<p>在js代码中，我们一般会把代码分为同步代码和异步代码，异步代码也就是需要执行时间的方法、请求等代码块。同步代码会合并执行后进行渲染。众所周知JS是单进程的，也就是一次只能执行一个任务（或方法），如果遇到当前代码执行时间过长的情况，就会造成编译的阻塞，其他后续的代码难以执行，严重影响效率和体验，所以 JS 还增加了异步队列 (task queue) 来解决这个问题。当每次碰到异步任务（方法）就会插入到异步队列中，但异步队列中的这些任务什么时候执行呢？这时就需要EventLoop的介入，每次当主线程中执行完成为空时，就会从异步队列取出一个异步任务进行执行，每次只执行一个。当执行完成后，再次执行主线程中的任务活或渲染任务，再次为空时再从异步队列取出一个异步任务进行执行，不断循环这个步骤，这就是EventLoop的机制。</p>
+<h3 id="特殊的异步队列"><a href="#特殊的异步队列" class="headerlink" title="特殊的异步队列"></a>特殊的异步队列</h3><h4 id="requestAnimationFrame"><a href="#requestAnimationFrame" class="headerlink" title="requestAnimationFrame"></a>requestAnimationFrame</h4><p><strong>requestAnimationFrame</strong>也是一个异步任务，只是注册的方法不加入异步队列，而是加入渲染这一边的队列中，它在渲染的三个步骤之前被执行。通常用来处理渲染相关的工作。因为浏览器每16ms执行一次渲染，所以它时定时执行，不需要等待主线程是为否为空。setTimeOut可能会在每个渲染期间执行多次，会造成掉帧的情况，这也就是为什么requestAnimationFrame的动画更加流畅的原因。</p>
+<h4 id="Microtasks"><a href="#Microtasks" class="headerlink" title="Microtasks"></a>Microtasks</h4><p><strong>Microtasks</strong> 就是在<strong>当次</strong>事件循环的<strong>结尾立刻执行</strong>的任务，但是不同于异步队列每次只执行一个，它会执行全部队列任务，知道队列为空。所以有可能导致页面阻塞。</p>
+<h3 id="区别和特点"><a href="#区别和特点" class="headerlink" title="区别和特点"></a>区别和特点</h3><ul>
+<li><p>Tasks 只执行一个。执行完了就进入主进程，主进程可能决定进入其他两个异步队列，也可能自己执行到空了再回来。<br>补充：对于“只执行一个”的理解，可以考虑设置 2 个相同时间的 timeout，两个并不会一起执行，而依然是分批的。</p>
+</li>
+<li><p>Animation callbacks 执行队列里的全部任务，但如果任务本身又新增 Animation callback 就不会当场执行了，因为那是下一个循环<br>补充：同 Tasks，可以考虑连续调用两句 requestAnimationFrame，它们会在同一次事件循环内执行，有别于 Tasks</p>
+</li>
+<li><p>Microtasks 直接执行到空队列才继续。因此如果任务本身又新增 Microtasks，也会一直执行下去。所以上面的例子才会产生阻塞。<br>补充：因为是当次执行，因此如果既设置了 setTimeout(0) 又设置了 Promise.then()，优先执行 Microtasks。</p>
+</li>
+</ul>
 </div>
         
     </div>

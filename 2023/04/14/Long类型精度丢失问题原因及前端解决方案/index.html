@@ -45,9 +45,7 @@
         
     </div>
     <div class="post-content">
-         
-         
-        
+          
         <div>&lt;h2 id=&#34;精度丢失原因&#34;&gt;&lt;a href=&#34;#精度丢失原因&#34; class=&#34;headerlink&#34; title=&#34;精度丢失原因&#34;&gt;&lt;/a&gt;精度丢失原因&lt;/h2&gt;&lt;h3 id=&#34;JavaScript-中-Number-特性&#34;&gt;&lt;a href=&#34;#JavaScript-中-Number-特性&#34; class=&#34;headerlink&#34; title=&#34;JavaScript 中 Number 特性&#34;&gt;&lt;/a&gt;JavaScript 中 Number 特性&lt;/h3&gt;&lt;p&gt;JavaScript 中数字类型只有 Number 类型，不区分 int、long、double 等。根据（&lt;a href=&#34;https://segmentfault.com/a/1190000008268668&#34;&gt;IEEE 754 标准&lt;/a&gt;）来表示实现它的 Number 类型。&lt;/p&gt;
 &lt;h3 id=&#34;最大安全整数&#34;&gt;&lt;a href=&#34;#最大安全整数&#34; class=&#34;headerlink&#34; title=&#34;最大安全整数&#34;&gt;&lt;/a&gt;最大安全整数&lt;/h3&gt;&lt;p&gt;根据 IEEE 754 标准，其 16 进制形式为 0x001f_ffff_ffff_ffff ，即 9007199254740991。它等于 2 的 53 次方减 1，在 ES6 中，Number.MAX_SAFE_INTEGER 即为最大安全整数。&lt;/p&gt;
 &lt;p&gt;如果超过最大安全整数，则不能用数值传递，需要用其他数据类型，比如字符串，或拆分成两个数据字段。否则会出现精度丢失。&lt;/p&gt;

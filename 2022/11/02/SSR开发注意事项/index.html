@@ -45,9 +45,7 @@
         
     </div>
     <div class="post-content">
-         
-         
-        
+          
         <div>&lt;h4 id=&#34;开发注意事项&#34;&gt;&lt;a href=&#34;#开发注意事项&#34; class=&#34;headerlink&#34; title=&#34;开发注意事项&#34;&gt;&lt;/a&gt;开发注意事项&lt;/h4&gt;&lt;h4 id=&#34;数据处理&#34;&gt;&lt;a href=&#34;#数据处理&#34; class=&#34;headerlink&#34; title=&#34;数据处理&#34;&gt;&lt;/a&gt;数据处理&lt;/h4&gt;&lt;p&gt;&amp;#x3D;&amp;#x3D;如果是 SSR 下就取页面的数据&lt;br&gt;context.state.home.newsList&lt;br&gt;否则从 state 取&amp;#x3D;&amp;#x3D;&lt;/p&gt;
 &lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;const mapStateToProps = state =&amp;gt; (&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    list: webConfig.SSR?context.state.home.newsList:state.home.newsList,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    details: state.home.details,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 

@@ -47,9 +47,7 @@
         
     </div>
     <div class="post-content">
-         
-         
-        
+          
         <div>&lt;h4 id=&#34;什么是rematch&#34;&gt;&lt;a href=&#34;#什么是rematch&#34; class=&#34;headerlink&#34; title=&#34;什么是rematch&#34;&gt;&lt;/a&gt;什么是rematch&lt;/h4&gt;&lt;h4 id=&#34;为什么不是redux&#34;&gt;&lt;a href=&#34;#为什么不是redux&#34; class=&#34;headerlink&#34; title=&#34;为什么不是redux&#34;&gt;&lt;/a&gt;为什么不是redux&lt;/h4&gt;&lt;p&gt;在redux中状态管理的流程如下:&lt;br&gt;1.首先需要页面发起一个dispatch函数，接受一个action参数，&lt;br&gt;2.state中定义这个action 并导入都页面中&lt;br&gt;3.action中对异步或逻辑进行处理，然后再dispatch一个action&lt;br&gt;4.定义reducer然后 收集action，并处理&lt;br&gt;5.createStore，对所有的reducer进行合并处理，并添加中间件&lt;/p&gt;
 &lt;p&gt;所有因为redux操作的复杂性，很多重复的步骤可以省略，rematch就是对redux进行了二次封装，借鉴了dva的风格重新优化了流程，多余的action types，action creators，switch 语句或者thunks。使得我们开发时减少了很多重复的步骤和流程。&lt;/p&gt;
 &lt;p&gt;一个常见的rematch如下：&lt;/p&gt;

@@ -47,9 +47,7 @@
         
     </div>
     <div class="post-content">
-         
-         
-        
+          
         <div>&lt;p&gt;&lt;strong&gt;手写简单实现一个promise现在已经成了前端面试进阶必问之一的题目，接下来我们就简单实现一个promise&lt;/strong&gt;&lt;/p&gt;
 &lt;h3 id=&#34;基础版&#34;&gt;&lt;a href=&#34;#基础版&#34; class=&#34;headerlink&#34; title=&#34;基础版&#34;&gt;&lt;/a&gt;基础版&lt;/h3&gt;&lt;p&gt;我们知道一个promise有三种状态，初始状态pending，成功状态resolve，失败状态reject，pending可在一定条件下转化为resolve或reject，并不可逆。&lt;/p&gt;
 &lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;定义三种状态&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;const PENDING = &lt;span class=&#34;string&#34;&gt;&amp;#x27;pending&amp;#x27;&lt;/span&gt;; //初始状态 可转换为resolve或reject 不可逆&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;const RESOLVE = &lt;span class=&#34;string&#34;&gt;&amp;#x27;resolve&amp;#x27;&lt;/span&gt;; //成功状态 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;const REJECT = &lt;span class=&#34;string&#34;&gt;&amp;#x27;reject&amp;#x27;&lt;/span&gt;; //失败状态&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;

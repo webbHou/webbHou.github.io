@@ -47,9 +47,7 @@
         
     </div>
     <div class="post-content">
-         
-         
-        
+          
         <div>&lt;h3 id=&#34;什么是immutable-Data&#34;&gt;&lt;a href=&#34;#什么是immutable-Data&#34; class=&#34;headerlink&#34; title=&#34;什么是immutable Data&#34;&gt;&lt;/a&gt;什么是immutable Data&lt;/h3&gt;&lt;p&gt;immutable Data就是一旦创建就不可变的数据，每次的修改和添加删除操作都会返回新的immutable Data数据，Immutable 实现的原理是 Persistent Data Structure（持久化数据结构），immutable会共享相同的数据结构，当两个对象的hashCode相同，值就相同。当修改时只会对有影响的节点进行修改，其余的继续共享，避免了deepclone把所以节点都复制一遍带来的性能损耗，immutable解决了复杂类型引用赋值带来的数据隐患。&lt;/p&gt;
 &lt;h3 id=&#34;immutable的优点&#34;&gt;&lt;a href=&#34;#immutable的优点&#34; class=&#34;headerlink&#34; title=&#34;immutable的优点&#34;&gt;&lt;/a&gt;immutable的优点&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;降低了复杂可变数据带来的复杂度&lt;/li&gt;

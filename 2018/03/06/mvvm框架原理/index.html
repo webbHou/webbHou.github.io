@@ -49,9 +49,7 @@
         
     </div>
     <div class="post-content">
-         
-         
-        
+          
         <div>&lt;p&gt;最近几年前端技术层出不穷，行业生态和技术创新形式一片大好，涌现出了一大批框架、ui库、构建工具等，前端变得越来越不可替代，在公司的地位也越来越重要，工作内容页越来越有趣和技术性。当然也有坏的一面，层出不穷的技术当然会让很大一批人迷茫和不知从何学起，但随之慢慢的沉淀，更好的技术慢慢的被大家所接受和运用，react、vue等mvvm现在已经成为了一个前端er必须了解的东西，以下将从原理上对mvvm框架进行解析。&lt;/p&gt;
 &lt;h3 id=&#34;什么是mvvm&#34;&gt;&lt;a href=&#34;#什么是mvvm&#34; class=&#34;headerlink&#34; title=&#34;什么是mvvm&#34;&gt;&lt;/a&gt;什么是mvvm&lt;/h3&gt;&lt;p&gt;m即modle模型逻辑层，v即view视图层。mvvm体现了这个框架的运行原理，也就是模型驱动视图，视图的改变更改模型。也就是双向数据绑定的核心。&lt;/p&gt;
 &lt;h3 id=&#34;双向数据绑定的原理&#34;&gt;&lt;a href=&#34;#双向数据绑定的原理&#34; class=&#34;headerlink&#34; title=&#34;双向数据绑定的原理&#34;&gt;&lt;/a&gt;双向数据绑定的原理&lt;/h3&gt;&lt;p&gt;vue主要运用了原生得Object.defindproperty()方法进行data数据的getter和setter,然后追踪依赖,当数据发生改变时,发布通知给订阅者,然后通过computed进行计算后,生成新的虚拟dom，然后通过diff算法进行新老视图的对比，然后进行视图的更新。&lt;/p&gt;
